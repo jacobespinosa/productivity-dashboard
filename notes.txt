@@ -42,13 +42,43 @@ GITHUB INTEGRATION:
   Commit Commits
 
 
-HOMEPAGE:
-  Current Task (Timer?)
-  Tasks remaining
-  Weekly progress
-  Total time worked
-  Streaks
-  Recent Commits
+DASHBOARD:
+  SideBar (left side)
+  Timer (top left)
+  Current Task/Project (right of Timer)
+  TotalTimeWeekly (middle)
+    With a goal
+  WeeklyProgress (middle)
+    Count by tasks
+  Streaks (middle)
+  TaskList (top right)
+    Tasks remaining
+  WeeklyCalender (bottom)
+
+Dashboard
+├── Sidebar
+│
+├── Top Row
+│   ├── Timer / Current Focus Session
+│   ├── Current Task / Project
+│   └── TaskList / Tasks Remaining
+│
+├── Metrics Row
+│   ├── Total Time Weekly
+│   ├── Weekly Progress
+│   ├── Streaks
+│   └── Recent Commits
+│
+└── Bottom Row
+    └── WeeklyCalendar
+
+Tasks
+  Sidebar
+  CurrentFocus
+  TaskList
+  WeeklyStats
+  WeeklyCalendar
+
 
 GRAPHS:
   Workload heatmap (monthly or weekly? Based on hours or tasks completed?)
