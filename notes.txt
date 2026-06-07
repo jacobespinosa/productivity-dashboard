@@ -1,0 +1,55 @@
+
+Ideas
+
+TASKS:
+  Title
+  Priority
+  Due date
+  Tags
+  Estimated hours
+  Actual hours
+  End task feature that automatically adds up all timer seesions
+
+TIMER:
+  Session duration
+  Tasks worked on
+  Total time working
+  Track projects by time
+
+WEEKLY ANALYTICS:
+  Hours worked
+  Tasks Completed
+  Average session length
+  Completion rate
+
+WEEKLY CALENDER:
+  Next week (button or automatic)
+  Archive prevous weeks
+  Tasks are tied to projects
+  Time planned vs time spent
+
+
+GOAL TRACKING:
+  Long term goals
+
+  EX: 
+    React Course (88%), Maybe use moduals?
+    Leet Code (67/250)
+
+GITHUB INTEGRATION:
+  Contributions
+  Repos
+  Commit Commits
+
+
+HOMEPAGE:
+  Current Task (Timer?)
+  Tasks remaining
+  Weekly progress
+  Total time worked
+  Streaks
+  Recent Commits
+
+GRAPHS:
+  Workload heatmap (monthly or weekly? Based on hours or tasks completed?)
+  Completion Circles
