@@ -1,21 +1,41 @@
+import './SideBar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar, faFolder,  } from '@fortawesome/free-regular-svg-icons';
+import { faChartLine, faGear, faBorderAll } from '@fortawesome/free-solid-svg-icons';
+
 function SideBar() {
   return (
-    <aside className="surface border-r-2 border-theme w-3xs h-screen">
-      <div className="h-16 p-4 text-center text-2xl">
+    <aside className="sidebar">
+      <div className="sidebar-header">
         <a href="#">App Name</a>
       </div>
 
-      <div className="flex flex-col mt-2">
-        <p className="p-4 text-secondary">Menu</p>
-        <a href="#" className="border-1 p-4 text-primary text-lg">Dashboard</a>
-        <a href="#">Calendar</a>
-        <a href="#">Projects</a>
-        <a href="#">Analytics</a>
+      <div className="sidebar-section">
+        <p className="sidebar-title">Menu</p>
+        <a href="#" className="sidebar-link">
+          <FontAwesomeIcon icon={faBorderAll} />
+          Dashboard
+        </a>
+        <a href="#" className="sidebar-link">
+          <FontAwesomeIcon icon={faCalendar} />
+          Calendar
+        </a>
+        <a href="#" className="sidebar-link">
+          <FontAwesomeIcon icon={faFolder} />
+          Projects
+        </a>
+        <a href="#" className="sidebar-link">
+          <FontAwesomeIcon icon={faChartLine} />
+          Analytics
+        </a>
       </div>
 
-      <div className="flex flex-col">
-        <p className="p-4 text-secondary">General</p>
-        <a href="#">Settings</a>
+      <div className="sidebar-section">
+        <p className="sidebar-title">General</p>
+        <a href="#" className="sidebar-link">
+          <FontAwesomeIcon icon={faGear} />
+          Settings
+        </a>
       </div>
     </aside>
   );

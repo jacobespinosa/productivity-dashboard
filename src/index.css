@@ -23,31 +23,3 @@
     margin: 0;
     box-sizing: border-box;
 }
-
-body {
-    background-color: var(--background);
-}
-
-.bg-main {
-    background-color: var(--background);
-}
-
-.surface {
-    background-color: var(--surface);
-}
-
-.text-primary {
-    color: var(--text-primary);
-}
-
-.text-secondary {
-    color: var(--text-secondary);
-}
-
-.accent {
-    background-color: var(--accent);
-}
-
-.border-theme {
-    border-color: var(--border);
-}
