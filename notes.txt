@@ -21,6 +21,7 @@ WEEKLY ANALYTICS:
   Tasks Completed
   Average session length
   Completion rate
+  Difference between Estimated time and Actual time
 
 WEEKLY CALENDER:
   Next week (button or automatic)

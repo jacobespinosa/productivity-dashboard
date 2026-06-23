@@ -1,0 +1,16 @@
+.weekly-calender {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    padding: 1rem;
+}
+
+.weekly-header {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.day-container {
+    display: flex;
+}

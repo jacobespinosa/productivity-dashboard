@@ -1,8 +1,29 @@
 import './App.css'
 import Dashboard from './pages/Dashboard';
+import { useState } from 'react';
 
 function App() {
-  return <Dashboard />
+  const [projects, setProjects] = useState([
+    {
+      id: 1,
+      name: "leetCode",
+      timeSpent: 0
+    },
+    {
+      id: 2,
+      name: "Python",
+      timeSpent: 0,
+    },
+    {
+      id: 3,
+      name: "SIEM",
+      timeSpent: 0
+    }
+  ]);
+
+
+
+  return <Dashboard projects={projects} setProjects={setProjects}/>
 }
 
 export default App

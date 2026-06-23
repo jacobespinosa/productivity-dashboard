@@ -7,7 +7,7 @@ function SideBar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
-        <a href="#">App Name</a>
+        <p>App Name</p>
       </div>
 
       <div className="sidebar-section">

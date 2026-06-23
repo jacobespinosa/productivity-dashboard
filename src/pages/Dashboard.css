@@ -1,0 +1,28 @@
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--background);
+}
+
+.dashboard-content {
+    display: grid;
+    flex: 1;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr 1fr;
+    gap: 1.5rem;
+    grid-template-areas: 
+        'timer timer taskList'
+        'totalTimeWeekly weeklyProgress taskList'
+        'weeklyCalender weeklyCalender weeklyCalender';
+    padding: 2rem;
+}
+
+.timer {
+    grid-area: timer;
+    justify-self: start;
+    align-self: start;
+}
+
+.weekly-calender {
+    grid-area: weeklyCalender;
+}
