@@ -1,5 +1,6 @@
 .weekly-calender {
     display: flex;
+    gap: 0.5rem;
     flex-direction: column;
     border: 1px solid var(--border);
     background-color: var(--surface);
@@ -7,10 +8,42 @@
 }
 
 .weekly-header {
+    display: flex;
+}
+
+.weekly-calender-title {
     font-size: 3rem;
     font-weight: 700;
 }
 
+.new-week-btn {
+    margin-left: auto;
+    padding: 0.5rem 1rem;
+}
+
 .day-container {
     display: flex;
+    gap: 0.5rem;
+}
+
+.day-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    height: 250px;
+    width: 14%;
+    padding: 0.5rem;
+}
+
+.card-heading {
+}
+
+.card-footing {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.add-task-btn {
+    margin-top: auto;
 }
