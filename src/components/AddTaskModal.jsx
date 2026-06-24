@@ -1,7 +1,7 @@
 import './AddTaskModal.css';
 import { useState } from 'react';
 
-function AddTaskModal({mode, task, dayId, onClose, onSubmit}) {
+function AddTaskModal({mode, task, onClose, onSubmit}) {
     const [ taskName, setTaskName ] = useState(task?.name || "");
     const [ taskTime, setTaskTime ] = useState(task?.time || 0);
 
@@ -28,7 +28,7 @@ function AddTaskModal({mode, task, dayId, onClose, onSubmit}) {
                     onChange={(e) => setTaskTime(Number(e.target.value))}
                     value={taskTime}
                 >
-                    <option value="0" selected>Select time</option>
+                    <option value="0">Select time</option>
                     <option value="15">15 min</option>
                     <option value="30">30 min</option>
                     <option value="45">45 min</option>

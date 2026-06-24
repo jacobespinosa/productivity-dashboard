@@ -3,7 +3,7 @@ import SideBar from "../components/SideBar";
 import Timer   from "../components/Timer";
 import WeeklyCalender from '../components/WeeklyCalender';
 
-function Dashboard({projects, setProjects, weeklyPlan, setWeeklyPlan}) {
+function Dashboard({projects, setProjects, tasksByDate, setTasksByDate}) {
   return (
       <main className="dashboard">
         <SideBar />
@@ -14,8 +14,8 @@ function Dashboard({projects, setProjects, weeklyPlan, setWeeklyPlan}) {
             setProjects={setProjects}
           />
           <WeeklyCalender 
-            weeklyPlan={weeklyPlan}
-            setWeeklyPlan={setWeeklyPlan}
+            tasksByDate={tasksByDate}
+            setTasksByDate={setTasksByDate}
           />
         </section>
       </main>

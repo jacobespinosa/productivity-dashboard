@@ -5,92 +5,84 @@ import AddTaskModal from './AddTaskModal';
 import { useState } from 'react';
 
 
-function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
+function WeeklyCalender({ tasksByDate, setTasksByDate }) {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() - daysToSubtract);
+    
     const [ modalMode, setModalMode ] = useState("add");
     const [ isModalOpen, setIsModalOpen ] = useState(false);
-    const [ selectedDayId, setSelectedDayId ] = useState(null);
+    const [ selectedDateKey, setSelectedDateKey ] = useState("");
     const [ selectedTask, setSelectedTask ] = useState(null);
+    const [ currentWeekStart, setCurrentWeekStart ] = useState(weekStart);
 
     function handleCreateTask(taskName, estimatedTime) {
-        setWeeklyPlan(prevWeeklyPlan => 
-            prevWeeklyPlan.map(day => 
-                day.id === selectedDayId
-                ? { ...day, tasks: [...day.tasks, {
+        console.log(`selectedDateKey: ${selectedDateKey}`);
+
+        setTasksByDate(prev => ({
+            ...prev,
+            [selectedDateKey]: [
+                ...(prev[selectedDateKey] || []),
+                {
                     id: Date.now(),
                     name: taskName,
                     time: estimatedTime,
                     isDone: false
                 }
-              ]
-            }
-            : day
-            )
-        );
+            ]
+        }));
         setIsModalOpen(false);
     }
 
     function handleUpdateTask(taskName, estimatedTime) {
-        setWeeklyPlan(prevWeeklyPlan => 
-            prevWeeklyPlan.map(day => 
-                day.id === selectedDayId
-                ? { ...day, 
-                    tasks: day.tasks.map(task => 
-                        task.id === selectedTask.id
-                        ? {
-                            ...task,
-                            name: taskName,
-                            time: estimatedTime
-                        }
-                        : task
-                    )
-                } : day
+        setTasksByDate(prev => ({
+            ...prev,
+            [selectedDateKey]: prev[selectedDateKey].map(task =>
+                task.id === selectedTask.id
+                ? {
+                    ...task,
+                    name: taskName,
+                    time: estimatedTime
+                }
+                : task
             )
-        );
+        }));
         setIsModalOpen(false);        
     }
 
-    function handleDeleteTask(dayId, taskId) {
-        setWeeklyPlan(prevWeeklyPlan =>
-            prevWeeklyPlan.map(day => 
-                day.id === dayId
-                ? {
-                    ...day,
-                    tasks: day.tasks.filter(task =>
-                        taskId !== task.id
-                    )
-                } : day
+    function handleDeleteTask(dateKey, taskId) {
+        setTasksByDate(prev => ({
+            ...prev,
+            [dateKey]: prev[dateKey].filter(
+                task => task.id !== taskId
             )
-        )
+        }));
     }
 
-    function handleToggleTask(dayId, taskId) {
-        setWeeklyPlan(prevWeeklyPlan =>
-            prevWeeklyPlan.map(day =>
-                day.id === dayId
-                ? { ...day,
-                    tasks: day.tasks.map(task =>
-                        task.id === taskId
-                        ? {
-                            ...task,
-                            isDone: !task.isDone
-                        } : task
-                    )
-                } : day
+    function handleToggleTask(dateKey, taskId) {
+        setTasksByDate(prev => ({
+            ...prev,
+            [dateKey]: prev[dateKey].map(task =>
+                task.id === taskId
+                ? { ...task, isDone: !task.isDone }
+                : task
             )
-        )
+        }));
     }
 
-    function handleAddTask(dayId) {
+    function handleAddTask(dateKey) {
         setModalMode("add");
+        setSelectedDateKey(dateKey);
         setSelectedTask(null);
-        setSelectedDayId(dayId);
         setIsModalOpen(true);
     }
 
-    function handleEditTask(dayId, task) {
+    function handleEditTask(dateKey, task) {
         setModalMode("edit");
+        setSelectedDateKey(dateKey);
         setSelectedTask(task);
-        setSelectedDayId(dayId);
         setIsModalOpen(true);
     }
 
@@ -100,6 +92,23 @@ function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
         const mins  = Math.floor(minutes % 60);
         return `${hours > 0 ? `${hours}h ` : ""}${mins}m`;
     }
+
+    const weekDays = Array.from({ length: 7 }, (_, index) => {
+        const date = new Date(currentWeekStart);
+        date.setDate(currentWeekStart.getDate() + index);
+
+        const dateKey = date.toLocaleDateString('en-US');
+
+        console.log(`Week dateKey: ${dateKey}`);
+
+        const tasks = tasksByDate[dateKey] || [];
+        return {
+            dateKey, 
+            day: date.toLocaleDateString('default', {weekday: 'long'}),
+            tasks
+        }
+    });
+
 
     return (
         <>
@@ -113,17 +122,17 @@ function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
         </div>
 
         <div className="day-container">
-        {weeklyPlan.map(day => {
+        {weekDays.map(day => {
             const totalTime = day.tasks.reduce(
                 (acc, task) => acc + task.time,
                 0
-            )
+            );
             
             
             return (
-                <div key={day.id} className="day-card">
+                <div key={day.dateKey} className="day-card">
                     <div className="card-heading">
-                        <h3 className="date">{day.day}, {day.date}</h3>
+                        <h3 className="date">{day.day}, {day.dateKey}</h3>
                     </div>
 
                     <ul className="task-list">
@@ -135,11 +144,11 @@ function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
                                     type="checkbox" 
                                     checked={task.isDone}
                                     onClick={(e) => e.stopPropagation()}
-                                    onChange={() => handleToggleTask(day.id, task.id)} 
+                                    onChange={() => handleToggleTask(day.dateKey, task.id)} 
                                 />
                                 <span 
                                     className="task-text"
-                                    onClick={() => handleEditTask(day.id, task)}>
+                                    onClick={() => handleEditTask(day.dateKey, task)}>
                                     {task.name} - {formatMinutes(task.time)}
                                 </span>
                                 <button
@@ -147,7 +156,7 @@ function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
                                     className="delete-btn"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        handleDeleteTask(day.id, task.id);
+                                        handleDeleteTask(day.dateKey, task.id);
                                     }}
                                 >
                                 <FontAwesomeIcon icon={faTrashCan} />
@@ -164,7 +173,7 @@ function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
                         <button
                             type="button"
                             className="add-task-btn"
-                            onClick={() => handleAddTask(day.id)}
+                            onClick={() => handleAddTask(day.dateKey)}
                         >
                         Add task
                         </button>
@@ -177,7 +186,6 @@ function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
 
         {isModalOpen && (
             <AddTaskModal
-                dayId={selectedDayId}
                 mode={modalMode}
                 task={selectedTask}
                 onClose={() => setIsModalOpen(false)}
