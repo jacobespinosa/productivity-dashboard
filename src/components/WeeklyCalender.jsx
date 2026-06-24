@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan  } from '@fortawesome/free-regular-svg-icons';
 import './WeeklyCalender.css';
 import AddTaskModal from './AddTaskModal';
 import { useState } from 'react';
@@ -47,6 +49,20 @@ function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
         setIsModalOpen(false);        
     }
 
+    function handleDeleteTask(dayId, taskId) {
+        setWeeklyPlan(prevWeeklyPlan =>
+            prevWeeklyPlan.map(day => 
+                day.id === dayId
+                ? {
+                    ...day,
+                    tasks: day.tasks.filter(task =>
+                        taskId !== task.id
+                    )
+                } : day
+            )
+        )
+    }
+
     function handleToggleTask(dayId, taskId) {
         setWeeklyPlan(prevWeeklyPlan =>
             prevWeeklyPlan.map(day =>
@@ -78,12 +94,22 @@ function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
         setIsModalOpen(true);
     }
 
+
+    function formatMinutes(minutes) {
+        const hours = Math.floor(minutes / 60);
+        const mins  = Math.floor(minutes % 60);
+        return `${hours > 0 ? `${hours}h ` : ""}${mins}m`;
+    }
+
     return (
         <>
         <div className="weekly-calender">
         <div className="weekly-header">
           <h1 className="weekly-calender-title">Weekly Plan</h1>
-          <button type="button" className="new-week-btn">New Week</button>
+          <div className="week-navigation">
+              <button type="button" className="prev-week">Prev</button>
+              <button type="button" className="next-week">Next</button>
+          </div>
         </div>
 
         <div className="day-container">
@@ -91,30 +117,49 @@ function WeeklyCalender({ weeklyPlan, setWeeklyPlan }) {
             const totalTime = day.tasks.reduce(
                 (acc, task) => acc + task.time,
                 0
-            );
-
+            )
+            
+            
             return (
                 <div key={day.id} className="day-card">
                     <div className="card-heading">
                         <h3 className="date">{day.day}, {day.date}</h3>
                     </div>
 
-                    <ul>
+                    <ul className="task-list">
                         {day.tasks.map(task => (
-                            <li key={task.id} onClick={() => handleEditTask(day.id, task)}>
+                            <li 
+                              key={task.id} 
+                              className="list-item">
                                 <input 
                                     type="checkbox" 
                                     checked={task.isDone}
                                     onClick={(e) => e.stopPropagation()}
                                     onChange={() => handleToggleTask(day.id, task.id)} 
                                 />
-                                {task.name} - {task.time}m
+                                <span 
+                                    className="task-text"
+                                    onClick={() => handleEditTask(day.id, task)}>
+                                    {task.name} - {formatMinutes(task.time)}
+                                </span>
+                                <button
+                                    type="button"
+                                    className="delete-btn"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDeleteTask(day.id, task.id);
+                                    }}
+                                >
+                                <FontAwesomeIcon icon={faTrashCan} />
+                                </button>
                             </li>
                         ))}
                     </ul>
 
                     <div className="card-footing">
-                        <p className="estimated-time">Total: {totalTime}m</p>
+                        <p className="estimated-time">
+                            Total: {formatMinutes(totalTime)}
+                        </p>
 
                         <button
                             type="button"

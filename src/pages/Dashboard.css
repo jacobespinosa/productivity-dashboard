@@ -8,7 +8,7 @@
     display: grid;
     flex: 1;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr 1fr;
+    grid-template-rows: auto 1fr 1.1fr;
     gap: 1.5rem;
     grid-template-areas: 
         'timer timer taskList'
