@@ -93,6 +93,50 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
         return `${hours > 0 ? `${hours}h ` : ""}${mins}m`;
     }
 
+    function handleNextWeek() {
+        const nextWeek = new Date(currentWeekStart);
+        nextWeek.setDate(nextWeek.getDate() + 7);
+        setCurrentWeekStart(nextWeek);
+    }
+
+    function handlePrevWeek() {
+        const prevWeek = new Date(currentWeekStart);
+        prevWeek.setDate(prevWeek.getDate() - 7);
+        setCurrentWeekStart(prevWeek);
+    }
+
+    function handleCurrentWeek() {
+        setCurrentWeekStart(new Date(weekStart));
+    }
+
+    function getDaySuffix(day) {
+        if (day > 3 && day < 21) return "th";
+        switch (day % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
+    }
+
+    function getCurrentWeekRange() {
+        const startDate = new Date(currentWeekStart);
+        const endDate = new Date(currentWeekStart);
+        endDate.setDate(startDate.getDate() + 6);
+
+        const startMonth = startDate.toLocaleDateString('default', {month: 'short'});
+        const endMonth = endDate.toLocaleDateString('default', {month: 'short'});
+
+        const start = startDate.getDate()
+        const end = endDate.getDate();
+
+        const startPrefix = getDaySuffix(start);
+        const endPrefix = getDaySuffix(end);
+        return `${startMonth} ${start}${startPrefix} - ${
+            startMonth !== endMonth ? `${endMonth} ` : ""
+        }${end}${endPrefix}`;
+    }
+
     const weekDays = Array.from({ length: 7 }, (_, index) => {
         const date = new Date(currentWeekStart);
         date.setDate(currentWeekStart.getDate() + index);
@@ -114,10 +158,26 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
         <>
         <div className="weekly-calender">
         <div className="weekly-header">
-          <h1 className="weekly-calender-title">Weekly Plan</h1>
+          <div className="weekly-title">
+            <h1 className="weekly-calender-title">Weekly Plan</h1>
+            <span className="date-range">{getCurrentWeekRange()}</span>
+          </div>
           <div className="week-navigation">
-              <button type="button" className="prev-week">Prev</button>
-              <button type="button" className="next-week">Next</button>
+              <button type="button" 
+                      className="prev-week"
+                      onClick={() => handlePrevWeek()}
+              >Prev</button>
+              <button type="button" 
+                      className="this-week"
+                      disabled={
+                        weekStart.toDateString() === currentWeekStart.toDateString()
+                      }
+                      onClick={() => handleCurrentWeek()}
+              >This Week</button>
+              <button type="button" 
+                      className="next-week"
+                      onClick={() => handleNextWeek()}
+              >Next</button>
           </div>
         </div>
 
