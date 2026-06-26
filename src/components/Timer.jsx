@@ -1,5 +1,6 @@
 import './Timer.css';
 import { useState, useEffect } from 'react';
+import { formatSecondsHHMMSS } from '../utils/timeUtils';
 
 function Timer({projects, setProjects}) {
     const [isRunning, setIsRunning] = useState(false);
@@ -35,19 +36,9 @@ function Timer({projects, setProjects}) {
         setSeconds(0);
     }
 
-    function formatTime(totalSeconds) {
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-        const hh = hours.toString().padStart(2, "0");
-        const mm = minutes.toString().padStart(2, "0");
-        const ss = seconds.toString().padStart(2, "0");
-        return `${hh}:${mm}:${ss}`;
-    }
-
     return (
         <div className="timer">
-           <p className="time">{formatTime(seconds)}</p> 
+           <p className="time">{formatSecondsHHMMSS(seconds)}</p> 
            <select className="project-selector" 
                    onChange={(e) => setSelectedProjectId(Number(e.target.value))}
            >

@@ -12,8 +12,8 @@
     gap: 1.5rem;
     grid-template-areas: 
         'timer timer taskList'
-        'totalTimeWeekly weeklyProgress taskList'
-        'weeklyCalender weeklyCalender weeklyCalender';
+        'totalTimeRing totalTasksRing taskList'
+        'weeklyCalendar weeklyCalendar weeklyCalendar';
     padding: 2rem;
 }
 
@@ -23,6 +23,14 @@
     align-self: start;
 }
 
-.weekly-calender {
-    grid-area: weeklyCalender;
+.weekly-calendar {
+    grid-area: weeklyCalendar;
+}
+
+.total-weekly-tasks-ring {
+    grid-area: totalTasksRing;
+}
+
+.total-weekly-time-ring {
+    grid-area: totalTimeRing;
 }

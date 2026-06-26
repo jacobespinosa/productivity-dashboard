@@ -1,4 +1,4 @@
-.weekly-calender {
+.weekly-calendar {
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border);
@@ -21,7 +21,7 @@
     gap: 2.5rem;
 }
 
-.weekly-calender-title {
+.weekly-calendar-title {
     font-size: 2.25rem;
     line-height: 1;
 }

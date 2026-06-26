@@ -1,26 +1,22 @@
+import './WeeklyCalendar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan  } from '@fortawesome/free-regular-svg-icons';
-import './WeeklyCalender.css';
+import { getCurrentWeekStart, getDaySuffix, 
+         getCurrentWeekRange } from '../utils/dateUtils';
+import { formatMinutesHHMM } from '../utils/timeUtils';
 import AddTaskModal from './AddTaskModal';
 import { useState } from 'react';
 
 
-function WeeklyCalender({ tasksByDate, setTasksByDate }) {
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-    const weekStart = new Date(today);
-    weekStart.setDate(today.getDate() - daysToSubtract);
+function WeeklyCalendar({ projects, tasksByDate, setTasksByDate }) {
     
     const [ modalMode, setModalMode ] = useState("add");
     const [ isModalOpen, setIsModalOpen ] = useState(false);
     const [ selectedDateKey, setSelectedDateKey ] = useState("");
     const [ selectedTask, setSelectedTask ] = useState(null);
-    const [ currentWeekStart, setCurrentWeekStart ] = useState(weekStart);
+    const [ visibleWeekStart, setVisibleWeekStart ] = useState(getCurrentWeekStart());
 
-    function handleCreateTask(taskName, estimatedTime) {
-        console.log(`selectedDateKey: ${selectedDateKey}`);
-
+    function handleCreateTask(taskName, projectId, estimatedTime) {
         setTasksByDate(prev => ({
             ...prev,
             [selectedDateKey]: [
@@ -28,6 +24,7 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
                 {
                     id: Date.now(),
                     name: taskName,
+                    projectId: projectId || null,
                     time: estimatedTime,
                     isDone: false
                 }
@@ -36,7 +33,9 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
         setIsModalOpen(false);
     }
 
-    function handleUpdateTask(taskName, estimatedTime) {
+    function handleUpdateTask(taskName, projectId, estimatedTime) {
+        if (!selectedTask) return;
+
         setTasksByDate(prev => ({
             ...prev,
             [selectedDateKey]: prev[selectedDateKey].map(task =>
@@ -44,6 +43,7 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
                 ? {
                     ...task,
                     name: taskName,
+                    projectId: projectId || null,
                     time: estimatedTime
                 }
                 : task
@@ -87,63 +87,29 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
     }
 
 
-    function formatMinutes(minutes) {
-        const hours = Math.floor(minutes / 60);
-        const mins  = Math.floor(minutes % 60);
-        return `${hours > 0 ? `${hours}h ` : ""}${mins}m`;
-    }
 
     function handleNextWeek() {
-        const nextWeek = new Date(currentWeekStart);
+        const nextWeek = new Date(visibleWeekStart);
         nextWeek.setDate(nextWeek.getDate() + 7);
-        setCurrentWeekStart(nextWeek);
+        setVisibleWeekStart(nextWeek);
     }
 
     function handlePrevWeek() {
-        const prevWeek = new Date(currentWeekStart);
+        const prevWeek = new Date(visibleWeekStart);
         prevWeek.setDate(prevWeek.getDate() - 7);
-        setCurrentWeekStart(prevWeek);
+        setVisibleWeekStart(prevWeek);
     }
 
     function handleCurrentWeek() {
-        setCurrentWeekStart(new Date(weekStart));
+        setVisibleWeekStart(new Date(getCurrentWeekStart()));
     }
 
-    function getDaySuffix(day) {
-        if (day > 3 && day < 21) return "th";
-        switch (day % 10) {
-            case 1: return "st";
-            case 2: return "nd";
-            case 3: return "rd";
-            default: return "th";
-        }
-    }
-
-    function getCurrentWeekRange() {
-        const startDate = new Date(currentWeekStart);
-        const endDate = new Date(currentWeekStart);
-        endDate.setDate(startDate.getDate() + 6);
-
-        const startMonth = startDate.toLocaleDateString('default', {month: 'short'});
-        const endMonth = endDate.toLocaleDateString('default', {month: 'short'});
-
-        const start = startDate.getDate()
-        const end = endDate.getDate();
-
-        const startPrefix = getDaySuffix(start);
-        const endPrefix = getDaySuffix(end);
-        return `${startMonth} ${start}${startPrefix} - ${
-            startMonth !== endMonth ? `${endMonth} ` : ""
-        }${end}${endPrefix}`;
-    }
 
     const weekDays = Array.from({ length: 7 }, (_, index) => {
-        const date = new Date(currentWeekStart);
-        date.setDate(currentWeekStart.getDate() + index);
+        const date = new Date(visibleWeekStart);
+        date.setDate(visibleWeekStart.getDate() + index);
 
         const dateKey = date.toLocaleDateString('en-US');
-
-        console.log(`Week dateKey: ${dateKey}`);
 
         const tasks = tasksByDate[dateKey] || [];
         return {
@@ -153,14 +119,13 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
         }
     });
 
-
     return (
         <>
-        <div className="weekly-calender">
+        <div className="weekly-calendar">
         <div className="weekly-header">
           <div className="weekly-title">
-            <h1 className="weekly-calender-title">Weekly Plan</h1>
-            <span className="date-range">{getCurrentWeekRange()}</span>
+            <h1 className="weekly-calendar-title">Weekly Plan</h1>
+            <span className="date-range">{getCurrentWeekRange(visibleWeekStart)}</span>
           </div>
           <div className="week-navigation">
               <button type="button" 
@@ -170,7 +135,7 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
               <button type="button" 
                       className="this-week"
                       disabled={
-                        weekStart.toDateString() === currentWeekStart.toDateString()
+                        getCurrentWeekStart().toDateString() === visibleWeekStart.toDateString()
                       }
                       onClick={() => handleCurrentWeek()}
               >This Week</button>
@@ -188,7 +153,6 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
                 0
             );
             
-            
             return (
                 <div key={day.dateKey} className="day-card">
                     <div className="card-heading">
@@ -203,21 +167,17 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
                                 <input 
                                     type="checkbox" 
                                     checked={task.isDone}
-                                    onClick={(e) => e.stopPropagation()}
                                     onChange={() => handleToggleTask(day.dateKey, task.id)} 
                                 />
                                 <span 
                                     className="task-text"
                                     onClick={() => handleEditTask(day.dateKey, task)}>
-                                    {task.name} - {formatMinutes(task.time)}
+                                    {task.name} - {formatMinutesHHMM(task.time)}
                                 </span>
                                 <button
                                     type="button"
                                     className="delete-btn"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleDeleteTask(day.dateKey, task.id);
-                                    }}
+                                    onClick={(e) => {handleDeleteTask(day.dateKey, task.id)}}
                                 >
                                 <FontAwesomeIcon icon={faTrashCan} />
                                 </button>
@@ -227,7 +187,7 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
 
                     <div className="card-footing">
                         <p className="estimated-time">
-                            Total: {formatMinutes(totalTime)}
+                            Total: {formatMinutesHHMM(totalTime)}
                         </p>
 
                         <button
@@ -246,6 +206,7 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
 
         {isModalOpen && (
             <AddTaskModal
+                projects={projects}
                 mode={modalMode}
                 task={selectedTask}
                 onClose={() => setIsModalOpen(false)}
@@ -257,4 +218,4 @@ function WeeklyCalender({ tasksByDate, setTasksByDate }) {
     );
 }
 
-export default WeeklyCalender
+export default WeeklyCalendar

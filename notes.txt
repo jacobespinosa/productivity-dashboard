@@ -47,7 +47,7 @@ DASHBOARD:
   SideBar (left side)
   Timer (top left)
   Current Task/Project (right of Timer)
-  TotalTimeWeekly (middle)
+  WeeklyTimeGoalRing (middle)
     With a goal
   WeeklyProgress (middle)
     Count by tasks
@@ -84,3 +84,15 @@ Tasks
 GRAPHS:
   Workload heatmap (monthly or weekly? Based on hours or tasks completed?)
   Completion Circles
+
+RINGS:
+  Color Progression
+    - gray = no progress 
+    - color = type of project?
+    - accent blue = progressing
+    - green =  goal reached
+    - gold = exceed goal
+
+  title under or above ring 
+  when time updates, dont instantly jump
+  stop filling when full

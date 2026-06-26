@@ -1,26 +1,27 @@
 import './AddTaskModal.css';
 import { useState } from 'react';
 
-function AddTaskModal({mode, task, onClose, onSubmit}) {
-    const [ taskName, setTaskName ] = useState(task?.name || "");
-    const [ taskTime, setTaskTime ] = useState(task?.time || 0);
+function AddTaskModal({mode, task, onClose, onSubmit, projects}) {
+    const [ taskName, setTaskName ] = useState(task?.name ?? "");
+    const [ taskTime, setTaskTime ] = useState(task?.time ?? 0);
+    const [ projectId, setProjectId ] = useState(task?.projectId ?? "");
 
     function handleSubmit(e) {
         e.preventDefault();
-        onSubmit(taskName, taskTime);
+        onSubmit(taskName, projectId || null, taskTime);
     }
 
     return (
-        <div className="modal-background">
-            <div className="modal">
-                <h2 className="modal-title">
+        <div className="task-modal-background">
+            <div className="task-modal">
+                <h2 className="task-modal-title">
                     {mode === "add"? "Add Task" : "Edit Task"}
                 </h2>
 
                 <form className="task-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
+                    <div className="task-form-group">
                         <label htmlFor="name">
-                            Enter Task Name: <span className="required">*</span>
+                            Enter Task Name: <span className="required"></span>
                         </label>
                         <input 
                             id="name" 
@@ -31,7 +32,7 @@ function AddTaskModal({mode, task, onClose, onSubmit}) {
                             onChange={(e) => setTaskName(e.target.value)}
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="task-form-group">
                         <label htmlFor="time">
                             Enter Estimated Time: <span className="optional">(optional)</span>
                         </label>
@@ -53,13 +54,29 @@ function AddTaskModal({mode, task, onClose, onSubmit}) {
                             <option value="240">4 hours</option>
                         </select>
                     </div>
+                    <div className="task-form-group">
+                        <label htmlFor="project">
+                            Enter Associated Project: <span className="optional">(optional)</span>
+                        </label>
+                        <select
+                            id="project"
+                            onChange={(e) => setProjectId(e.target.value === "" ? "" : Number(e.target.value))}
+                            value={projectId}
+                        >
+                            <option value="">No project</option>
+
+                            {projects.map(project => 
+                                <option value={project.id}>{project.name}</option>
+                            )}
+                        </select>
+                    </div>
                     <button 
                         type="submit" 
-                        className="submit-btn"
+                        className="task-submit-btn"
                     >
                         {mode === "add" ? "Add Task" : "Save Changes"}
                     </button>
-                    <div className="close-btn" onClick={onClose}>
+                    <div className="task-close-btn" onClick={onClose}>
                         &times;
                     </div>
                 </form>
