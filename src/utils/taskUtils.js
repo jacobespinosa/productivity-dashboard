@@ -22,6 +22,8 @@ export function getWeeklyTaskStats(tasksByDate) {
 }
 
 export function getDueStatus(task) {
+    if (task.isDone) return "";
+
     const [year, month, day] = task.dueDate.split("-");
     const taskDueDate = new Date(year, month - 1, day);
 
