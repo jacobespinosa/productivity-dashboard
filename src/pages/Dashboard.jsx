@@ -2,6 +2,7 @@ import './Dashboard.css';
 
 import { getCurrentWeekStart } from '../utils/dateUtils';
 import { getWeeklyTaskStats } from '../utils/taskUtils';
+import { getWeeklyTimeStats } from '../utils/timeUtils';
 import { useState } from 'react';
 
 import SideBar from "../components/SideBar";
@@ -9,11 +10,13 @@ import Timer   from "../components/Timer";
 import WeeklyCalendar from '../components/WeeklyCalendar';
 import ProgressRing from '../components/ProgressRing';
 
-function Dashboard({projects, setProjects, tasksByDate, setTasksByDate}) {
+function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
+                    timeByDate, setTimeByDate }) {
 
-  const [ currentWeekStart, setCurrentWeekStart ] = useState(getCurrentWeekStart());
+  const [ currentSessionSeconds, setCurrentSessionSeconds ] = useState(0);
 
-  const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(currentWeekStart, tasksByDate);
+  const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(tasksByDate);
+  const totalWeeklyTime = getWeeklyTimeStats(timeByDate) + currentSessionSeconds;
 
   return (
       <main className="dashboard">
@@ -23,6 +26,10 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate}) {
           <Timer
             projects={projects}
             setProjects={setProjects}
+            timeByDate={timeByDate}
+            setTimeByDate={setTimeByDate}
+            currentSessionSeconds={currentSessionSeconds}
+            setCurrentSessionSeconds={setCurrentSessionSeconds}
           />
           <div className="total-weekly-tasks-ring">
             <ProgressRing 
@@ -34,7 +41,7 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate}) {
           </div>
           <div className="total-weekly-time-ring">
             <ProgressRing
-              value={72854}
+              value={totalWeeklyTime}
               goal={86400}
               title={"Total Weekly Time"}
               type="time"

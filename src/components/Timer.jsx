@@ -2,16 +2,19 @@ import './Timer.css';
 import { useState, useEffect } from 'react';
 import { formatSecondsHHMMSS } from '../utils/timeUtils';
 
-function Timer({projects, setProjects}) {
+function Timer({projects, setProjects, timeByDate, setTimeByDate,
+                currentSessionSeconds, setCurrentSessionSeconds}) {
     const [isRunning, setIsRunning] = useState(false);
-    const [seconds, setSeconds] = useState(0);
     const [selectedProjectId, setSelectedProjectId] = useState(projects[0].id);
+    
+    const today = new Date();
+    const dateKey = today.toLocaleDateString();
 
     useEffect(() => {
         if (!isRunning) return;
 
         const intervalId = setInterval(() => {
-            setSeconds(prevSeconds => prevSeconds + 1);
+            setCurrentSessionSeconds(prevSeconds => prevSeconds + 1);
         }, 1000);
 
         return () => {
@@ -27,18 +30,25 @@ function Timer({projects, setProjects}) {
         setProjects(prevProjects => 
             prevProjects.map(project => 
                 project.id === selectedProjectId
-                ? { ...project, timeSpent: project.timeSpent + seconds }
+                ? { ...project, timeSpent: project.timeSpent + currentSessionSeconds }
                 : project
             )
         )
 
+        setTimeByDate(prevTimeByDate => (
+            {
+                ...prevTimeByDate,
+                [dateKey]: (prevTimeByDate[dateKey] ?? 0) + currentSessionSeconds 
+            }
+        ))
+
         setIsRunning(false);
-        setSeconds(0);
+        setCurrentSessionSeconds(0);
     }
 
     return (
         <div className="timer">
-           <p className="time">{formatSecondsHHMMSS(seconds)}</p> 
+           <p className="time">{formatSecondsHHMMSS(currentSessionSeconds)}</p> 
            <select className="project-selector" 
                    onChange={(e) => setSelectedProjectId(Number(e.target.value))}
            >
@@ -53,7 +63,7 @@ function Timer({projects, setProjects}) {
            </select>
 
            <div className="btn-container">
-             {seconds > 0? (
+             {currentSessionSeconds > 0? (
              <button className="btn end" onClick={handleEndSession}>
                end
              </button> 

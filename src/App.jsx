@@ -7,21 +7,31 @@ function App() {
     {
       id: 1,
       name: "leetCode",
-      timeSpent: 0
+      timeSpent: 21674
     },
     {
       id: 2,
       name: "Python",
-      timeSpent: 0,
+      timeSpent: 16223
     },
     {
       id: 3,
       name: "SIEM",
-      timeSpent: 0
+      timeSpent: 36902
     }
   ]);
 
-const [ tasksByDate, setTasksByDate ] = useState({
+  const [ timeByDate, setTimeByDate ] = useState({
+      "6/22/2026": 16902,
+      "6/23/2026": 16223,
+      "6/24/2026": 21674,
+      "6/25/2026": 8963,
+      "6/26/2026": 12261,
+      "6/27/2026": 1612,
+      "6/28/2026": 0
+  });
+
+  const [ tasksByDate, setTasksByDate ] = useState({
       "6/22/2026": [
           {
               id: 1,
@@ -147,11 +157,12 @@ const [ tasksByDate, setTasksByDate ] = useState({
               isDone: false
           }
       ]
-});
+  });
 
   return <Dashboard 
             projects={projects} setProjects={setProjects}
             tasksByDate={tasksByDate} setTasksByDate={setTasksByDate}
+            timeByDate={timeByDate} setTimeByDate={setTimeByDate}
           />
 }
 
