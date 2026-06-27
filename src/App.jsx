@@ -38,14 +38,16 @@ function App() {
               name: "Study React",
               projectId: 1,
               time: 90,
-              isDone: true
+              isDone: true,
+              dueDate: "2026-06-22"
           },
           {
               id: 2,
               name: "LeetCode",
               projectId: 2,
               time: 60,
-              isDone: false
+              isDone: false,
+              dueDate: "2026-06-22"
           }
       ],
 
@@ -55,21 +57,24 @@ function App() {
               name: "Work on Dashboard",
               projectId: 1,
               time: 120,
-              isDone: true
+              isDone: true,
+              dueDate: "2026-06-24"
           },
           {
               id: 4,
               name: "Linux+ Study",
               projectId: 3,
               time: 45,
-              isDone: true
+              isDone: true,
+              dueDate: "2026-06-24"
           },
           {
               id: 5,
               name: "Gym",
               projectId: null,
               time: 60,
-              isDone: false
+              isDone: false,
+              dueDate: "2026-06-24"
           }
       ],
 
@@ -79,7 +84,8 @@ function App() {
               name: "Weekly Quiz",
               projectId: null,
               time: 30,
-              isDone: true
+              isDone: true,
+              dueDate: "2026-06-25"
           }
       ],
 
@@ -89,14 +95,16 @@ function App() {
               name: "Portfolio Improvements",
               projectId: 1,
               time: 120,
-              isDone: false
+              isDone: false,
+              dueDate: "2026-06-25"
           },
           {
               id: 8,
               name: "Cloud Notes",
               projectId: 3,
               time: 60,
-              isDone: false
+              isDone: false,
+              dueDate: "2026-06-25"
           }
       ],
 
@@ -106,14 +114,16 @@ function App() {
               name: "Read Documentation",
               projectId: 2,
               time: 45,
-              isDone: true
+              isDone: true,
+              dueDate: "2026-06-26"
           },
           {
               id: 10,
               name: "System Design Practice",
               projectId: 2,
               time: 90,
-              isDone: false
+              isDone: false,
+              dueDate: "2026-06-26"
           }
       ],
 
@@ -123,21 +133,24 @@ function App() {
               name: "Fix Timer Bugs",
               projectId: 1,
               time: 75,
-              isDone: false
+              isDone: false,
+              dueDate: "2026-06-27"
           },
           {
               id: 12,
               name: "Review Security Notes",
               projectId: 3,
               time: 60,
-              isDone: true
+              isDone: true,
+              dueDate: "2026-06-27"
           },
           {
               id: 13,
               name: "Laundry",
               projectId: null,
               time: 30,
-              isDone: true
+              isDone: true,
+              dueDate: "2026-06-27"
           }
       ],
 
@@ -147,14 +160,16 @@ function App() {
               name: "Plan Next Week",
               projectId: null,
               time: 30,
-              isDone: false
+              isDone: false,
+              dueDate: "2026-06-28"
           },
           {
               id: 15,
               name: "Refactor Weekly Calendar",
               projectId: 1,
               time: 90,
-              isDone: false
+              isDone: false,
+              dueDate: "2026-06-28"
           }
       ]
   });

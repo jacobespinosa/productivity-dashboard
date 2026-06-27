@@ -47,6 +47,9 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
               type="time"
             />
           </div>
+          <div className="today-task-list">
+
+          </div>
           <WeeklyCalendar
             projects={projects}
             tasksByDate={tasksByDate}

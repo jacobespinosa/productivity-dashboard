@@ -12,8 +12,8 @@
     flex-direction: column;
     position: relative;
     z-index: 999;
-    width: 400px;
-    height: 500px;
+    width: 410px;
+    height: 550px;
     border: 1px solid var(--border);
     border-radius: 14px;
     background-color: var(--background);

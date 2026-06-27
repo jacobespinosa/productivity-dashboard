@@ -96,3 +96,24 @@ RINGS:
   title under or above ring 
   when time updates, dont instantly jump
   stop filling when full
+
+TodayTaskList:
+  - tasks remaining (top)
+  - list of todays incomplete tasks with a checkbox to mark completed
+  - Task name, project assigned to if applicable
+  - Estimated task time
+  - Sort by due date, Priority, or projects
+  - progress indicator like 3/7 completed
+  - carry over incomplete tasks from yesterday (make red)
+  - button that automatically starts a timer for task
+  - highlight task currently being worked on if timer is running for it
+  - completed tasks collapse near bottom
+  - color coded projects
+  - total estimated time remaining today
+  - drag to reorder
+  - search
+
+  due date:
+    Gray = due later.
+    Accent = due tomorrow or today.
+    Red = overdue.

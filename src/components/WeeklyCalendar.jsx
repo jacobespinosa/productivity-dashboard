@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan  } from '@fortawesome/free-regular-svg-icons';
 import { getCurrentWeekStart, getDaySuffix, 
          getCurrentWeekRange } from '../utils/dateUtils';
-import { formatMinutesHHMM } from '../utils/timeUtils';
+import { formatMinutesHHMM, formatISOMMDD } from '../utils/timeUtils';
+import { getDueStatus } from '../utils/taskUtils';
 import AddTaskModal from './AddTaskModal';
 import { useState } from 'react';
 
@@ -16,7 +17,7 @@ function WeeklyCalendar({ projects, tasksByDate, setTasksByDate }) {
     const [ selectedTask, setSelectedTask ] = useState(null);
     const [ visibleWeekStart, setVisibleWeekStart ] = useState(getCurrentWeekStart());
 
-    function handleCreateTask(taskName, projectId, estimatedTime) {
+    function handleCreateTask(taskName, projectId, estimatedTime, dueDate) {
         setTasksByDate(prev => ({
             ...prev,
             [selectedDateKey]: [
@@ -26,14 +27,15 @@ function WeeklyCalendar({ projects, tasksByDate, setTasksByDate }) {
                     name: taskName,
                     projectId: projectId || null,
                     time: estimatedTime,
-                    isDone: false
+                    isDone: false,
+                    dueDate: dueDate
                 }
             ]
         }));
         setIsModalOpen(false);
     }
 
-    function handleUpdateTask(taskName, projectId, estimatedTime) {
+    function handleUpdateTask(taskName, projectId, estimatedTime, dueDate) {
         if (!selectedTask) return;
 
         setTasksByDate(prev => ({
@@ -44,7 +46,8 @@ function WeeklyCalendar({ projects, tasksByDate, setTasksByDate }) {
                     ...task,
                     name: taskName,
                     projectId: projectId || null,
-                    time: estimatedTime
+                    time: estimatedTime,
+                    dueDate: dueDate
                 }
                 : task
             )
@@ -115,7 +118,7 @@ function WeeklyCalendar({ projects, tasksByDate, setTasksByDate }) {
         return {
             dateKey, 
             day: date.toLocaleDateString('default', {weekday: 'long'}),
-            tasks
+            tasks,
         }
     });
 
@@ -172,7 +175,10 @@ function WeeklyCalendar({ projects, tasksByDate, setTasksByDate }) {
                                 <span 
                                     className="task-text"
                                     onClick={() => handleEditTask(day.dateKey, task)}>
-                                    {task.name} - {formatMinutesHHMM(task.time)}
+                                    {task.name} - {formatMinutesHHMM(task.time)} •  
+                                    <span className={`task-due-date ${getDueStatus(task)}`}>
+                                        {` ${formatISOMMDD(task.dueDate)}`}
+                                    </span>
                                 </span>
                                 <button
                                     type="button"

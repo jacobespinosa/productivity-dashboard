@@ -34,3 +34,7 @@
 .total-weekly-time-ring {
     grid-area: totalTimeRing;
 }
+
+.today-task-list {
+    grid-area: taskList;
+}

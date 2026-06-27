@@ -1,14 +1,19 @@
 import './AddTaskModal.css';
 import { useState } from 'react';
+import { getWeekStartISO } from '../utils/timeUtils';
 
 function AddTaskModal({mode, task, onClose, onSubmit, projects}) {
     const [ taskName, setTaskName ] = useState(task?.name ?? "");
     const [ taskTime, setTaskTime ] = useState(task?.time ?? 0);
+    const [ dueDate, setDueDate ] = useState(task?.dueDate ?? "");
     const [ projectId, setProjectId ] = useState(task?.projectId ?? "");
+    
+    const weekStartISO = getWeekStartISO();
+    console.log(weekStartISO); 
 
     function handleSubmit(e) {
         e.preventDefault();
-        onSubmit(taskName, projectId || null, taskTime);
+        onSubmit(taskName, projectId || null, taskTime, dueDate);
     }
 
     return (
@@ -30,6 +35,18 @@ function AddTaskModal({mode, task, onClose, onSubmit, projects}) {
                             required
                             placeholder="e.g. Finish project"
                             onChange={(e) => setTaskName(e.target.value)}
+                        />
+                    </div>
+                    <div className="task-form-group">
+                        <label htmlFor="due-date">
+                            Enter Due Date: <span className="optional">(optional)</span>
+                        </label>
+                        <input
+                            id="due-date"
+                            type="date"
+                            value={dueDate}
+                            min={weekStartISO}
+                            onChange={(e) => setDueDate(e.target.value)}
                         />
                     </div>
                     <div className="task-form-group">

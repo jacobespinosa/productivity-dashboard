@@ -20,3 +20,24 @@ export function getWeeklyTaskStats(tasksByDate) {
 
     return { totalTasks, totalTasksCompleted };
 }
+
+export function getDueStatus(task) {
+    const [year, month, day] = task.dueDate.split("-");
+    const taskDueDate = new Date(year, month - 1, day);
+
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+
+    const futureDate = new Date(todayDate);
+    futureDate.setDate(futureDate.getDate() + 2);
+
+    if (taskDueDate < todayDate) {
+        return "overdue";
+    }
+    else if (taskDueDate < futureDate) {
+        return "due-soon";
+    }
+    else {
+        return "";
+    }
+}

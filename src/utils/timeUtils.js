@@ -3,7 +3,7 @@ import { getCurrentWeekStart } from "./dateUtils";
 export function formatMinutesHHMM(minutes) {
     const hours = Math.floor(minutes / 60);
     const mins  = Math.floor(minutes % 60);
-    return `${hours > 0 ? `${hours}h ` : ""}${mins}m`;
+    return `${hours > 0 ? `${hours}h ` : ""}${mins > 0 ? `${mins}m` : ""}`;
 }
 
 export function formatSecondsHHMMSS(totalSeconds) {
@@ -38,4 +38,18 @@ export function getWeeklyTimeStats(timeByDate) {
         weekStart.setDate(weekStart.getDate() + 1);
     }
     return totalTime;
+}
+
+export function getWeekStartISO() {
+    const currentWeekStart = getCurrentWeekStart();
+    return new Date(currentWeekStart).toISOString().split('T')[0];
+}
+
+export function formatISOMMDD(date) {
+    /* 2026-06-22 -> 6/22 */
+    let dateArray = date.split('-');
+    dateArray.shift();
+    dateArray[0] = dateArray[0].replace(/^0+/, '');
+    dateArray[1] = dateArray[1].replace(/^0+/, '');
+    return dateArray.join('/');
 }

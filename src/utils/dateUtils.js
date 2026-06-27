@@ -1,5 +1,6 @@
 export function getCurrentWeekStart() {
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const dayOfWeek = today.getDay();
     const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
     const weekStart = new Date(today);
