@@ -9,6 +9,7 @@ import SideBar from "../components/SideBar";
 import Timer   from "../components/Timer";
 import WeeklyCalendar from '../components/WeeklyCalendar';
 import ProgressRing from '../components/ProgressRing';
+import TodayTaskList from '../components/TodayTaskList';
 
 function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                     timeByDate, setTimeByDate }) {
@@ -48,7 +49,10 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             />
           </div>
           <div className="today-task-list">
-
+            <TodayTaskList
+              tasksByDate={tasksByDate}
+              setTasksByDate={setTasksByDate}
+            />
           </div>
           <WeeklyCalendar
             projects={projects}
