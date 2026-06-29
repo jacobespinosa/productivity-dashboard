@@ -33,7 +33,7 @@ export function getWeeklyTimeStats(timeByDate) {
     for (let i = 0; i < 7; i++) {
         let dateKey = weekStart.toLocaleDateString();
 
-        totalTime += timeByDate[dateKey];
+        totalTime += timeByDate[dateKey] ?? 0;
 
         weekStart.setDate(weekStart.getDate() + 1);
     }
@@ -47,6 +47,8 @@ export function getWeekStartISO() {
 
 export function formatISOMMDD(date) {
     /* 2026-06-22 -> 6/22 */
+    if (!date) return
+
     let dateArray = date.split('-');
     dateArray.shift();
     dateArray[0] = dateArray[0].replace(/^0+/, '');

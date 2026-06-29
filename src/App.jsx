@@ -22,24 +22,24 @@ function App() {
   ]);
 
   const [ timeByDate, setTimeByDate ] = useState({
-      "6/22/2026": 16902,
-      "6/23/2026": 16223,
-      "6/24/2026": 21674,
-      "6/25/2026": 8963,
-      "6/26/2026": 12261,
-      "6/27/2026": 1612,
-      "6/28/2026": 0
+      "6/29/2026": 16902,
+      "6/30/2026": 16223,
+      "7/1/2026": 21674,
+      "7/2/2026": 8963,
+      "7/3/2026": 12261,
+      "7/4/2026": 1612,
+      "7/5/2026": 0
   });
 
   const [ tasksByDate, setTasksByDate ] = useState({
-      "6/22/2026": [
+      "6/29/2026": [
           {
               id: 1,
               name: "Study React",
               projectId: 1,
               time: 90,
               isDone: true,
-              dueDate: "2026-06-22"
+              dueDate: "2026-06-30"
           },
           {
               id: 2,
@@ -47,18 +47,18 @@ function App() {
               projectId: 2,
               time: 60,
               isDone: false,
-              dueDate: "2026-06-22"
+              dueDate: "2026-06-30"
           }
       ],
 
-      "6/23/2026": [
+      "6/30/2026": [
           {
               id: 3,
               name: "Work on Dashboard",
               projectId: 1,
               time: 120,
               isDone: true,
-              dueDate: "2026-06-24"
+              dueDate: "2026-07-1"
           },
           {
               id: 4,
@@ -66,7 +66,7 @@ function App() {
               projectId: 3,
               time: 45,
               isDone: true,
-              dueDate: "2026-06-24"
+              dueDate: "2026-07-1"
           },
           {
               id: 5,
@@ -74,29 +74,29 @@ function App() {
               projectId: null,
               time: 60,
               isDone: false,
-              dueDate: "2026-06-24"
+              dueDate: "2026-07-1"
           }
       ],
 
-      "6/24/2026": [
+      "7/1/2026": [
           {
               id: 6,
               name: "Weekly Quiz",
               projectId: null,
               time: 30,
               isDone: true,
-              dueDate: "2026-06-25"
+              dueDate: "2026-07-2"
           }
       ],
 
-      "6/25/2026": [
+      "7/2/2026": [
           {
               id: 7,
               name: "Portfolio Improvements",
               projectId: 1,
               time: 120,
               isDone: false,
-              dueDate: "2026-06-25"
+              dueDate: "2026-07-3"
           },
           {
               id: 8,
@@ -104,18 +104,18 @@ function App() {
               projectId: 3,
               time: 60,
               isDone: false,
-              dueDate: "2026-06-25"
+              dueDate: "2026-07-3"
           }
       ],
 
-      "6/26/2026": [
+      "7/3/2026": [
           {
               id: 9,
               name: "Read Documentation",
               projectId: 2,
               time: 45,
               isDone: true,
-              dueDate: "2026-06-26"
+              dueDate: "2026-7-4"
           },
           {
               id: 10,
@@ -123,18 +123,18 @@ function App() {
               projectId: 2,
               time: 90,
               isDone: false,
-              dueDate: "2026-06-26"
+              dueDate: "2026-07-4"
           }
       ],
 
-      "6/27/2026": [
+      "7/4/2026": [
           {
               id: 11,
               name: "Fix Timer Bugs",
               projectId: 1,
               time: 75,
               isDone: false,
-              dueDate: "2026-06-27"
+              dueDate: "2026-7-5"
           },
           {
               id: 12,
@@ -142,7 +142,7 @@ function App() {
               projectId: 3,
               time: 60,
               isDone: true,
-              dueDate: "2026-06-27"
+              dueDate: "2026-7-5"
           },
           {
               id: 13,
@@ -150,11 +150,11 @@ function App() {
               projectId: null,
               time: 30,
               isDone: true,
-              dueDate: "2026-06-27"
+              dueDate: "2026-7-5"
           }
       ],
 
-      "6/28/2026": [
+      "7/5/2026": [
           {
               id: 14,
               name: "Plan Next Week",

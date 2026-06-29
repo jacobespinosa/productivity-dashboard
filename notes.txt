@@ -98,14 +98,15 @@ RINGS:
   stop filling when full
 
 TodayTaskList:
-  - tasks remaining (top)
-  - progress indicator like 3/7 completed
-  - total estimated time remaining today
+  - tasks remaining (top) DONE
+  - progress indicator like 3/7 completed DONE
+  - total estimated time remaining today DONE
 
-  - list of todays incomplete tasks with a checkbox to mark completed
-  - carry over incomplete tasks from yesterday (make red)
+  - Estimated task time DONE
+  - list of todays incomplete tasks with a checkbox to mark completed DONE
+  - carry over incomplete tasks (make red) DONE
+
   - Task name, project assigned to if applicable
-  - Estimated task time
   - button that automatically starts a timer for task
   - highlight task currently being worked on if timer is running for it
   - drag to reorder

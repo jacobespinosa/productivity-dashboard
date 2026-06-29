@@ -14,12 +14,20 @@
     background-color: var(--border);
 }
 
+.today-task-subheading {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tasks-remaining-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
 .today-task-date {
     color: var(--text-primary);
     font-size: 1.2rem;
-}
-
-.today-task-body {
 }
 
 .task-list-progress-bar {
@@ -31,4 +39,28 @@
 
 .today-task-list {
     overflow-y: auto;
+}
+
+.today-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.today-list-item.overdue {
+    color: var(--red);
+}
+
+.date-separator.overdue {
+    color: var(--red);
+}
+
+.today-task-list-footing {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

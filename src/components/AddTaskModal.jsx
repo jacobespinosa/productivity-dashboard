@@ -9,7 +9,6 @@ function AddTaskModal({mode, task, onClose, onSubmit, projects}) {
     const [ projectId, setProjectId ] = useState(task?.projectId ?? "");
     
     const weekStartISO = getWeekStartISO();
-    console.log(weekStartISO); 
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -45,7 +44,7 @@ function AddTaskModal({mode, task, onClose, onSubmit, projects}) {
                             id="due-date"
                             type="date"
                             value={dueDate}
-                            min={weekStartISO}
+                            min={mode === "add" ? weekStartISO : undefined}
                             onChange={(e) => setDueDate(e.target.value)}
                         />
                     </div>

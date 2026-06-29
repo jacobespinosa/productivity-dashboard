@@ -10,9 +10,9 @@ export function getWeeklyTaskStats(tasksByDate) {
     for (let i = 0; i < 7; i++) {
         const dateKey = weekStart.toLocaleDateString();
 
-        totalTasks += tasksByDate[dateKey].length;
+        totalTasks += (tasksByDate[dateKey] ?? []).length;
 
-        for (let task of tasksByDate[dateKey]) {
+        for (let task of (tasksByDate[dateKey] ?? [])) {
             totalTasksCompleted += task.isDone;
         }
         weekStart.setDate(weekStart.getDate() + 1);
@@ -42,4 +42,14 @@ export function getDueStatus(task) {
     else {
         return "";
     }
+}
+
+export function getLateTasks(tasksByDate) {
+    return Object.entries(tasksByDate).flatMap(([dateKey, tasks]) => 
+            tasks.map(task => (
+                {
+                    ...task,
+                    dateKey
+                })
+            )).filter(task => getDueStatus(task) === "overdue");
 }

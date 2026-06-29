@@ -5,91 +5,14 @@ import { getCurrentWeekStart, getDaySuffix,
          getCurrentWeekRange } from '../utils/dateUtils';
 import { formatMinutesHHMM, formatISOMMDD } from '../utils/timeUtils';
 import { getDueStatus } from '../utils/taskUtils';
-import AddTaskModal from './AddTaskModal';
 import { useState } from 'react';
 
 
-function WeeklyCalendar({ projects, tasksByDate, setTasksByDate }) {
+function WeeklyCalendar({ tasksByDate, handleAddTask, handleEditTask,
+                          handleDeleteTask, handleToggleTask
+ }) {
     
-    const [ modalMode, setModalMode ] = useState("add");
-    const [ isModalOpen, setIsModalOpen ] = useState(false);
-    const [ selectedDateKey, setSelectedDateKey ] = useState("");
-    const [ selectedTask, setSelectedTask ] = useState(null);
     const [ visibleWeekStart, setVisibleWeekStart ] = useState(getCurrentWeekStart());
-
-    function handleCreateTask(taskName, projectId, estimatedTime, dueDate) {
-        setTasksByDate(prev => ({
-            ...prev,
-            [selectedDateKey]: [
-                ...(prev[selectedDateKey] || []),
-                {
-                    id: Date.now(),
-                    name: taskName,
-                    projectId: projectId || null,
-                    time: estimatedTime,
-                    isDone: false,
-                    dueDate: dueDate
-                }
-            ]
-        }));
-        setIsModalOpen(false);
-    }
-
-    function handleUpdateTask(taskName, projectId, estimatedTime, dueDate) {
-        if (!selectedTask) return;
-
-        setTasksByDate(prev => ({
-            ...prev,
-            [selectedDateKey]: prev[selectedDateKey].map(task =>
-                task.id === selectedTask.id
-                ? {
-                    ...task,
-                    name: taskName,
-                    projectId: projectId || null,
-                    time: estimatedTime,
-                    dueDate: dueDate
-                }
-                : task
-            )
-        }));
-        setIsModalOpen(false);        
-    }
-
-    function handleDeleteTask(dateKey, taskId) {
-        setTasksByDate(prev => ({
-            ...prev,
-            [dateKey]: prev[dateKey].filter(
-                task => task.id !== taskId
-            )
-        }));
-    }
-
-    function handleToggleTask(dateKey, taskId) {
-        setTasksByDate(prev => ({
-            ...prev,
-            [dateKey]: prev[dateKey].map(task =>
-                task.id === taskId
-                ? { ...task, isDone: !task.isDone }
-                : task
-            )
-        }));
-    }
-
-    function handleAddTask(dateKey) {
-        setModalMode("add");
-        setSelectedDateKey(dateKey);
-        setSelectedTask(null);
-        setIsModalOpen(true);
-    }
-
-    function handleEditTask(dateKey, task) {
-        setModalMode("edit");
-        setSelectedDateKey(dateKey);
-        setSelectedTask(task);
-        setIsModalOpen(true);
-    }
-
-
 
     function handleNextWeek() {
         const nextWeek = new Date(visibleWeekStart);
@@ -174,11 +97,16 @@ function WeeklyCalendar({ projects, tasksByDate, setTasksByDate }) {
                                 />
                                 <span 
                                     className="task-text"
-                                    onClick={() => handleEditTask(day.dateKey, task)}>
-                                    {task.name} - {formatMinutesHHMM(task.time)} •  
-                                    <span className={`task-due-date ${getDueStatus(task)}`}>
-                                        {` ${formatISOMMDD(task.dueDate)}`}
-                                    </span>
+                                    onClick={() => handleEditTask(day.dateKey, task)}
+                                >
+                                    {task.name}
+                                    {task.time ? ` - ${formatMinutesHHMM(task.time)}` : ""}  
+                                    {task.dueDate && (
+                                        <span className={`task-due-date ${getDueStatus(task)}`}>
+                                            <span className="date-separator"> • </span> 
+                                            {formatISOMMDD(task.dueDate)}
+                                        </span>
+                                    )}
                                 </span>
                                 <button
                                     type="button"
@@ -210,16 +138,6 @@ function WeeklyCalendar({ projects, tasksByDate, setTasksByDate }) {
         </div>
         </div>
 
-        {isModalOpen && (
-            <AddTaskModal
-                projects={projects}
-                mode={modalMode}
-                task={selectedTask}
-                onClose={() => setIsModalOpen(false)}
-                onSubmit={modalMode === "add" 
-                          ? handleCreateTask : handleUpdateTask}
-            />
-        )}
         </>
     );
 }

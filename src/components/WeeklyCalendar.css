@@ -157,3 +157,7 @@
     opacity: 0.5;
     pointer-events: none;
 }
+
+.date-separator {
+    color: black;
+}
