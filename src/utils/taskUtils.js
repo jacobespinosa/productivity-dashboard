@@ -53,7 +53,11 @@ export function isTaskPastDue(task) {
     const todayDate = new Date();
     todayDate.setHours(0, 0, 0, 0);
 
-    if (taskDueDate < todayDate) {
+    if (taskDueDate >= todayDate) {
+        return false;
+    }
+    else if (!task.isDone || 
+            todayDate.toLocaleDateString() === task.dateCompleted) {
         return true;
     }
     else {

@@ -54,7 +54,8 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                   name: taskName,
                   projectId: projectId || null,
                   time: estimatedTime,
-                  dueDate: dueDate
+                  dueDate: dueDate,
+                  dateCompleted: ""
               }
               : task
           )
@@ -72,11 +73,19 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   }
 
   function handleToggleTask(dateKey, taskId) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
       setTasksByDate(prev => ({
           ...prev,
           [dateKey]: prev[dateKey].map(task =>
               task.id === taskId
-              ? { ...task, isDone: !task.isDone }
+              ? 
+              { 
+                ...task, 
+                isDone: !task.isDone,
+                dateCompleted: !task.isDone? today.toLocaleDateString() : ""
+              }
               : task
           )
       }));

@@ -161,7 +161,7 @@ function App() {
               projectId: null,
               time: 30,
               isDone: true,
-              dueDate: "2026-06-28"
+              dueDate: "2026-06-28",
           },
           {
               id: 15,
