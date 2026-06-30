@@ -22,7 +22,7 @@ export function getWeeklyTaskStats(tasksByDate) {
 }
 
 export function getDueStatus(task) {
-    if (task.isDone) return "";
+    if (task.isDone || !task.dueDate) return "";
 
     const [year, month, day] = task.dueDate.split("-");
     const taskDueDate = new Date(year, month - 1, day);
@@ -44,6 +44,23 @@ export function getDueStatus(task) {
     }
 }
 
+export function isTaskPastDue(task) {
+    if (!task.dueDate) return false;
+
+    const [year, month, day] = task.dueDate.split("-");
+    const taskDueDate = new Date(year, month - 1, day);
+
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+
+    if (taskDueDate < todayDate) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 export function getLateTasks(tasksByDate) {
     return Object.entries(tasksByDate).flatMap(([dateKey, tasks]) => 
             tasks.map(task => (
@@ -51,5 +68,5 @@ export function getLateTasks(tasksByDate) {
                     ...task,
                     dateKey
                 })
-            )).filter(task => getDueStatus(task) === "overdue");
+            )).filter(task => isTaskPastDue(task));
 }

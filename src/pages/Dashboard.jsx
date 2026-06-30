@@ -128,6 +128,7 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
           <div className="today-task-list">
             <TodayTaskList
               tasksByDate={tasksByDate}
+              projects={projects}
               handleAddTask={handleAddTask}
               handleEditTask={handleEditTask}
               handleCreateTask={handleCreateTask}

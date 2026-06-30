@@ -160,7 +160,7 @@ function App() {
               name: "Plan Next Week",
               projectId: null,
               time: 30,
-              isDone: false,
+              isDone: true,
               dueDate: "2026-06-28"
           },
           {
@@ -168,7 +168,7 @@ function App() {
               name: "Refactor Weekly Calendar",
               projectId: 1,
               time: 90,
-              isDone: false,
+              isDone: true,
               dueDate: "2026-06-28"
           }
       ]

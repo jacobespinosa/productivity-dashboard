@@ -4,6 +4,7 @@
     border: 2px solid var(--border);
     margin-left: auto;
     box-shadow: inset 0 -10px 0 var(--border);
+    background-color: var(--surface);
 }
 
 .today-task-heading {
@@ -54,8 +55,73 @@
     color: var(--red);
 }
 
+.today-list-item.overdue .task-text:hover {
+    text-decoration: underline;
+}
+
 .date-separator.overdue {
     color: var(--red);
+}
+
+.today-list-item:not(.overdue) .task-text:hover {
+    color: var(--blue);
+}
+
+.start-project-container {
+    display: flex;
+    gap: 0.3rem;
+    padding: 0 0.5rem 0 1rem;
+}
+
+.start-project-container:hover .task-list-project-name,
+.start-project-container:hover .project-start-btn {
+    color: black;
+}
+
+.task-list-project-name {
+    color: var(--text-secondary);
+}
+
+.project-start-btn {
+    border: none;
+    background-color: transparent;
+    font-size: .8rem;
+    color: var(--shadow);
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.today-list-item:hover {
+    background-color: var(--background);
+}
+
+.completed-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem;
+    transition: background-color 0.2s ease;
+    color: var(--text-secondary);
+}
+
+.completed-list-item .date-separator {
+    color: var(--text-secondary);
+}
+
+.completed-list-item .task-text {
+    text-decoration: line-through;
+    pointer-events: none;
+}
+
+.completed-list-item .start-project-container {
+    pointer-events: none;
+}
+
+.completed-tasks-dropdown-btn {
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 .today-task-list-footing {

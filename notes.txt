@@ -105,15 +105,18 @@ TodayTaskList:
   - Estimated task time DONE
   - list of todays incomplete tasks with a checkbox to mark completed DONE
   - carry over incomplete tasks (make red) DONE
+  - Task name, project assigned to if applicable DONE
+  - completed tasks collapse near bottom DONE
 
-  - Task name, project assigned to if applicable
   - button that automatically starts a timer for task
   - highlight task currently being worked on if timer is running for it
-  - drag to reorder
+
+  - drag to reorder (maybe later)
 
   - Sort by due date, Priority, or projects
 
-  - completed tasks collapse near bottom
 
+TIMER:
+
+PROJECTS:
   - color coded projects
-  - search
