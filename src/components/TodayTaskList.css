@@ -1,10 +1,18 @@
 .today-task-container {
+    display: flex;
+    flex-direction: column;
     width: 400px;
     height: 450px;
     border: 2px solid var(--border);
     margin-left: auto;
     box-shadow: inset 0 -10px 0 var(--border);
     background-color: var(--surface);
+}
+
+.today-task-container input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
 }
 
 .today-task-heading {
@@ -15,9 +23,16 @@
     background-color: var(--border);
 }
 
+.today-task-date {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+}
+
 .today-task-subheading {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
 }
 
 .tasks-remaining-container {
@@ -26,9 +41,17 @@
     gap: 0.5rem;
 }
 
-.today-task-date {
-    color: var(--text-primary);
-    font-size: 1.2rem;
+.today-tasks-filter-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--blue);
+    border-radius: 14px;
+    color: var(--blue);
+    background-color: var(--surface);
+}
+
+.today-tasks-filter-btn:hover {
+    color: var(--surface);
+    background-color: var(--blue);
 }
 
 .task-list-progress-bar {
@@ -38,17 +61,44 @@
     background: linear-gradient(to right, var(--blue) var(--progress), var(--border) 0);
 }
 
+.task-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.today-list-item,
+.completed-list-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .today-task-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1rem;
+    flex: 1;
+    min-height: 0;
+}
+
+.today-task-list-scroll {
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
+    padding-right: 0.5rem;
 }
 
 .today-list-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
     padding: 0.3rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
+}
+
+.today-list-item .task-text {
+    min-width: 0;
 }
 
 .today-list-item.overdue {
@@ -79,16 +129,13 @@
 }
 
 .task-list-project-name {
+    display: inline-flex;
+    font-size: 0.8rem;
+    align-items: center;
     color: var(--text-secondary);
-}
-
-.project-start-btn {
-    border: none;
-    background-color: transparent;
-    font-size: .8rem;
-    color: var(--shadow);
-    transition: color 0.2s ease;
-    cursor: pointer;
+    background: var(--background);
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
 }
 
 .today-list-item:hover {
@@ -96,9 +143,31 @@
 }
 
 .completed-list-item {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    opacity: 0.85;
+}
+
+.completed-tasks-list {
+    flex-shrink: 0;
+    padding: 0.5rem 1rem;
+}
+
+.completed-tasks-list.open {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.completed-tasks-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.completed-list-item {
     padding: 0.3rem;
     transition: background-color 0.2s ease;
     color: var(--text-secondary);
@@ -111,6 +180,7 @@
 .completed-list-item .task-text {
     text-decoration: line-through;
     pointer-events: none;
+    min-width: 0;
 }
 
 .completed-list-item .start-project-container {
@@ -118,15 +188,51 @@
 }
 
 .completed-tasks-dropdown-btn {
+    display: flex;
+    gap: 0.2rem;
+    align-items: center;
     border: none;
     background: transparent;
     font-family: inherit;
     font-size: inherit;
 }
 
+.completed-tasks-list.open .completed-tasks-dropdown-btn {
+    margin-bottom: 0.5rem;
+}
+
+.chevron {
+    font-size: 0.8rem;
+}
+
 .today-task-list-footing {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
     margin-top: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.task-list-divider {
+    width: 100%;
+    height: 1px;
+    border: none;
+    background-color: var(--border);
+}
+
+.project-start-btn,
+.task-body .delete-btn {
+    width: 26px;
+    height: 26px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.project-start-btn:hover,
+.task-body .delete-btn:hover {
+    color: var(--text-primary);
 }

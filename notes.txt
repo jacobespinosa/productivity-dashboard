@@ -112,8 +112,8 @@ TodayTaskList:
   - highlight task currently being worked on if timer is running for it
 
   - drag to reorder (maybe later)
+  - Sort by due date, Priority, or projects (maybe later)
 
-  - Sort by due date, Priority, or projects
 
 
 TIMER:

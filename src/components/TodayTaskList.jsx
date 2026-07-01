@@ -58,102 +58,117 @@ function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDelete
                     Filter
                 </button>
             </div>
-            <ul className="today-task-list">
-                {activeTasks.map(task => (
-                    <li
-                        key={task.id}
-                        className={`today-list-item ${getDueStatus(task)}`}
+            <div className="task-body">
+                <div className="today-task-list">
+                    <ul className="today-task-list-scroll">
+                        {activeTasks.map(task =>  {
+                            const project = projects.find(p => p.id === task.projectId);
+                            return (
+                            <li
+                                key={task.id}
+                                className={`today-list-item ${getDueStatus(task)}`}
+                            >
+                                <input 
+                                    type="checkbox" 
+                                    checked={task.isDone}
+                                    onChange={() => handleToggleTask((task.dateKey ?? dateKey), task.id)} 
+                                />
+                                <span 
+                                    className="task-text"
+                                    onClick={() => handleEditTask((task.dateKey ?? dateKey), task)}
+                                >
+                                    {task.name}
+                                    {task.time ? ` - ${formatMinutesHHMM(task.time)}` : ""}  
+                                    {task.dueDate && (
+                                        <span className={`task-due-date ${getDueStatus(task)}`}>
+                                            <span className={`date-separator ${getDueStatus(task)}`}> • </span> 
+                                            {formatISOMMDD(task.dueDate)}
+                                        </span>
+                                    )}
+                                </span>
+                                <div className="start-project-container">
+                                    {project && 
+                                        <span
+                                            className="task-list-project-name">
+                                            {project?.name}
+                                        </span> 
+                                    }
+                                    <button
+                                        type="button"
+                                        className="project-start-btn"
+
+                                    >
+                                        <FontAwesomeIcon icon={faPlay} />
+                                    </button>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    className="delete-btn"
+                                    onClick={(e) => {handleDeleteTask((task.dateKey ?? dateKey), task.id)}}
+                                >
+                                    <FontAwesomeIcon icon={faTrashCan} />
+                                </button>
+                            </li>    
+                        )})}
+                    </ul>
+                </div>
+                <hr className="task-list-divider"></hr>
+                <div className={`completed-tasks-list ${isCompletedTasksOpen? "open" : ""}`}>
+                    <button
+                        type="button"
+                        className="completed-tasks-dropdown-btn"
+                        onClick={() => handleTaskDropdown()}
                     >
-                        <input 
-                            type="checkbox" 
-                            checked={task.isDone}
-                            onChange={() => handleToggleTask((task.dateKey ?? dateKey), task.id)} 
-                        />
-                        <span 
-                            className="task-text"
-                            onClick={() => handleEditTask((task.dateKey ?? dateKey), task)}
-                        >
-                            {task.name}
-                            {task.time ? ` - ${formatMinutesHHMM(task.time)}` : ""}  
-                            {task.dueDate && (
-                                <span className={`task-due-date ${getDueStatus(task)}`}>
-                                    <span className={`date-separator ${getDueStatus(task)}`}> • </span> 
-                                    {formatISOMMDD(task.dueDate)}
+                        <FontAwesomeIcon icon={isCompletedTasksOpen? 
+                            faChevronUp : faChevronDown} className="chevron" />
+                        Completed Tasks ({numOfTasksDone})
+                    </button>
+                    <ul className="completed-tasks-scroll">
+                        {isCompletedTasksOpen && completedTasks.map(task => {
+                            const project = projects.find(p => p.id === task.projectId);
+                            return (
+                            <li key={task.id} className="completed-list-item">
+                                <input 
+                                    type="checkbox" 
+                                    checked={task.isDone}
+                                    onChange={() => handleToggleTask((task.dateKey ?? dateKey), task.id)} 
+                                />
+                                <span 
+                                    className="task-text"
+                                >
+                                    {task.name}
+                                    {task.time ? ` - ${formatMinutesHHMM(task.time)}` : ""}  
+                                    {task.dueDate && (
+                                        <span className={`task-due-date ${getDueStatus(task)}`}>
+                                            <span className={`date-separator ${getDueStatus(task)}`}> • </span> 
+                                            {formatISOMMDD(task.dueDate)}
+                                        </span>
+                                    )}
                                 </span>
-                            )}
-                        </span>
-                        <div className="start-project-container">
-                            <span
-                                className="task-list-project-name">
-                                {projects.find(p => p.id === task.projectId)?.name}
-                            </span>
-                            <button
-                                type="button"
-                                className="project-start-btn"
+                                <div className="start-project-container">
+                                    {project && 
+                                        <span
+                                            className="task-list-project-name">
+                                            {project?.name}
+                                        </span> 
+                                    }
+                                </div>
 
-                            >
-                                <FontAwesomeIcon icon={faPlay} />
-                            </button>
-                        </div>
+                                <button
+                                    type="button"
+                                    className="delete-btn"
+                                    onClick={(e) => {handleDeleteTask((task.dateKey ?? dateKey), task.id)}}
+                                >
+                                    <FontAwesomeIcon icon={faTrashCan} />
+                                </button>
+                            </li>
+                        )})}
+                    </ul>
+                </div>
 
-                        <button
-                            type="button"
-                            className="delete-btn"
-                            onClick={(e) => {handleDeleteTask((task.dateKey ?? dateKey), task.id)}}
-                        >
-                            <FontAwesomeIcon icon={faTrashCan} />
-                        </button>
-                    </li>    
-                ))}
-            </ul>
-            <div className="completed-tasks-list">
-                <button
-                    type="button"
-                    className="completed-tasks-dropdown-btn"
-                    onClick={() => handleTaskDropdown()}
-                >
-                    <FontAwesomeIcon icon={isCompletedTasksOpen? 
-                        faChevronUp : faChevronDown} className="chevron" />
-                    Completed Tasks ({numOfTasksDone})
-                </button>
-                <ul>
-                    {isCompletedTasksOpen && completedTasks.map(task =>  (
-                        <li key={task.id} className="completed-list-item">
-                            <input 
-                                type="checkbox" 
-                                checked={task.isDone}
-                                onChange={() => handleToggleTask((task.dateKey ?? dateKey), task.id)} 
-                            />
-                            <span 
-                                className="task-text"
-                            >
-                                {task.name}
-                                {task.time ? ` - ${formatMinutesHHMM(task.time)}` : ""}  
-                                {task.dueDate && (
-                                    <span className={`task-due-date ${getDueStatus(task)}`}>
-                                        <span className={`date-separator ${getDueStatus(task)}`}> • </span> 
-                                        {formatISOMMDD(task.dueDate)}
-                                    </span>
-                                )}
-                            </span>
-                            <div className="start-project-container">
-                                <span
-                                    className="task-list-project-name">
-                                    {projects.find(p => p.id === task.projectId)?.name}
-                                </span>
-                            </div>
-
-                            <button
-                                type="button"
-                                className="delete-btn"
-                                onClick={(e) => {handleDeleteTask((task.dateKey ?? dateKey), task.id)}}
-                            >
-                                <FontAwesomeIcon icon={faTrashCan} />
-                            </button>
-                        </li>
-                    ))}
-                </ul>
             </div>
+            <hr className="task-list-divider"></hr>
             <div className="today-task-list-footing">
                 <div className="estimated-time-remaining">
                     <p>Estimated time left: {estimatedTimeLeft !== 0 
