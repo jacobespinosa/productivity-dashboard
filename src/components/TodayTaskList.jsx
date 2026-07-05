@@ -113,7 +113,7 @@ function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDelete
                         )})}
                     </ul>
                 </div>
-                <hr className="task-list-divider"></hr>
+                <hr className="divider"></hr>
                 <div className={`completed-tasks-list ${isCompletedTasksOpen? "open" : ""}`}>
                     <button
                         type="button"
@@ -168,7 +168,7 @@ function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDelete
                 </div>
 
             </div>
-            <hr className="task-list-divider"></hr>
+            <hr className="divider"></hr>
             <div className="today-task-list-footing">
                 <div className="estimated-time-remaining">
                     <p>Estimated time left: {estimatedTimeLeft !== 0 

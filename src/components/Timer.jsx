@@ -1,14 +1,35 @@
 import './Timer.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { formatSecondsHHMMSS } from '../utils/timeUtils';
+import DropdownSelector from '../components/DropdownSelector';
 
 function Timer({projects, setProjects, timeByDate, setTimeByDate,
-                currentSessionSeconds, setCurrentSessionSeconds}) {
+                currentSessionSeconds, setCurrentSessionSeconds,
+                currentProjectId, setCurrentProjectId, selectedTask,
+                setSelectedTask, tasksByDate, handleAddTask, setSelectedProjectId }) {
     const [isRunning, setIsRunning] = useState(false);
-    const [selectedProjectId, setSelectedProjectId] = useState(projects[0].id);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(true);
     
     const today = new Date();
     const dateKey = today.toLocaleDateString();
+    const currentProject = projects.find(p => p.id === currentProjectId);
+
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const isClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+            return;
+        }
+
+        document.addEventListener("click", isClickOutside);
+
+        return () => {
+            document.removeEventListener("click", isClickOutside);
+        }
+    }, [])
 
     useEffect(() => {
         if (!isRunning) return;
@@ -29,7 +50,7 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
     function handleEndSession() {
         setProjects(prevProjects => 
             prevProjects.map(project => 
-                project.id === selectedProjectId
+                project.id === currentProjectId
                 ? { ...project, timeSpent: project.timeSpent + currentSessionSeconds }
                 : project
             )
@@ -49,18 +70,24 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
     return (
         <div className="timer">
            <p className="time">{formatSecondsHHMMSS(currentSessionSeconds)}</p> 
-           <select className="project-selector" 
-                   onChange={(e) => setSelectedProjectId(Number(e.target.value))}
-           >
-              {projects.map(project => (
-                <option
-                  key={project.id}
-                  value={project.id}
-                >
-                  {project.name}
-                </option>
-              ))}
-           </select>
+           <div className="selector-container" ref={dropdownRef}
+e               onClick={() => setIsDropdownOpen(prev => !prev)}>
+            <span className="project-name">{currentProject.name}</span>
+            <span className="task-name">{selectedTask?.name ? `: ${selectedTask.name}` : ""}</span>
+            <div className="dropdown-container">
+                    { isDropdownOpen && 
+                        <DropdownSelector
+                            projects={projects}
+                            currentProjectId={currentProjectId}
+                            setCurrentProjectId={setCurrentProjectId}
+                            tasksByDate={tasksByDate}
+                            setSelectedTask={setSelectedTask}
+                            handleAddTask={handleAddTask}
+                            setIsDropdownOpen={setIsDropdownOpen}
+                        />
+                    }
+            </div>
+           </div>
 
            <div className="btn-container">
              {currentSessionSeconds > 0? (
@@ -78,7 +105,6 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
                 {isRunning? "pause" : "start"}
              </button>
            </div>
-
         </div>
     );
 }

@@ -5,6 +5,11 @@ import { useState } from 'react';
 function App() {
   const [projects, setProjects] = useState([
     {
+      id: 0,
+      name: "No Project",
+      timeSpent: 0
+    },
+    {
       id: 1,
       name: "leetCode",
       timeSpent: 21674
@@ -36,7 +41,7 @@ function App() {
           {
               id: 1,
               name: "Study React",
-              projectId: 1,
+              projectId: 0,
               time: 90,
               isDone: true,
               dueDate: "2026-06-30"

@@ -20,6 +20,7 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   const [ selectedTask, setSelectedTask ] = useState(null);
   const [ modalMode, setModalMode ] = useState("add");
   const [ isModalOpen, setIsModalOpen ] = useState(false);
+  const [ currentProjectId, setCurrentProjectId ] = useState(projects[0].id);
 
   const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(tasksByDate);
   const totalWeeklyTime = getWeeklyTimeStats(timeByDate) + currentSessionSeconds;
@@ -117,6 +118,12 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             setTimeByDate={setTimeByDate}
             currentSessionSeconds={currentSessionSeconds}
             setCurrentSessionSeconds={setCurrentSessionSeconds}
+            currentProjectId={currentProjectId}
+            setCurrentProjectId={setCurrentProjectId}
+            selectedTask={selectedTask}
+            setSelectedTask={setSelectedTask}
+            tasksByDate={tasksByDate}
+            handleAddTask={handleAddTask}
           />
           <div className="total-weekly-tasks-ring">
             <ProgressRing 
@@ -161,9 +168,13 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
               projects={projects}
               mode={modalMode}
               task={selectedTask}
-              onClose={() => setIsModalOpen(false)}
+              onClose={() => {
+                setCurrentProjectId(projects[0].id);
+                setIsModalOpen(false);
+              }}
               onSubmit={modalMode === "add" 
                         ? handleCreateTask : handleUpdateTask}
+              currentProjectId={currentProjectId}
           />
       )}
       </main>

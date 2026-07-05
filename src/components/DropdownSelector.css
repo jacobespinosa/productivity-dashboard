@@ -1,0 +1,85 @@
+.dropdown-selector {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 30px;
+    left: -50px;
+    width: 350px;
+    height: 350px;
+    box-shadow: 1px 1px 8px var(--shadow);
+    background-color: var(--surface);
+    font-size: 1rem;
+}
+
+.project-options {
+    overflow-y: auto;
+    margin-right: 0.75rem;
+}
+
+.default-project-option {
+    margin-top: 0.5rem;
+}
+
+.default-project-option,
+.task-option,
+.project-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.default-project-option:hover,
+.task-option:hover,
+.project-option:hover {
+    background-color: var(--background);
+}
+
+.task-options {
+    overflow-y: auto;
+    margin-bottom: 0.5rem;
+    margin-right: 0.75rem;
+}
+
+.selector-add-task-btn {
+    color: var(--blue);
+    border: none;
+    background-color: transparent;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.selector-add-task-btn:hover {
+    text-decoration: underline;
+}
+
+.create-project-btn {
+    font-size: inherit;
+    font-family: inherit;
+    color: var(--blue);
+    border: 1px solid var(--blue);
+    border-radius: 14px;
+    background-color: var(--surface);
+    padding: 0.5rem 1rem;
+    margin: 1rem 0.5rem 0.5rem;
+    width: 325px;
+    cursor: pointer;
+}
+
+.create-project-btn:hover {
+    color: var(--surface);
+    border: 1px solid var(--blue);
+    background-color: var(--blue);
+}
+
+.project-selector-title,
+.task-selector-title {
+    color: var(--text-secondary);
+    margin: 1rem;
+}
+
+.create-project-btn-container {
+    text-align: center;
+    margin-top: auto;
+}

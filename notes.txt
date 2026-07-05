@@ -116,7 +116,13 @@ TodayTaskList:
 
 
 
-TIMER:
-
+Dropdown:
+  bugs:
+    - Adding task when timer has tasks and project select gets rid of it
+  Features:
+    - Click outside component closes it DONE
+    - Add create new project Modal
+    - Organize tasks and projects better in dropdown
+    - Finish styling 
 PROJECTS:
   - color coded projects

@@ -2,11 +2,11 @@ import './AddTaskModal.css';
 import { useState } from 'react';
 import { getWeekStartISO } from '../utils/timeUtils';
 
-function AddTaskModal({mode, task, onClose, onSubmit, projects}) {
+function AddTaskModal({mode, task, onClose, onSubmit, projects, currentProjectId}) {
     const [ taskName, setTaskName ] = useState(task?.name ?? "");
     const [ taskTime, setTaskTime ] = useState(task?.time ?? 0);
     const [ dueDate, setDueDate ] = useState(task?.dueDate ?? "");
-    const [ projectId, setProjectId ] = useState(task?.projectId ?? "");
+    const [ projectId, setProjectId ] = useState(task?.projectId ?? currentProjectId);
     
     const weekStartISO = getWeekStartISO();
 
@@ -79,8 +79,6 @@ function AddTaskModal({mode, task, onClose, onSubmit, projects}) {
                             onChange={(e) => setProjectId(e.target.value === "" ? "" : Number(e.target.value))}
                             value={projectId}
                         >
-                            <option value="">No project</option>
-
                             {projects.map(project => 
                                 <option value={project.id}>{project.name}</option>
                             )}
