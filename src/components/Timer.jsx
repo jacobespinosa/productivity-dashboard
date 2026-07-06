@@ -70,10 +70,12 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
     return (
         <div className="timer">
            <p className="time">{formatSecondsHHMMSS(currentSessionSeconds)}</p> 
-           <div className="selector-container" ref={dropdownRef}
-e               onClick={() => setIsDropdownOpen(prev => !prev)}>
-            <span className="project-name">{currentProject.name}</span>
-            <span className="task-name">{selectedTask?.name ? `: ${selectedTask.name}` : ""}</span>
+           <div className="selector-wrapper" ref={dropdownRef}>
+            <div className="selector-container"
+                    onClick={() => setIsDropdownOpen(prev => !prev)}>
+                <span className="project-name">{currentProject?.name ?? "No Project"}</span>
+                <span className="task-name">{selectedTask?.name ? `: ${selectedTask.name}` : ""}</span>
+            </div>
             <div className="dropdown-container">
                     { isDropdownOpen && 
                         <DropdownSelector

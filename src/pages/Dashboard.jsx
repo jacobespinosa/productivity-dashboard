@@ -18,6 +18,7 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   const [ currentSessionSeconds, setCurrentSessionSeconds ] = useState(0);
   const [ selectedDateKey, setSelectedDateKey ] = useState("");
   const [ selectedTask, setSelectedTask ] = useState(null);
+  const [ newTask, setNewTask ] = useState(null);
   const [ modalMode, setModalMode ] = useState("add");
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ currentProjectId, setCurrentProjectId ] = useState(projects[0].id);
@@ -44,12 +45,12 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   }
 
   function handleUpdateTask(taskName, projectId, estimatedTime, dueDate) {
-      if (!selectedTask) return;
+      if (!newTask) return;
 
       setTasksByDate(prev => ({
           ...prev,
           [selectedDateKey]: prev[selectedDateKey].map(task =>
-              task.id === selectedTask.id
+              task.id === newTask.id
               ? {
                   ...task,
                   name: taskName,
@@ -95,14 +96,14 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   function handleAddTask(dateKey) {
       setModalMode("add");
       setSelectedDateKey(dateKey);
-      setSelectedTask(null);
+      setNewTask(null);
       setIsModalOpen(true);
   }
 
   function handleEditTask(dateKey, task) {
       setModalMode("edit");
       setSelectedDateKey(dateKey);
-      setSelectedTask(task);
+      setNewTask(task);
       setIsModalOpen(true);
   }
 
@@ -167,7 +168,7 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
           <AddTaskModal
               projects={projects}
               mode={modalMode}
-              task={selectedTask}
+              task={newTask}
               onClose={() => {
                 setCurrentProjectId(projects[0].id);
                 setIsModalOpen(false);
