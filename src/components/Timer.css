@@ -12,31 +12,47 @@
     font-size: 3rem;
 }
 
+.selector-wrapper {
+    flex: 1;
+    min-width: 0;
+}
+
 .selector-container {
+    display: flex;
+    min-width: 0;
     font-size: 1.2rem;
+    cursor: pointer;
 }
 
 .selector-container:hover {
     text-decoration: underline;
 }
 
+.selector-text {
+    flex: 1;
+    min-width: 0;     
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .btn-container {
     display: flex;
-    gap: .5rem;
+    gap: .3rem;
     margin-left: auto;
 }
 
 .btn {
     text-transform: uppercase;
     padding: .7rem 1.2rem;
-    border-radius: 10px;
+    border-radius: 14px;
     border: none;
     color: var(--surface);
     cursor: pointer;
 }
 
 .btn.pause {
-    background-color: var(--yellow);
+    background-color: var(--orange);
 }
 
 .btn.start {

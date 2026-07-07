@@ -53,7 +53,9 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
                                 }}
                             >
                                 <span className="color-dot" style={{"color": `${project.color}`}}>●</span>
-                                <span>{project.name}</span>
+                                <span className="project-option-name">
+                                    {project.name}
+                                </span>
                             </li>
                         )
                     })}

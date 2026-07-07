@@ -74,12 +74,15 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
            <div className="selector-wrapper" ref={dropdownRef}>
             <div className="selector-container" style={{ "color": `${currentProject.color}`}}
                     onClick={() => setIsDropdownOpen(prev => !prev)}>
-                <span className="project-name">
-                    {currentProject?.name ?? "No Project"}
-                </span>
-                <span className="task-name">
-                    {selectedTask?.name ? `: ${selectedTask.name}` : ""}
-                </span>
+                <div className="selector-text"
+                     title={`${currentProject?.name}${selectedTask?.name ? `: ${selectedTask.name}` : ""}`}>
+                    <span className="project-name">
+                        {currentProject?.name ?? "No Project"}
+                    </span>
+                    <span className="task-name">
+                        {selectedTask?.name ? `: ${selectedTask.name}` : ""}
+                    </span>
+                </div>
             </div>
             <div className="dropdown-container">
                     { isDropdownOpen && 
@@ -99,22 +102,37 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
             </div>
            </div>
 
-           <div className="btn-container">
-             {currentSessionSeconds > 0? (
-             <button className="btn end" onClick={handleEndSession}>
-               end
-             </button> 
-             ) : null}
+            <div className="btn-container">
+            {currentSessionSeconds > 0 && (
+                <>
+                <button
+                    type="button"
+                    className={isRunning ? "btn pause" : "btn start"}
+                    onClick={handleClick}
+                >
+                    {isRunning ? "pause" : "resume"}
+                </button>
 
-             <button 
-                type="button" 
+                <button
+                    type="button"
+                    className="btn end"
+                    onClick={handleEndSession}
+                >
+                    end
+                </button>
+                </>
+            )}
+
+            {currentSessionSeconds === 0 && (
+                <button
+                type="button"
+                className="btn start"
                 onClick={handleClick}
-                className={isRunning
-                           ? "btn pause"
-                           : "btn start"}>
-                {isRunning? "pause" : "start"}
-             </button>
-           </div>
+                >
+                    start
+                </button>
+            )}
+            </div>
         </div>
     );
 }

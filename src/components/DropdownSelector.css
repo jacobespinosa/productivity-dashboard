@@ -15,12 +15,14 @@
     display: flex;
     justify-content: space-between;
     padding: 0.5rem 1rem;
-    
 }
 
 .current-project-name {
     font-size: 1.1rem;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .color-dot {
@@ -36,6 +38,12 @@
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
+}
+
+.project-option-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .project-selector,
