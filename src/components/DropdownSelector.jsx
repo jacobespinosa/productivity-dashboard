@@ -2,7 +2,7 @@ import './DropdownSelector.css';
 
 function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
                           tasksByDate, setSelectedTask, handleAddTask,
-                          setIsDropdownOpen}) {
+                          setIsDropdownOpen, setIsCreateProjectOpen}) {
 
     const currentProject = projects.find(p => p.id === currentProjectId);
     const projectTasks =  Object.values(tasksByDate).flat().filter(task => 
@@ -25,7 +25,7 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
             <p className="project-selector-title">Projects:</p>
             <ul className="project-options">
             {projects.map((project, index) => {
-                if (index === 0) return;
+                if (index === 0) return null;
                 return (
                     <li className="project-option"
                         key={project.id}
@@ -51,7 +51,7 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
             <div className="task-selector">
                 <p className="task-selector-title">
                     {currentProjectId === 0 ? "General tasks: " 
-                        : `${currentProject.name} tasks:`}
+                        : `${currentProject?.name ?? "No Project"} tasks:`}
                 </p>
                 <ul className="task-options">
                     {projectTasks.map(task =>
@@ -66,7 +66,13 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
             </div>
             <div className="create-project-btn-container">
                 <div className="divider"></div>
-                <button type="button" className="create-project-btn">
+                <button type="button" 
+                        className="create-project-btn"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setIsCreateProjectOpen(true)
+                        }}
+                >
                     Create New Project
                 </button>
             </div>

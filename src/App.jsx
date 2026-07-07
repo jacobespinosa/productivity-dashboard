@@ -7,21 +7,25 @@ function App() {
     {
       id: 0,
       name: "No Project",
+      color: "",
       timeSpent: 0
     },
     {
       id: 1,
       name: "leetCode",
+      color: "#FF8849",
       timeSpent: 21674
     },
     {
       id: 2,
       name: "Python",
+      color: "#69BE28",
       timeSpent: 16223
     },
     {
       id: 3,
       name: "SIEM",
+      color: "#3DB7E4",
       timeSpent: 36902
     }
   ]);

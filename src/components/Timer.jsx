@@ -6,9 +6,10 @@ import DropdownSelector from '../components/DropdownSelector';
 function Timer({projects, setProjects, timeByDate, setTimeByDate,
                 currentSessionSeconds, setCurrentSessionSeconds,
                 currentProjectId, setCurrentProjectId, selectedTask,
-                setSelectedTask, tasksByDate, handleAddTask, setSelectedProjectId }) {
+                setSelectedTask, tasksByDate, handleAddTask,
+                setIsCreateProjectOpen }) {
     const [isRunning, setIsRunning] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     
     const today = new Date();
     const dateKey = today.toLocaleDateString();
@@ -73,7 +74,9 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
            <div className="selector-wrapper" ref={dropdownRef}>
             <div className="selector-container"
                     onClick={() => setIsDropdownOpen(prev => !prev)}>
-                <span className="project-name">{currentProject?.name ?? "No Project"}</span>
+                <span className="project-name" style={{ "color": `${currentProject.color}`}}>
+                    {currentProject?.name ?? "No Project"}
+                </span>
                 <span className="task-name">{selectedTask?.name ? `: ${selectedTask.name}` : ""}</span>
             </div>
             <div className="dropdown-container">
@@ -86,6 +89,7 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
                             setSelectedTask={setSelectedTask}
                             handleAddTask={handleAddTask}
                             setIsDropdownOpen={setIsDropdownOpen}
+                            setIsCreateProjectOpen={setIsCreateProjectOpen}
                         />
                     }
             </div>

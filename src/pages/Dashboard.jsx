@@ -11,6 +11,7 @@ import Timer   from "../components/Timer";
 import WeeklyCalendar from '../components/WeeklyCalendar';
 import ProgressRing from '../components/ProgressRing';
 import TodayTaskList from '../components/TodayTaskList';
+import CreateProjectModal from '../components/CreateProjectModal';
 
 function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                     timeByDate, setTimeByDate }) {
@@ -21,6 +22,7 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   const [ newTask, setNewTask ] = useState(null);
   const [ modalMode, setModalMode ] = useState("add");
   const [ isModalOpen, setIsModalOpen ] = useState(false);
+  const [ isCreateProjectOpen, setIsCreateProjectOpen ] = useState(false);
   const [ currentProjectId, setCurrentProjectId ] = useState(projects[0].id);
 
   const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(tasksByDate);
@@ -107,6 +109,16 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
       setIsModalOpen(true);
   }
 
+  function handleCreateProject(name, color) {
+      setProjects(prevProjects => 
+          [...prevProjects, {
+            id: Date.now(),
+            name: name,
+            color: color
+          }]
+      )
+  }
+
   return (
       <main className="dashboard">
         <SideBar />
@@ -125,6 +137,7 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             setSelectedTask={setSelectedTask}
             tasksByDate={tasksByDate}
             handleAddTask={handleAddTask}
+            setIsCreateProjectOpen={setIsCreateProjectOpen}
           />
           <div className="total-weekly-tasks-ring">
             <ProgressRing 
@@ -176,6 +189,15 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
               onSubmit={modalMode === "add" 
                         ? handleCreateTask : handleUpdateTask}
               currentProjectId={currentProjectId}
+          />
+      )}
+
+      {isCreateProjectOpen && (
+          <CreateProjectModal
+              onSubmit={handleCreateProject}
+              onClose={() => {
+                setIsCreateProjectOpen(false);
+              }}
           />
       )}
       </main>

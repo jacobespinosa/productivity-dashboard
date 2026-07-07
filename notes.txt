@@ -113,16 +113,23 @@ TodayTaskList:
 
   - drag to reorder (maybe later)
   - Sort by due date, Priority, or projects (maybe later)
-
+  - color projects
 
 
 Dropdown:
   bugs:
-    - Adding task when timer has tasks and project select gets rid of it
+    - Adding task when timer has tasks and project select gets rid of it DONE
   Features:
     - Click outside component closes it DONE
     - Add create new project Modal
     - Organize tasks and projects better in dropdown
     - Finish styling 
+
 PROJECTS:
   - color coded projects
+
+DASHBOARD GRAPHS:
+   - time spent on week by project (bar chart horizontal / next to weekly hours ring)
+   - daily focus over the last week (or 7 days). Use hours
+   - Recent sessions (below daily tasks)
+   - Streaks
