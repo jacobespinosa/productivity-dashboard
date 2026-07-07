@@ -36,10 +36,10 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
               {
                   id: Date.now(),
                   name: taskName,
-                  projectId: projectId || null,
+                  projectId,
                   time: estimatedTime,
                   isDone: false,
-                  dueDate: dueDate
+                  dueDate
               }
           ]
       }));
@@ -56,9 +56,9 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
               ? {
                   ...task,
                   name: taskName,
-                  projectId: projectId || null,
+                  projectId,
                   time: estimatedTime,
-                  dueDate: dueDate,
+                  dueDate,
                   dateCompleted: ""
               }
               : task

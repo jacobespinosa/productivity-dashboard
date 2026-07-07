@@ -6,13 +6,13 @@ function AddTaskModal({mode, task, onClose, onSubmit, projects, currentProjectId
     const [ taskName, setTaskName ] = useState(task?.name ?? "");
     const [ taskTime, setTaskTime ] = useState(task?.time ?? 0);
     const [ dueDate, setDueDate ] = useState(task?.dueDate ?? "");
-    const [ projectId, setProjectId ] = useState(task?.projectId ?? currentProjectId);
+    const [ projectId, setProjectId ] = useState(task?.projectId ?? currentProjectId ?? 0);
     
     const weekStartISO = getWeekStartISO();
 
     function handleSubmit(e) {
         e.preventDefault();
-        onSubmit(taskName, projectId || null, taskTime, dueDate);
+        onSubmit(taskName, projectId, taskTime, dueDate);
     }
 
     return (
@@ -76,7 +76,7 @@ function AddTaskModal({mode, task, onClose, onSubmit, projects, currentProjectId
                         </label>
                         <select
                             id="project"
-                            onChange={(e) => setProjectId(e.target.value === "" ? "" : Number(e.target.value))}
+                            onChange={(e) => setProjectId(Number(e.target.value))}
                             value={projectId}
                         >
                             {projects.map(project => 

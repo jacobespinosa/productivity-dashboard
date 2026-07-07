@@ -10,6 +10,12 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
     const projectTasks =  Object.values(tasksByDate).flat().filter(task => 
         task.projectId === currentProjectId && !task.isDone)
 
+    const taskSelectorTitle = projectTasks.length === 0
+                              ? "No active tasks:"
+                              : currentProjectId === 0
+                              ? "General tasks:"
+                              : `${currentProject?.name ?? "No projects"} tasks:`;
+
     const todayDate = new Date();
     todayDate.setHours(0, 0, 0, 0);
     const todayDatekey = todayDate.toLocaleDateString();
@@ -19,6 +25,7 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
             <p className="project-selector-title">Current Project</p>
             <div className="project-selector" onClick={() => setSelectorMode("tasks")}>
                 <span className="current-project-name">
+                    <span className="color-dot" style={{"color": `${currentProject.color}`}}>●</span>
                     {currentProject?.name}
                 </span>
                 <button className="selector-change-project-btn"
@@ -27,7 +34,7 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
                             e.stopPropagation();
                             setSelectorMode("projects")
                         }}>
-                    Change
+                    Change 
                 </button>
             </div>
             {selectorMode === "projects" &&
@@ -45,6 +52,7 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
                                     setSelectorMode("tasks");
                                 }}
                             >
+                                <span className="color-dot" style={{"color": `${project.color}`}}>●</span>
                                 <span>{project.name}</span>
                             </li>
                         )
@@ -55,8 +63,7 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
             { selectorMode === "tasks" &&
                 <div className="task-selector">
                     <p className="task-selector-title">
-                        {currentProjectId === 0 ? "General tasks: " 
-                            : `${currentProject?.name ?? "No Project"} tasks:`}
+                        Tasks
                     </p>
                     <ul className="task-options">
                         {projectTasks.map(task =>

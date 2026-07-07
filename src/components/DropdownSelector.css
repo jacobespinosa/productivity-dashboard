@@ -18,18 +18,33 @@
     
 }
 
+.current-project-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.color-dot {
+    margin-right: 0.3rem;
+}
+
 .project-options {
     overflow-y: auto;
     margin-right: 0.75rem;
 }
 
-.project-selector,
-.task-option,
 .project-option {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.project-selector,
+.task-option {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
+    cursor: pointer;
 }
 
 .project-selector:hover,
@@ -39,8 +54,9 @@
 }
 
 .task-options {
+    flex: 1;
     overflow-y: auto;
-    margin-bottom: 0.5rem;
+    min-height: 0;
     margin-right: 0.75rem;
 }
 
@@ -60,7 +76,9 @@
 }
 
 .selector-add-task-btn {
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    align-self: flex-start;
 }
 
 .create-project-btn {
@@ -85,13 +103,24 @@
     background-color: var(--blue);
 }
 
-.project-selector-title,
-.task-selector-title {
+.project-selector-title {
     color: var(--text-secondary);
     margin: 1rem;
+}
+
+.task-selector {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.task-selector-title {
+    color: var(--text-secondary);
+    margin: 1rem 1rem 0.5rem; 
 }
 
 .create-project-btn-container {
     text-align: center;
     margin-top: auto;
+    background-color: var(--background);
 }

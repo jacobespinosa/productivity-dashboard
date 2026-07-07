@@ -80,7 +80,7 @@ function App() {
           {
               id: 5,
               name: "Gym",
-              projectId: null,
+              projectId: 0,
               time: 60,
               isDone: false,
               dueDate: "2026-07-1"
@@ -156,7 +156,7 @@ function App() {
           {
               id: 13,
               name: "Laundry",
-              projectId: null,
+              projectId: 0,
               time: 30,
               isDone: true,
               dueDate: "2026-7-5"
