@@ -1,8 +1,10 @@
 import './DropdownSelector.css';
+import { useState } from 'react';
 
 function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
                           tasksByDate, setSelectedTask, handleAddTask,
                           setIsDropdownOpen, setIsCreateProjectOpen}) {
+    const [selectorMode, setSelectorMode] = useState("tasks");
 
     const currentProject = projects.find(p => p.id === currentProjectId);
     const projectTasks =  Object.values(tasksByDate).flat().filter(task => 
@@ -14,63 +16,77 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
 
     return (
         <div className="dropdown-selector">
-            <p className="default-project-option"
-                    onClick={() => {
-                        setCurrentProjectId(projects[0].id);
-                        setSelectedTask(null);
-                    }}
-            >
-                {projects[0].name}
-            </p>
-            <p className="project-selector-title">Projects:</p>
-            <ul className="project-options">
-            {projects.map((project, index) => {
-                if (index === 0) return null;
-                return (
-                    <li className="project-option"
-                        key={project.id}
-                        onClick={() => {
-                            setCurrentProjectId(project.id)
-                            setSelectedTask(null);
-                        }}
-                    >
-                        <span>{project.name}</span>
-                        <button type="button" 
-                                className="selector-add-task-btn"
-                                onClick={() => {
-                                    setCurrentProjectId(project.id);
-                                    handleAddTask(todayDatekey);
-                                }}
-                        >
-                            Add Task
-                        </button>
-                    </li>
-                )
-            })}
-            </ul>
-            <div className="task-selector">
-                <p className="task-selector-title">
-                    {currentProjectId === 0 ? "General tasks: " 
-                        : `${currentProject?.name ?? "No Project"} tasks:`}
-                </p>
-                <ul className="task-options">
-                    {projectTasks.map(task =>
-                        <li className="task-option"
-                            key={task.id}    
-                            onClick={() => setSelectedTask(task)} 
-                        >
-                            {task.name}
-                        </li>
-                    )}
-                </ul>
+            <p className="project-selector-title">Current Project</p>
+            <div className="project-selector" onClick={() => setSelectorMode("tasks")}>
+                <span className="current-project-name">
+                    {currentProject?.name}
+                </span>
+                <button className="selector-change-project-btn"
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectorMode("projects")
+                        }}>
+                    Change
+                </button>
             </div>
+            {selectorMode === "projects" &&
+                <div className="project-selector-container">
+                    <p className="project-selector-title">Select Project</p>
+                    <ul className="project-options">
+                    {projects.map((project) => {
+                        if (project.id === currentProjectId) return null;
+                        return (
+                            <li className="project-option"
+                                key={project.id}
+                                onClick={() => {
+                                    setCurrentProjectId(project.id)
+                                    setSelectedTask(null);
+                                    setSelectorMode("tasks");
+                                }}
+                            >
+                                <span>{project.name}</span>
+                            </li>
+                        )
+                    })}
+                    </ul>
+                </div>
+            }
+            { selectorMode === "tasks" &&
+                <div className="task-selector">
+                    <p className="task-selector-title">
+                        {currentProjectId === 0 ? "General tasks: " 
+                            : `${currentProject?.name ?? "No Project"} tasks:`}
+                    </p>
+                    <ul className="task-options">
+                        {projectTasks.map(task =>
+                            <li className="task-option"
+                                key={task.id}    
+                                onClick={() => setSelectedTask(task)} 
+                            >
+                                {task.name}
+                            </li>
+                        )}
+                    </ul>
+                    <button type="button" 
+                            className="selector-add-task-btn"
+                            onClick={() => {
+                                setIsDropdownOpen(false);
+                                handleAddTask(todayDatekey);
+                            }}
+                    >
+                        + Add Task
+                    </button>
+                </div>
+            }
             <div className="create-project-btn-container">
                 <div className="divider"></div>
                 <button type="button" 
                         className="create-project-btn"
                         onClick={(e) => {
                             e.stopPropagation();
-                            setIsCreateProjectOpen(true)
+                            setIsDropdownOpen(false);
+                            setIsCreateProjectOpen(true);
                         }}
                 >
                     Create New Project

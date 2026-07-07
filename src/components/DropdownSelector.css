@@ -11,16 +11,19 @@
     font-size: 1rem;
 }
 
+.project-selector {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    
+}
+
 .project-options {
     overflow-y: auto;
     margin-right: 0.75rem;
 }
 
-.default-project-option {
-    margin-top: 0.5rem;
-}
-
-.default-project-option,
+.project-selector,
 .task-option,
 .project-option {
     display: flex;
@@ -29,7 +32,7 @@
     padding: 0.5rem 1rem;
 }
 
-.default-project-option:hover,
+.project-selector:hover,
 .task-option:hover,
 .project-option:hover {
     background-color: var(--background);
@@ -41,7 +44,8 @@
     margin-right: 0.75rem;
 }
 
-.selector-add-task-btn {
+.selector-add-task-btn,
+.selector-change-project-btn {
     color: var(--blue);
     border: none;
     background-color: transparent;
@@ -50,8 +54,13 @@
     cursor: pointer;
 }
 
-.selector-add-task-btn:hover {
+.selector-add-task-btn:hover,
+.selector-change-project-btn:hover {
     text-decoration: underline;
+}
+
+.selector-add-task-btn {
+    padding: 0 1rem;
 }
 
 .create-project-btn {
@@ -65,6 +74,9 @@
     margin: 1rem 0.5rem 0.5rem;
     width: 325px;
     cursor: pointer;
+    transition: color 0.2s ease,
+                border 0.2s ease,
+                background-color 0.2s ease;
 }
 
 .create-project-btn:hover {

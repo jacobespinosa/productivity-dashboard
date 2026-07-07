@@ -134,7 +134,7 @@
     display: inline-flex;
     font-size: 0.8rem;
     align-items: center;
-    color: var(--text-secondary);
+    color: var(--surface);
     background: var(--background);
     padding: 0.15rem 0.45rem;
     border-radius: 999px;

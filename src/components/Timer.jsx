@@ -72,25 +72,29 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
         <div className="timer">
            <p className="time">{formatSecondsHHMMSS(currentSessionSeconds)}</p> 
            <div className="selector-wrapper" ref={dropdownRef}>
-            <div className="selector-container"
+            <div className="selector-container" style={{ "color": `${currentProject.color}`}}
                     onClick={() => setIsDropdownOpen(prev => !prev)}>
-                <span className="project-name" style={{ "color": `${currentProject.color}`}}>
+                <span className="project-name">
                     {currentProject?.name ?? "No Project"}
                 </span>
-                <span className="task-name">{selectedTask?.name ? `: ${selectedTask.name}` : ""}</span>
+                <span className="task-name">
+                    {selectedTask?.name ? `: ${selectedTask.name}` : ""}
+                </span>
             </div>
             <div className="dropdown-container">
                     { isDropdownOpen && 
-                        <DropdownSelector
-                            projects={projects}
-                            currentProjectId={currentProjectId}
-                            setCurrentProjectId={setCurrentProjectId}
-                            tasksByDate={tasksByDate}
-                            setSelectedTask={setSelectedTask}
-                            handleAddTask={handleAddTask}
-                            setIsDropdownOpen={setIsDropdownOpen}
-                            setIsCreateProjectOpen={setIsCreateProjectOpen}
-                        />
+                        <div onClick={(e) => e.stopPropagation()}>
+                            <DropdownSelector
+                                projects={projects}
+                                currentProjectId={currentProjectId}
+                                setCurrentProjectId={setCurrentProjectId}
+                                tasksByDate={tasksByDate}
+                                setSelectedTask={setSelectedTask}
+                                handleAddTask={handleAddTask}
+                                setIsDropdownOpen={setIsDropdownOpen}
+                                setIsCreateProjectOpen={setIsCreateProjectOpen}
+                            />
+                        </div>
                     }
             </div>
            </div>

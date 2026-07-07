@@ -4,6 +4,7 @@ import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faPlay, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { formatMinutesHHMM, formatISOMMDD } from '../utils/timeUtils'; 
 import { getDueStatus, getLateTasks } from '../utils/taskUtils';
+import { getTextColor } from '../utils/projectUtils';
 import { useState } from 'react';
 
 function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDeleteTask, 
@@ -54,9 +55,11 @@ function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDelete
                         style={{ "--progress": `${percent}%`}}>
                     </div>
                 </div>
+                {/*
                 <button type="button" className="today-tasks-filter-btn">
                     Filter
                 </button>
+                */}
             </div>
             <div className="task-body">
                 <div className="today-task-list">
@@ -89,6 +92,10 @@ function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDelete
                                 <div className="start-project-container">
                                     {project && 
                                         <span
+                                            style={{
+                                                background: project?.color,
+                                                color: getTextColor(project?.color)
+                                            }}
                                             className="task-list-project-name">
                                             {project?.name}
                                         </span> 
@@ -149,6 +156,10 @@ function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDelete
                                 <div className="start-project-container">
                                     {project && 
                                         <span
+                                            style={{
+                                                background: project?.color,
+                                                color: getTextColor(project?.color)
+                                            }}
                                             className="task-list-project-name">
                                             {project?.name}
                                         </span> 
