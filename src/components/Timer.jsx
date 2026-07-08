@@ -7,8 +7,7 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
                 currentSessionSeconds, setCurrentSessionSeconds,
                 currentProjectId, setCurrentProjectId, selectedTask,
                 setSelectedTask, tasksByDate, handleAddTask,
-                setIsCreateProjectOpen }) {
-    const [isRunning, setIsRunning] = useState(false);
+                setIsCreateProjectOpen, isRunning, setIsRunning }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     
     const today = new Date();

@@ -1,5 +1,10 @@
 import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from './pages/Dashboard';
+import CalendarPage from './pages/CalendarPage';
+import ProjectsPage from "./pages/ProjectsPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
+import Layout from "./components/Layout";
 import { useState } from 'react';
 
 function App() {
@@ -31,17 +36,17 @@ function App() {
   ]);
 
   const [ timeByDate, setTimeByDate ] = useState({
-      "6/29/2026": 16902,
-      "6/30/2026": 16223,
-      "7/1/2026": 21674,
-      "7/2/2026": 8963,
-      "7/3/2026": 12261,
-      "7/4/2026": 1612,
-      "7/5/2026": 0
+      "7/6/2026": 16902,
+      "7/7/2026": 16223,
+      "7/8/2026": 11674,
+      "7/9/2026": 8963,
+      "7/10/2026": 12261,
+      "7/11/2026": 1612,
+      "7/12/2026": 0
   });
 
   const [ tasksByDate, setTasksByDate ] = useState({
-      "6/29/2026": [
+      "7/6/2026": [
           {
               id: 1,
               name: "Study React",
@@ -60,7 +65,7 @@ function App() {
           }
       ],
 
-      "6/30/2026": [
+      "7/7/2026": [
           {
               id: 3,
               name: "Work on Dashboard",
@@ -87,7 +92,7 @@ function App() {
           }
       ],
 
-      "7/1/2026": [
+      "7/8/2026": [
           {
               id: 6,
               name: "Weekly Quiz",
@@ -98,7 +103,7 @@ function App() {
           }
       ],
 
-      "7/2/2026": [
+      "7/9/2026": [
           {
               id: 7,
               name: "Portfolio Improvements",
@@ -117,7 +122,7 @@ function App() {
           }
       ],
 
-      "7/3/2026": [
+      "7/10/2026": [
           {
               id: 9,
               name: "Read Documentation",
@@ -136,7 +141,7 @@ function App() {
           }
       ],
 
-      "7/4/2026": [
+      "7/11/2026": [
           {
               id: 11,
               name: "Fix Timer Bugs",
@@ -163,7 +168,7 @@ function App() {
           }
       ],
 
-      "7/5/2026": [
+      "7/12/2026": [
           {
               id: 14,
               name: "Plan Next Week",
@@ -183,11 +188,128 @@ function App() {
       ]
   });
 
-  return <Dashboard 
-            projects={projects} setProjects={setProjects}
-            tasksByDate={tasksByDate} setTasksByDate={setTasksByDate}
-            timeByDate={timeByDate} setTimeByDate={setTimeByDate}
-          />
+
+  function handleCreateTask(taskName, projectId, estimatedTime, dueDate) {
+      setTasksByDate(prev => ({
+          ...prev,
+          [selectedDateKey]: [
+              ...(prev[selectedDateKey] || []),
+              {
+                  id: Date.now(),
+                  name: taskName,
+                  projectId,
+                  time: estimatedTime,
+                  isDone: false,
+                  dueDate
+              }
+          ]
+      }));
+      setIsModalOpen(false);
+  }
+
+  function handleUpdateTask(taskName, projectId, estimatedTime, dueDate) {
+      if (!newTask) return;
+
+      setTasksByDate(prev => ({
+          ...prev,
+          [selectedDateKey]: prev[selectedDateKey].map(task =>
+              task.id === newTask.id
+              ? {
+                  ...task,
+                  name: taskName,
+                  projectId,
+                  time: estimatedTime,
+                  dueDate,
+                  dateCompleted: ""
+              }
+              : task
+          )
+      }));
+      setIsModalOpen(false);        
+  }
+
+  function handleDeleteTask(dateKey, taskId) {
+      setTasksByDate(prev => ({
+          ...prev,
+          [dateKey]: prev[dateKey].filter(
+              task => task.id !== taskId
+          )
+      }));
+  }
+
+  function handleToggleTask(dateKey, taskId) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      setTasksByDate(prev => ({
+          ...prev,
+          [dateKey]: prev[dateKey].map(task =>
+              task.id === taskId
+              ? 
+              { 
+                ...task, 
+                isDone: !task.isDone,
+                dateCompleted: !task.isDone? today.toLocaleDateString() : ""
+              }
+              : task
+          )
+      }));
+  }
+
+  function handleAddTask(dateKey) {
+      setModalMode("add");
+      setSelectedDateKey(dateKey);
+      setNewTask(null);
+      setIsModalOpen(true);
+  }
+
+  function handleEditTask(dateKey, task) {
+      setModalMode("edit");
+      setSelectedDateKey(dateKey);
+      setNewTask(task);
+      setIsModalOpen(true);
+  }
+
+  const taskActions = {
+      handleCreateTask,
+      handleDeleteTask,
+      handleToggleTask,
+      handleUpdateTask,
+      handleAddTask,
+      handleEditTask
+  }
+
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route element={<Layout />}>
+                    <Route path="/" element={<Navigate to="/Dashboard" />} />
+                    <Route 
+                        path="/dashboard" 
+                        element={
+                            <Dashboard 
+                                projects={projects} setProjects={setProjects}
+                                tasksByDate={tasksByDate} setTasksByDate={setTasksByDate}
+                                timeByDate={timeByDate} setTimeByDate={setTimeByDate}
+                                taskActions={taskActions}
+                            />
+                        } 
+                    />
+                    <Route 
+                        path="/calendar" 
+                        element={
+                            <CalendarPage 
+                                tasksByDate={tasksByDate}
+                                taskActions={taskActions}
+                            />
+                        } 
+                    />
+                    <Route path="/projects" element={<ProjectsPage />} />
+                    <Route path="/analytics" element={<AnalyticsPage />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App

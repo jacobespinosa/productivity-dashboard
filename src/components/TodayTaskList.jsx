@@ -8,7 +8,8 @@ import { getTextColor } from '../utils/projectUtils';
 import { useState } from 'react';
 
 function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDeleteTask, 
-                        handleToggleTask, projects
+                        handleToggleTask, projects, setIsRunning, setCurrentProjectId,
+                        setSelectedTask
 }) {
     const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
 
@@ -89,7 +90,12 @@ function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDelete
                                         </span>
                                     )}
                                 </span>
-                                <div className="start-project-container">
+                                <div className="start-project-container"
+                                     onClick={() => {
+                                        setCurrentProjectId(task.projectId);
+                                        setSelectedTask(task);
+                                        setIsRunning(true);
+                                     }}>
                                     {project.id !== 0 && 
                                         <span
                                             style={{

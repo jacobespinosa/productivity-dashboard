@@ -1,4 +1,5 @@
 import './SideBar.css';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faFolder,  } from '@fortawesome/free-regular-svg-icons';
 import { faChartLine, faGear, faBorderAll } from '@fortawesome/free-solid-svg-icons';
@@ -12,22 +13,22 @@ function SideBar() {
 
       <div className="sidebar-section">
         <p className="sidebar-title">Menu</p>
-        <a href="#" className="sidebar-link">
+        <NavLink to="/dashboard" className="sidebar-link">
           <FontAwesomeIcon icon={faBorderAll} />
           Dashboard
-        </a>
-        <a href="#" className="sidebar-link">
+        </NavLink>
+        <NavLink to="/calendar" className="sidebar-link">
           <FontAwesomeIcon icon={faCalendar} />
           Calendar
-        </a>
-        <a href="#" className="sidebar-link">
+        </NavLink>
+        <NavLink to="/projects" className="sidebar-link">
           <FontAwesomeIcon icon={faFolder} />
           Projects
-        </a>
-        <a href="#" className="sidebar-link">
+        </NavLink>
+        <NavLink to="/analytics" className="sidebar-link">
           <FontAwesomeIcon icon={faChartLine} />
           Analytics
-        </a>
+        </NavLink>
       </div>
 
       <div className="sidebar-section">

@@ -14,7 +14,16 @@ import TodayTaskList from '../components/TodayTaskList';
 import CreateProjectModal from '../components/CreateProjectModal';
 
 function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
-                    timeByDate, setTimeByDate }) {
+                    timeByDate, setTimeByDate, taskActions }) {
+
+  const {
+      handleCreateTask,
+      handleDeleteTask,
+      handleToggleTask,
+      handleUpdateTask,
+      handleAddTask,
+      handleEditTask
+  } = taskActions;
 
   const [ currentSessionSeconds, setCurrentSessionSeconds ] = useState(0);
   const [ selectedDateKey, setSelectedDateKey ] = useState("");
@@ -24,90 +33,15 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ isCreateProjectOpen, setIsCreateProjectOpen ] = useState(false);
   const [ currentProjectId, setCurrentProjectId ] = useState(projects[0].id);
+  const [ isRunning, setIsRunning ] = useState(false);
 
   const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(tasksByDate);
   const totalWeeklyTime = getWeeklyTimeStats(timeByDate) + currentSessionSeconds;
 
-  function handleCreateTask(taskName, projectId, estimatedTime, dueDate) {
-      setTasksByDate(prev => ({
-          ...prev,
-          [selectedDateKey]: [
-              ...(prev[selectedDateKey] || []),
-              {
-                  id: Date.now(),
-                  name: taskName,
-                  projectId,
-                  time: estimatedTime,
-                  isDone: false,
-                  dueDate
-              }
-          ]
-      }));
-      setIsModalOpen(false);
+  function startTimer() {
+
   }
 
-  function handleUpdateTask(taskName, projectId, estimatedTime, dueDate) {
-      if (!newTask) return;
-
-      setTasksByDate(prev => ({
-          ...prev,
-          [selectedDateKey]: prev[selectedDateKey].map(task =>
-              task.id === newTask.id
-              ? {
-                  ...task,
-                  name: taskName,
-                  projectId,
-                  time: estimatedTime,
-                  dueDate,
-                  dateCompleted: ""
-              }
-              : task
-          )
-      }));
-      setIsModalOpen(false);        
-  }
-
-  function handleDeleteTask(dateKey, taskId) {
-      setTasksByDate(prev => ({
-          ...prev,
-          [dateKey]: prev[dateKey].filter(
-              task => task.id !== taskId
-          )
-      }));
-  }
-
-  function handleToggleTask(dateKey, taskId) {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      setTasksByDate(prev => ({
-          ...prev,
-          [dateKey]: prev[dateKey].map(task =>
-              task.id === taskId
-              ? 
-              { 
-                ...task, 
-                isDone: !task.isDone,
-                dateCompleted: !task.isDone? today.toLocaleDateString() : ""
-              }
-              : task
-          )
-      }));
-  }
-
-  function handleAddTask(dateKey) {
-      setModalMode("add");
-      setSelectedDateKey(dateKey);
-      setNewTask(null);
-      setIsModalOpen(true);
-  }
-
-  function handleEditTask(dateKey, task) {
-      setModalMode("edit");
-      setSelectedDateKey(dateKey);
-      setNewTask(task);
-      setIsModalOpen(true);
-  }
 
   function handleCreateProject(name, color) {
       setProjects(prevProjects => 
@@ -121,8 +55,6 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
 
   return (
       <main className="dashboard">
-        <SideBar />
-
         <section className="dashboard-content">
           <Timer
             projects={projects}
@@ -138,6 +70,8 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             tasksByDate={tasksByDate}
             handleAddTask={handleAddTask}
             setIsCreateProjectOpen={setIsCreateProjectOpen}
+            isRunning={isRunning}
+            setIsRunning={setIsRunning}
           />
           <div className="total-weekly-tasks-ring">
             <ProgressRing 
@@ -155,6 +89,22 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
               type="time"
             />
           </div>
+
+          <div className="project-time-breakdown">
+
+          </div>
+
+          <div className="weekly-focus-chart">
+
+          </div>
+
+          <div className="recent-sessions">
+
+          </div>
+
+          <div className="streaks-card">
+            
+          </div>
           <div className="today-task-list">
             <TodayTaskList
               tasksByDate={tasksByDate}
@@ -165,17 +115,11 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
               handleDeleteTask={handleDeleteTask}
               handleToggleTask={handleToggleTask}
               handleUpdateTask={handleUpdateTask}
+              setIsRunning={setIsRunning}
+              setCurrentProjectId={setCurrentProjectId}
+              setSelectedTask={setSelectedTask}
             />
           </div>
-          <WeeklyCalendar
-            tasksByDate={tasksByDate}
-            handleAddTask={handleAddTask}
-            handleEditTask={handleEditTask}
-            handleCreateTask={handleCreateTask}
-            handleDeleteTask={handleDeleteTask}
-            handleToggleTask={handleToggleTask}
-            handleUpdateTask={handleUpdateTask}
-          />
         </section>
       {isModalOpen && (
           <AddTaskModal

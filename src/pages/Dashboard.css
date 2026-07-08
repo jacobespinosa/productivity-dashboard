@@ -1,30 +1,23 @@
 .dashboard {
     display: flex;
-    min-height: 100vh;
-    background-color: var(--background);
 }
 
 .dashboard-content {
     display: grid;
     flex: 1;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr 1.1fr;
+    grid-template-rows: auto 1fr 1fr;
     gap: 1.5rem;
     grid-template-areas: 
-        'timer timer taskList'
-        'totalTimeRing totalTasksRing taskList'
-        'weeklyCalendar weeklyCalendar weeklyCalendar';
-    padding: 2rem;
+        'timer streaksCard taskList'
+        'totalTasksRing totalTimeRing taskList'
+        'weeklyFocusChart projectTimeBreakdown recentSessions';
 }
 
 .timer {
     grid-area: timer;
     justify-self: start;
     align-self: start;
-}
-
-.weekly-calendar {
-    grid-area: weeklyCalendar;
 }
 
 .total-weekly-tasks-ring {
@@ -37,4 +30,20 @@
 
 .today-task-list {
     grid-area: taskList;
+}
+
+.project-time-breakdown {
+    grid-area: projectTimeBreakdown;
+}
+
+.weekly-focus-chart {
+    grid-area: weeklyFocusChart;
+}
+
+.recent-sessions {
+    grid-area: recentSessions;
+}
+
+.streaks-card {
+    grid-area: streaksCard;
 }

@@ -108,7 +108,7 @@ TodayTaskList:
   - Task name, project assigned to if applicable DONE
   - completed tasks collapse near bottom DONE
 
-  - button that automatically starts a timer for task
+  - button that automatically starts a timer for task DONE
   - highlight task currently being worked on if timer is running for it
 
   - drag to reorder (maybe later)
@@ -134,3 +134,10 @@ DASHBOARD GRAPHS:
    - daily focus over the last week (or 7 days). Use hours
    - Recent sessions (below daily tasks)
    - Streaks
+
+  What am I working on? → Timer
+  How am I doing this week? → Rings + Project breakdown
+  What should I work on today? → TodayTaskList
+  What did I just accomplish? → RecentSessions
+  How has my week looked? → WeeklyFocusChart
+  How consistent have I been? → StreaksCard
