@@ -130,8 +130,8 @@ PROJECTS:
   - color coded projects DONE
 
 DASHBOARD GRAPHS:
-   - time spent on week by project (bar chart horizontal / next to weekly hours ring)
-   - daily focus over the last week (or 7 days). Use hours
+   - time spent on week by project (bar chart horizontal / next to weekly hours ring) DONE
+   - daily focus over the last week (or 7 days). Use hours DONE
    - Recent sessions (below daily tasks)
    - Streaks
 

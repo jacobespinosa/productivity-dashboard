@@ -2,7 +2,7 @@ import './Dashboard.css';
 
 import { getCurrentWeekStart } from '../utils/dateUtils';
 import { getWeeklyTaskStats } from '../utils/taskUtils';
-import { getWeeklyTimeStats } from '../utils/timeUtils';
+import { getWeeklyTotalTime } from '../utils/timeUtils';
 import { useState } from 'react';
 
 import AddTaskModal from '../components/AddTaskModal';
@@ -12,9 +12,12 @@ import WeeklyCalendar from '../components/WeeklyCalendar';
 import ProgressRing from '../components/ProgressRing';
 import TodayTaskList from '../components/TodayTaskList';
 import CreateProjectModal from '../components/CreateProjectModal';
+import ProjectTimeBreakdown from '../components/ProjectTimeBreakdown';
+import WeeklyFocusChart from '../components/WeeklyFocusChart';
 
 function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
-                    timeByDate, setTimeByDate, taskActions }) {
+                    timeByDate, setTimeByDate, taskActions, taskModalState,
+                    newTask }) {
 
   const {
       handleCreateTask,
@@ -25,23 +28,21 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
       handleEditTask
   } = taskActions;
 
+  const {
+    taskModalMode,
+    setTaskModalMode,
+    isTaskModalOpen,
+    setIsTaskModalOpen
+  } = taskModalState
+
   const [ currentSessionSeconds, setCurrentSessionSeconds ] = useState(0);
-  const [ selectedDateKey, setSelectedDateKey ] = useState("");
   const [ selectedTask, setSelectedTask ] = useState(null);
-  const [ newTask, setNewTask ] = useState(null);
-  const [ modalMode, setModalMode ] = useState("add");
-  const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ isCreateProjectOpen, setIsCreateProjectOpen ] = useState(false);
   const [ currentProjectId, setCurrentProjectId ] = useState(projects[0].id);
   const [ isRunning, setIsRunning ] = useState(false);
 
   const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(tasksByDate);
-  const totalWeeklyTime = getWeeklyTimeStats(timeByDate) + currentSessionSeconds;
-
-  function startTimer() {
-
-  }
-
+  const totalWeeklyTime = getWeeklyTotalTime(timeByDate) + currentSessionSeconds;
 
   function handleCreateProject(name, color) {
       setProjects(prevProjects => 
@@ -73,29 +74,38 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             isRunning={isRunning}
             setIsRunning={setIsRunning}
           />
-          <div className="total-weekly-tasks-ring">
-            <ProgressRing 
-              value={totalTasksCompleted}
-              goal={totalTasks}
-              title={"Total Weekly Tasks"}
-              unit=""
-            />
-          </div>
-          <div className="total-weekly-time-ring">
-            <ProgressRing
-              value={totalWeeklyTime}
-              goal={86400}
-              title={"Total Weekly Time"}
-              type="time"
-            />
-          </div>
 
-          <div className="project-time-breakdown">
+          <div className="dashboard-graphs">
+            <div className="total-weekly-tasks-ring">
+              <ProgressRing 
+                value={totalTasksCompleted}
+                goal={totalTasks}
+                title={"Total Weekly Tasks"}
+                unit=""
+              />
+            </div>
+            <div className="total-weekly-time-ring">
+              <ProgressRing
+                value={totalWeeklyTime}
+                goal={86400}
+                title={"Total Weekly Time"}
+                type="time"
+              />
+            </div>
 
-          </div>
+            <div className="project-time-breakdown">
+              <ProjectTimeBreakdown 
+                  projects={projects}
+                  tasksByDate={tasksByDate}
+                  timeByDate={timeByDate}
+              />
+            </div>
 
-          <div className="weekly-focus-chart">
-
+            <div className="weekly-focus-chart">
+              <WeeklyFocusChart 
+                  timeByDate={timeByDate}
+              />
+            </div>
           </div>
 
           <div className="recent-sessions">
@@ -103,9 +113,9 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
           </div>
 
           <div className="streaks-card">
-            
+
           </div>
-          <div className="today-task-list">
+          <div className="daily-task-list">
             <TodayTaskList
               tasksByDate={tasksByDate}
               projects={projects}
@@ -121,16 +131,16 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             />
           </div>
         </section>
-      {isModalOpen && (
+      {isTaskModalOpen && (
           <AddTaskModal
               projects={projects}
-              mode={modalMode}
+              mode={taskModalMode}
               task={newTask}
               onClose={() => {
                 setCurrentProjectId(projects[0].id);
-                setIsModalOpen(false);
+                setIsTaskModalOpen(false);
               }}
-              onSubmit={modalMode === "add" 
+              onSubmit={taskModalMode === "add" 
                         ? handleCreateTask : handleUpdateTask}
               currentProjectId={currentProjectId}
           />

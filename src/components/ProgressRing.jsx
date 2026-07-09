@@ -11,6 +11,7 @@ function ProgressRing({value, goal, title, type}) {
 
     return (
         <div className="progress-ring">
+            <h3 className="progress-ring-title">{title}</h3>
             <div className={`progress-ring-circle ${percent === 100 ? "completed" : ""}`}
                  style={{ "--progress": `${percent}%` }}
             >
@@ -20,7 +21,6 @@ function ProgressRing({value, goal, title, type}) {
                     </span>
                 </div>
             </div>
-            <h3 className="progress-ring-title">{title}</h3>
         </div>
     );
 }

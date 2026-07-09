@@ -1,0 +1,45 @@
+.project-weekly-breakdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.project-weekly-breakdown-title {
+    font-weight: normal;
+    text-align: center;
+}
+
+.project-weekly-breakdown-list {
+    list-style: none;
+}
+
+.project-weekly-breakdown-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.project-weekly-breakdown-label {
+    font-size: 1.2rem;
+    width: 110px;
+}
+
+.project-weekly-breakdown-bar {
+    width: 250px;
+    height: 25px;
+    background: linear-gradient(to right, var(--projectColor) var(--progress), var(--background) 0);
+}
+
+.breakdown-time-percent-container {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.project-weekly-breakdown-time {
+    font-size: 1rem;
+}
+
+.project-weekly-breakdown-percent {
+    color: var(--text-secondary);
+}

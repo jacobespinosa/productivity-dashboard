@@ -80,7 +80,9 @@ function AddTaskModal({mode, task, onClose, onSubmit, projects, currentProjectId
                             value={projectId}
                         >
                             {projects.map(project => 
-                                <option value={project.id}>{project.name}</option>
+                                <option key={project.id} value={project.id}>
+                                    {project.name}
+                                </option>
                             )}
                         </select>
                     </div>

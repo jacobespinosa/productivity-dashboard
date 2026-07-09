@@ -80,8 +80,8 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
                     <button type="button" 
                             className="selector-add-task-btn"
                             onClick={() => {
-                                setIsDropdownOpen(false);
                                 handleAddTask(todayDatekey);
+                                setIsDropdownOpen(false);
                             }}
                     >
                         + Add Task

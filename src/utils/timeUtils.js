@@ -6,6 +6,12 @@ export function formatMinutesHHMM(minutes) {
     return `${hours > 0 ? `${hours}h ` : ""}${mins > 0 ? `${mins}m` : ""}`;
 }
 
+export function formatMinutesHHMMIncludeZero(minutes) {
+    const hours = Math.floor(minutes / 60);
+    const mins  = Math.floor(minutes % 60);
+    return `${hours > 0 ? `${hours}h ` : ""}${mins > 0 ? `${mins}m` : "0m"}`;
+}
+
 export function formatSecondsHHMMSS(totalSeconds) {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -24,7 +30,7 @@ export function formatSecondsHHMM(totalSeconds) {
     return `${hh}:${mm}`;
 }
 
-export function getWeeklyTimeStats(timeByDate) {
+export function getWeeklyTotalTime(timeByDate) {
     const currentWeekStart = getCurrentWeekStart();
 
     const weekStart = new Date(currentWeekStart);
@@ -54,4 +60,21 @@ export function formatISOMMDD(date) {
     dateArray[0] = dateArray[0].replace(/^0+/, '');
     dateArray[1] = dateArray[1].replace(/^0+/, '');
     return dateArray.join('/');
+}
+
+export function getWeeklyTimeStats(timeByDate) {
+    const weekStart = getCurrentWeekStart();
+    const weeklyTimeStats = [];
+
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(weekStart);
+        date.setDate(date.getDate() + i);
+
+        const dateKey = date.toLocaleDateString('en-US');
+        const day = date.toLocaleDateString('en-US', {weekday: 'short'})
+        const time = timeByDate[dateKey] || 0;
+
+        weeklyTimeStats.push({day, time})
+    }
+    return weeklyTimeStats;
 }

@@ -8,11 +8,15 @@ import Layout from "./components/Layout";
 import { useState } from 'react';
 
 function App() {
+  const [ taskModalMode, setTaskModalMode ] = useState("add");
+  const [ isTaskModalOpen, setIsTaskModalOpen ] = useState(false);
+  const [ selectedDateKey, setSelectedDateKey ] = useState("");
+  const [ newTask, setNewTask ] = useState(null);
   const [projects, setProjects] = useState([
     {
       id: 0,
       name: "No Project",
-      color: "",
+      color: "#333",
       timeSpent: 0
     },
     {
@@ -35,15 +39,15 @@ function App() {
     }
   ]);
 
-  const [ timeByDate, setTimeByDate ] = useState({
-      "7/6/2026": 16902,
-      "7/7/2026": 16223,
-      "7/8/2026": 11674,
-      "7/9/2026": 8963,
-      "7/10/2026": 12261,
-      "7/11/2026": 1612,
-      "7/12/2026": 0
-  });
+    const [timeByDate, setTimeByDate] = useState({
+        "7/6/2026": 9000,   
+        "7/7/2026": 13500,  
+        "7/8/2026": 1800,  
+        "7/9/2026": 10800,  
+        "7/10/2026": 8100, 
+        "7/11/2026": 9900, 
+        "7/12/2026": 7200  
+    });
 
   const [ tasksByDate, setTasksByDate ] = useState({
       "7/6/2026": [
@@ -96,7 +100,7 @@ function App() {
           {
               id: 6,
               name: "Weekly Quiz",
-              projectId: null,
+              projectId: 0,
               time: 30,
               isDone: true,
               dueDate: "2026-07-2"
@@ -172,7 +176,7 @@ function App() {
           {
               id: 14,
               name: "Plan Next Week",
-              projectId: null,
+              projectId: 0,
               time: 30,
               isDone: true,
               dueDate: "2026-06-28",
@@ -204,7 +208,7 @@ function App() {
               }
           ]
       }));
-      setIsModalOpen(false);
+      setIsTaskModalOpen(false);
   }
 
   function handleUpdateTask(taskName, projectId, estimatedTime, dueDate) {
@@ -225,7 +229,7 @@ function App() {
               : task
           )
       }));
-      setIsModalOpen(false);        
+      setIsTaskModalOpen(false);        
   }
 
   function handleDeleteTask(dateKey, taskId) {
@@ -257,17 +261,17 @@ function App() {
   }
 
   function handleAddTask(dateKey) {
-      setModalMode("add");
+      setTaskModalMode("add");
       setSelectedDateKey(dateKey);
       setNewTask(null);
-      setIsModalOpen(true);
+      setIsTaskModalOpen(true);
   }
 
   function handleEditTask(dateKey, task) {
-      setModalMode("edit");
+      setTaskModalMode("edit");
       setSelectedDateKey(dateKey);
       setNewTask(task);
-      setIsModalOpen(true);
+      setIsTaskModalOpen(true);
   }
 
   const taskActions = {
@@ -277,6 +281,13 @@ function App() {
       handleUpdateTask,
       handleAddTask,
       handleEditTask
+  }
+
+  const taskModalState = {
+    taskModalMode,
+    setTaskModalMode,
+    isTaskModalOpen,
+    setIsTaskModalOpen
   }
 
     return (
@@ -291,7 +302,8 @@ function App() {
                                 projects={projects} setProjects={setProjects}
                                 tasksByDate={tasksByDate} setTasksByDate={setTasksByDate}
                                 timeByDate={timeByDate} setTimeByDate={setTimeByDate}
-                                taskActions={taskActions}
+                                taskActions={taskActions} taskModalState={taskModalState}
+                                newTask={newTask}
                             />
                         } 
                     />
@@ -301,6 +313,7 @@ function App() {
                             <CalendarPage 
                                 tasksByDate={tasksByDate}
                                 taskActions={taskActions}
+                                taskModalState={taskModalState}
                             />
                         } 
                     />

@@ -6,17 +6,36 @@
     display: grid;
     flex: 1;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: auto 1fr 1fr;
+    grid-template-rows: auto 1fr 1.2fr;
     gap: 1.5rem;
     grid-template-areas: 
         'timer streaksCard taskList'
-        'totalTasksRing totalTimeRing taskList'
-        'weeklyFocusChart projectTimeBreakdown recentSessions';
+        'graphs graphs taskList'
+        'graphs graphs recentSessions';
+}
+
+.dashboard-graphs {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1rem;
+    grid-area: graphs;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.2fr 1fr;
+    grid-template-areas:
+        'totalTimeRing totalTasksRing'
+        'projectTimeBreakdown weeklyFocusChart';
 }
 
 .timer {
     grid-area: timer;
     justify-self: start;
+    align-self: start;
+}
+
+.daily-task-list {
+    grid-area: taskList;
+    justify-self: end;
     align-self: start;
 }
 
@@ -26,10 +45,6 @@
 
 .total-weekly-time-ring {
     grid-area: totalTimeRing;
-}
-
-.today-task-list {
-    grid-area: taskList;
 }
 
 .project-time-breakdown {
@@ -46,4 +61,16 @@
 
 .streaks-card {
     grid-area: streaksCard;
+}
+
+/*
+.timer,
+.streaks-card,
+.recent-sessions,
+.weekly-focus-chart,
+.project-time-breakdown,
+.daily-task-list,
+.total-weekly-tasks-ring,
+.total-weekly-time-ring {
+    border: 1px solid black;
 }
