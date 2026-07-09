@@ -1,7 +1,7 @@
 import './ProgressRing.css';
 import { formatSecondsHHMM } from '../utils/timeUtils';
 
-function ProgressRing({value, goal, title, type}) {
+function ProgressRing({value, goal, title, type, onClick}) {
     const percent = goal > 0 ? Math.min((value / goal) * 100, 100) : 0;
 
     const displayValue = type === "time" ? formatSecondsHHMM(value) : value;
@@ -16,9 +16,10 @@ function ProgressRing({value, goal, title, type}) {
                  style={{ "--progress": `${percent}%` }}
             >
                 <div className="progress-ring-inner-circle">
-                    <span className={`ring-fraction ${percent === 100 ? "completed" : ""}`}>
+                    <button className={`ring-fraction ${percent === 100 ? "completed" : ""} ${onClick? "clickable" : ""}`}
+                          onClick={onClick? onClick : undefined}>
                         {display}
-                    </span>
+                    </button>
                 </div>
             </div>
         </div>

@@ -14,6 +14,7 @@ import TodayTaskList from '../components/TodayTaskList';
 import CreateProjectModal from '../components/CreateProjectModal';
 import ProjectTimeBreakdown from '../components/ProjectTimeBreakdown';
 import WeeklyFocusChart from '../components/WeeklyFocusChart';
+import SetWeeklyGoalModal from '../components/SetWeeklyGoalModal';
 
 function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                     timeByDate, setTimeByDate, taskActions, taskModalState,
@@ -35,11 +36,13 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
     setIsTaskModalOpen
   } = taskModalState
 
-  const [ currentSessionSeconds, setCurrentSessionSeconds ] = useState(0);
-  const [ selectedTask, setSelectedTask ] = useState(null);
-  const [ isCreateProjectOpen, setIsCreateProjectOpen ] = useState(false);
-  const [ currentProjectId, setCurrentProjectId ] = useState(projects[0].id);
-  const [ isRunning, setIsRunning ] = useState(false);
+  const [currentSessionSeconds, setCurrentSessionSeconds] = useState(0);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
+  const [currentProjectId, setCurrentProjectId] = useState(projects[0].id);
+  const [isRunning, setIsRunning] = useState(false);
+  const [isWeeklyGoalModalOpen, setIsWeeklyGoalModalOpen] = useState(true);
+  const [weeklyTimeGoal, setWeeklyTimeGoal] = useState(86400);
 
   const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(tasksByDate);
   const totalWeeklyTime = getWeeklyTotalTime(timeByDate) + currentSessionSeconds;
@@ -82,14 +85,16 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                 goal={totalTasks}
                 title={"Total Weekly Tasks"}
                 unit=""
+                onClick={""}
               />
             </div>
             <div className="total-weekly-time-ring">
               <ProgressRing
                 value={totalWeeklyTime}
-                goal={86400}
+                goal={weeklyTimeGoal}
                 title={"Total Weekly Time"}
                 type="time"
+                onClick={() => setIsWeeklyGoalModalOpen(true)}
               />
             </div>
 
@@ -152,6 +157,16 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
               onClose={() => {
                 setIsCreateProjectOpen(false);
               }}
+          />
+      )}
+
+      {isWeeklyGoalModalOpen && (
+          <SetWeeklyGoalModal 
+              onSubmit={(goal) => setWeeklyTimeGoal(goal)}
+              onClose={() => {
+                setIsWeeklyGoalModalOpen(false);
+              }}
+              weeklyTimeGoal={weeklyTimeGoal}
           />
       )}
       </main>
