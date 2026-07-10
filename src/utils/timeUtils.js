@@ -78,3 +78,11 @@ export function getWeeklyTimeStats(timeByDate) {
     }
     return weeklyTimeStats;
 }
+
+export function formatTime12Hour(date) {
+    return new Date(date).toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
+}

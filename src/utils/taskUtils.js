@@ -74,3 +74,7 @@ export function getLateTasks(tasksByDate) {
                 })
             )).filter(task => isTaskPastDue(task));
 }
+
+export function getTasksArray(tasksByDate) {
+    return Object.values(tasksByDate).flat();
+}

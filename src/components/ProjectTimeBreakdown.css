@@ -26,7 +26,7 @@
 }
 
 .project-weekly-breakdown-bar {
-    width: 250px;
+    width: 225px;
     height: 25px;
     background: linear-gradient(to right, var(--projectColor) var(--progress), var(--background) 0);
 }

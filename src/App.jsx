@@ -8,10 +8,10 @@ import Layout from "./components/Layout";
 import { useState } from 'react';
 
 function App() {
-  const [ taskModalMode, setTaskModalMode ] = useState("add");
-  const [ isTaskModalOpen, setIsTaskModalOpen ] = useState(false);
-  const [ selectedDateKey, setSelectedDateKey ] = useState("");
-  const [ newTask, setNewTask ] = useState(null);
+  const [taskModalMode, setTaskModalMode] = useState("add");
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [selectedDateKey, setSelectedDateKey] = useState("");
+  const [newTask, setNewTask] = useState(null);
   const [projects, setProjects] = useState([
     {
       id: 0,
@@ -192,6 +192,71 @@ function App() {
       ]
   });
 
+  const [sessions, setSessions] = useState([
+        {
+            id: 1,
+            projectId: 1,
+            taskId: 3, // Work on Dashboard
+            startTime: "2026-07-07T09:00:00",
+            endTime: "2026-07-07T11:00:00",
+            durationSeconds: 7200,
+            date: "7/7/2026"
+        },
+        {
+            id: 2,
+            projectId: 3,
+            taskId: 4, // Linux+ Study
+            startTime: "2026-07-07T11:30:00",
+            endTime: "2026-07-07T12:15:00",
+            durationSeconds: 2700,
+            date: "7/7/2026"
+        },
+        {
+            id: 3,
+            projectId: 2,
+            taskId: null, // Gym
+            startTime: "2026-07-07T18:00:00",
+            endTime: "2026-07-07T19:00:00",
+            durationSeconds: 3600,
+            date: "7/7/2026"
+        },
+        {
+            id: 4,
+            projectId: 0,
+            taskId: 6, // Weekly Quiz
+            startTime: "2026-07-08T08:30:00",
+            endTime: "2026-07-08T09:00:00",
+            durationSeconds: 1800,
+            date: "7/8/2026"
+        },
+        {
+            id: 5,
+            projectId: 1,
+            taskId: 3, // Work on Dashboard
+            startTime: "2026-07-08T10:00:00",
+            endTime: "2026-07-08T12:00:00",
+            durationSeconds: 7200,
+            date: "7/8/2026"
+        },
+        {
+            id: 6,
+            projectId: 3,
+            taskId: 4, // Linux+ Study
+            startTime: "2026-07-08T13:15:00",
+            endTime: "2026-07-08T14:00:00",
+            durationSeconds: 2700,
+            date: "7/8/2026"
+        },
+        {
+            id: 7,
+            projectId: 0,
+            taskId: 5, // Gym
+            startTime: "2026-07-08T17:30:00",
+            endTime: "2026-07-08T18:30:00",
+            durationSeconds: 3600,
+            date: "7/8/2026"
+        }
+    ])
 
   function handleCreateTask(taskName, projectId, estimatedTime, dueDate) {
       setTasksByDate(prev => ({
@@ -303,7 +368,8 @@ function App() {
                                 tasksByDate={tasksByDate} setTasksByDate={setTasksByDate}
                                 timeByDate={timeByDate} setTimeByDate={setTimeByDate}
                                 taskActions={taskActions} taskModalState={taskModalState}
-                                newTask={newTask}
+                                newTask={newTask} sessions={sessions}
+                                setSessions={setSessions}
                             />
                         } 
                     />

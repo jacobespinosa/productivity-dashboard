@@ -15,10 +15,11 @@ import CreateProjectModal from '../components/CreateProjectModal';
 import ProjectTimeBreakdown from '../components/ProjectTimeBreakdown';
 import WeeklyFocusChart from '../components/WeeklyFocusChart';
 import SetWeeklyGoalModal from '../components/SetWeeklyGoalModal';
+import RecentSessions from '../components/RecentSessions';
 
 function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                     timeByDate, setTimeByDate, taskActions, taskModalState,
-                    newTask }) {
+                    newTask, sessions, setSessions }) {
 
   const {
       handleCreateTask,
@@ -41,7 +42,7 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
   const [currentProjectId, setCurrentProjectId] = useState(projects[0].id);
   const [isRunning, setIsRunning] = useState(false);
-  const [isWeeklyGoalModalOpen, setIsWeeklyGoalModalOpen] = useState(true);
+  const [isWeeklyGoalModalOpen, setIsWeeklyGoalModalOpen] = useState(false);
   const [weeklyTimeGoal, setWeeklyTimeGoal] = useState(86400);
 
   const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(tasksByDate);
@@ -113,27 +114,32 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             </div>
           </div>
 
-          <div className="recent-sessions">
-
-          </div>
-
           <div className="streaks-card">
 
           </div>
-          <div className="daily-task-list">
-            <TodayTaskList
-              tasksByDate={tasksByDate}
-              projects={projects}
-              handleAddTask={handleAddTask}
-              handleEditTask={handleEditTask}
-              handleCreateTask={handleCreateTask}
-              handleDeleteTask={handleDeleteTask}
-              handleToggleTask={handleToggleTask}
-              handleUpdateTask={handleUpdateTask}
-              setIsRunning={setIsRunning}
-              setCurrentProjectId={setCurrentProjectId}
-              setSelectedTask={setSelectedTask}
-            />
+          <div className="right-panel">
+            <div className="daily-task-list">
+              <TodayTaskList
+                tasksByDate={tasksByDate}
+                projects={projects}
+                handleAddTask={handleAddTask}
+                handleEditTask={handleEditTask}
+                handleCreateTask={handleCreateTask}
+                handleDeleteTask={handleDeleteTask}
+                handleToggleTask={handleToggleTask}
+                handleUpdateTask={handleUpdateTask}
+                setIsRunning={setIsRunning}
+                setCurrentProjectId={setCurrentProjectId}
+                setSelectedTask={setSelectedTask}
+              />
+            </div>
+            <div className="recent-sessions">
+                <RecentSessions 
+                  sessions={sessions}
+                  projects={projects}
+                  tasksByDate={tasksByDate}
+                />
+            </div>
           </div>
         </section>
       {isTaskModalOpen && (

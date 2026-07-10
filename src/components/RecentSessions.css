@@ -1,0 +1,44 @@
+.recent-sessions-container {
+    background-color: var(--surface);
+    border: 2px solid var(--border);
+    box-shadow: inset 0 -10px 0 var(--border);
+    width: 453px;
+    height: 325px;
+}
+
+.recent-sessions-header {
+    background-color: var(--border);
+}
+
+.recent-sessions-title {
+    text-align: center;
+    padding: 1rem;
+}
+
+.recent-sessions-list {
+    list-style: none;
+    display: flex;
+    gap: 0.6rem;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.recent-sessions-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid var(--projectColor);
+    padding-left: 0.5rem;
+}
+
+.recent-sessions-label {
+    display: flex;
+}
+
+.recent-session-header {
+    font-weight: 600;
+}
+
+.recent-session-meta {
+    color: var(--text-primary);
+}
