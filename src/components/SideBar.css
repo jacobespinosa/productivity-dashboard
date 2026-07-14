@@ -43,3 +43,7 @@
 .sidebar-link svg {
     font-size: larger;
 }
+
+.sidebar-link.active {
+    background-color: var(--background);
+}

@@ -6,7 +6,7 @@
     display: grid;
     flex: 1;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 90px 1fr 1fr;
+    grid-template-rows: 110px 1fr 1fr;
     gap: 1.5rem;
     grid-template-areas: 
         'timer streaksCard rightPanel'
@@ -69,6 +69,8 @@
 
 .streaks-card {
     grid-area: streaksCard;
+    display: flex;
+    justify-content: center;
 }
 
 /*

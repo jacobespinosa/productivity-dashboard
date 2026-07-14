@@ -2,7 +2,7 @@ import './Dashboard.css';
 
 import { getCurrentWeekStart } from '../utils/dateUtils';
 import { getWeeklyTaskStats } from '../utils/taskUtils';
-import { getWeeklyTotalTime } from '../utils/timeUtils';
+import { getWeeklyTotalTime, getWeeklyTimeStats } from '../utils/timeUtils';
 import { useState } from 'react';
 
 import AddTaskModal from '../components/AddTaskModal';
@@ -16,10 +16,12 @@ import ProjectTimeBreakdown from '../components/ProjectTimeBreakdown';
 import WeeklyFocusChart from '../components/WeeklyFocusChart';
 import SetWeeklyGoalModal from '../components/SetWeeklyGoalModal';
 import RecentSessions from '../components/RecentSessions';
+import StreaksCard from '../components/StreaksCard';
+import ColumnBarChart from '../components/ColumnBarChart';
 
 function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                     timeByDate, setTimeByDate, taskActions, taskModalState,
-                    newTask, sessions, setSessions }) {
+                    newTask, sessions, setSessions, currentProjectId, setCurrentProjectId }) {
 
   const {
       handleCreateTask,
@@ -40,7 +42,6 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   const [currentSessionSeconds, setCurrentSessionSeconds] = useState(0);
   const [selectedTask, setSelectedTask] = useState(null);
   const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
-  const [currentProjectId, setCurrentProjectId] = useState(projects[0].id);
   const [isRunning, setIsRunning] = useState(false);
   const [isWeeklyGoalModalOpen, setIsWeeklyGoalModalOpen] = useState(false);
   const [weeklyTimeGoal, setWeeklyTimeGoal] = useState(86400);
@@ -57,6 +58,11 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
           }]
       )
   }
+
+  const weeklyTimeStats = getWeeklyTimeStats(timeByDate);
+  const sortedTimeStats = weeklyTimeStats.toSorted((a, b) => b.time - a.time);
+  const mostTime = sortedTimeStats[0].time;
+  const maxTime = Math.ceil(mostTime / 60) * 60;
 
   return (
       <main className="dashboard">
@@ -77,6 +83,7 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             setIsCreateProjectOpen={setIsCreateProjectOpen}
             isRunning={isRunning}
             setIsRunning={setIsRunning}
+            setSessions={setSessions}
           />
 
           <div className="dashboard-graphs">
@@ -100,22 +107,31 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             </div>
 
             <div className="project-time-breakdown">
-              <ProjectTimeBreakdown 
+              <ProjectTimeBreakdown
                   projects={projects}
-                  tasksByDate={tasksByDate}
                   timeByDate={timeByDate}
+                  sessions={sessions}
               />
             </div>
 
             <div className="weekly-focus-chart">
-              <WeeklyFocusChart 
-                  timeByDate={timeByDate}
+              <ColumnBarChart 
+                  title={"Weekly Focus Chart"}
+                  data={weeklyTimeStats}
+                  maxValue={maxTime}
+                  getKey={item => item.day}
+                  getValue={item => item.time}
+                  getBottomLabel={item => item.day}
+                  getTopLabel={item => item.timeDisplay}
               />
             </div>
           </div>
 
           <div className="streaks-card">
-
+              <StreaksCard 
+                  tasksByDate={tasksByDate}
+                  timeByDate={timeByDate}
+              />
           </div>
           <div className="right-panel">
             <div className="daily-task-list">
@@ -142,20 +158,6 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
             </div>
           </div>
         </section>
-      {isTaskModalOpen && (
-          <AddTaskModal
-              projects={projects}
-              mode={taskModalMode}
-              task={newTask}
-              onClose={() => {
-                setCurrentProjectId(projects[0].id);
-                setIsTaskModalOpen(false);
-              }}
-              onSubmit={taskModalMode === "add" 
-                        ? handleCreateTask : handleUpdateTask}
-              currentProjectId={currentProjectId}
-          />
-      )}
 
       {isCreateProjectOpen && (
           <CreateProjectModal

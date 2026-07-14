@@ -4,6 +4,7 @@
     border: 1px solid var(--border);
     background-color: var(--surface);
     box-shadow: inset 0 -10px 0 var(--border);
+    height: 100%;
 }
 
 .weekly-header {
@@ -38,7 +39,7 @@
 
 .day-container {
     display: flex;
-    padding: 0.75rem 1.5rem 0;
+    padding: 0.75rem 1.5rem 1.5rem;
     gap: 0.75rem;
 }
 
@@ -160,4 +161,8 @@
 
 .date-separator {
     color: black;
+}
+
+.card-heading .today {
+    color: var(--blue);
 }

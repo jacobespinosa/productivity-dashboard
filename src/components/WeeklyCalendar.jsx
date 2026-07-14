@@ -2,18 +2,17 @@ import './WeeklyCalendar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan  } from '@fortawesome/free-regular-svg-icons';
 import { getCurrentWeekStart, getDaySuffix, 
-         getCurrentWeekRange } from '../utils/dateUtils';
+         getCurrentWeekRange, getTodayDate, getDateKey } from '../utils/dateUtils';
 import { formatMinutesHHMM, formatISOMMDD } from '../utils/timeUtils';
 import { getDueStatus } from '../utils/taskUtils';
 import { useState } from 'react';
 
 
 function WeeklyCalendar({ tasksByDate, handleAddTask, handleEditTask,
-                          handleDeleteTask, handleToggleTask
+                          handleDeleteTask, handleToggleTask, visibleWeekStart,
+                          setVisibleWeekStart
  }) {
     
-    const [ visibleWeekStart, setVisibleWeekStart ] = useState(getCurrentWeekStart());
-
     function handleNextWeek() {
         const nextWeek = new Date(visibleWeekStart);
         nextWeek.setDate(nextWeek.getDate() + 7);
@@ -78,11 +77,12 @@ function WeeklyCalendar({ tasksByDate, handleAddTask, handleEditTask,
                 (acc, task) => acc + task.time,
                 0
             );
-            
+            const todayDatekey = getDateKey(getTodayDate());
+            const isToday = todayDatekey === day.dateKey;
             return (
                 <div key={day.dateKey} className="day-card">
                     <div className="card-heading">
-                        <h3 className="date">{day.day}, {day.dateKey}</h3>
+                        <h3 className={`date ${isToday ? "today" : ""}`}>{day.day}, {day.dateKey}</h3>
                     </div>
 
                     <ul className="task-list">

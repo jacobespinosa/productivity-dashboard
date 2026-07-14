@@ -132,8 +132,71 @@ PROJECTS:
 DASHBOARD GRAPHS:
    - time spent on week by project (bar chart horizontal / next to weekly hours ring) DONE
    - daily focus over the last week (or 7 days). Use hours DONE
-   - Recent sessions (below daily tasks)
-   - Streaks
+   - Recent sessions (below daily tasks) DONE
+   - Weekly Project Goals
+   
+
+STREAKS:
+   - A streak is about consistency. A goal is about achievement.
+   - Days with at least one completed task. Very forgiving (Productivity)
+   - Days reaching your focus goal. 2 hours/day (Time)
+   - Days with every task completed. Harder achievement (Planning)
+   - Days with at least one project session. Encourages progress on long-term projects. (Project Work)
+   - Days all habits completed. If you later add recurring tasks (Habits) <-- Good Idea
+   - Instead of every streak being "days in a row," include a Best Streak alongside the current one.
+        Current 🔥 8 days
+        Best 🏆 31 days
+
+   3 Best Ones: (Rest go to ANALYTICS PAGE)
+      - Days with every task completed. Finishing everything you planned (Execution)
+      - Days reaching a daily focus goal. Spending enough focused time (consistency)
+      - Longest Streak (Personal Record)
+
+CALENDER PAGE:
+  - Calendar header with Month (long) and day of month;
+
+  - Mini calendar
+    - For quick navigation. Clicking a day jumps to it
+
+  - Filters for items in main calendar
+
+  - Daily agenda
+    - Modal for day when clicking on it 
+    - Notes for that day
+
+  - Main calendar
+    - tasks
+    - task count
+    - completed tasks
+    - total tracked time
+    - colored project dots
+
+    Mon 13
+    ● Math HW
+    ● React Dashboard
+    ○ Gym
+    3h 20m tracked
+
+   - Upcoming, overdue, due soon task with there own respective headers
+
+---------------------------------------------------------
+ Header
+---------------------------------------------------------
+| Left Sidebar |            Main Area                  |
+|              |                                       |
+| Mini Calendar|       Month Calendar                  |
+|              |                                       |
+| Filters      |                                       |
+|              |                                       |
+| Upcoming     |                                       |
+| Due Soon     |                                       |
+| Overdue      |                                       |
+---------------------------------------------------------
+ Weekly Plan (your existing component)
+---------------------------------------------------------
+
+ANALYTICS PAGE:
+   - Heatmap that you can rotate through to see different stats 
 
   What am I working on? → Timer
   How am I doing this week? → Rings + Project breakdown

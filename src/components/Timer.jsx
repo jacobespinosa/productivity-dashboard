@@ -7,8 +7,10 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
                 currentSessionSeconds, setCurrentSessionSeconds,
                 currentProjectId, setCurrentProjectId, selectedTask,
                 setSelectedTask, tasksByDate, handleAddTask,
-                setIsCreateProjectOpen, isRunning, setIsRunning }) {
+                setIsCreateProjectOpen, isRunning, setIsRunning, 
+                setSessions }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [startTime, setStartTime] = useState(null);
     
     const today = new Date();
     const dateKey = today.toLocaleDateString();
@@ -44,10 +46,16 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
     }, [isRunning]);
 
     function handleClick() {
+        if (!isRunning && currentSessionSeconds === 0) {
+            setStartTime(new Date().toISOString());
+        }
+
         setIsRunning(prev => !prev);
     }
 
     function handleEndSession() {
+        const endTime = new Date().toISOString();
+
         setProjects(prevProjects => 
             prevProjects.map(project => 
                 project.id === currentProjectId
@@ -61,6 +69,21 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
                 ...prevTimeByDate,
                 [dateKey]: (prevTimeByDate[dateKey] ?? 0) + currentSessionSeconds 
             }
+        ))
+
+        setSessions(prevSessions => (
+            [
+                ...prevSessions,
+                {
+                    id: Date.now(),
+                    projectId: currentProjectId,
+                    taskId: selectedTask?.id ?? null,
+                    startTime,
+                    endTime,
+                    durationSeconds: currentSessionSeconds,
+                    date: dateKey
+                }
+            ]
         ))
 
         setIsRunning(false);

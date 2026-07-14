@@ -72,9 +72,11 @@ export function getWeeklyTimeStats(timeByDate) {
 
         const dateKey = date.toLocaleDateString('en-US');
         const day = date.toLocaleDateString('en-US', {weekday: 'short'})
-        const time = timeByDate[dateKey] || 0;
+        const timeSeconds = timeByDate[dateKey] || 0;
+        const timeDisplay = formatMinutesHHMMIncludeZero(timeSeconds/60);
+        const time = timeSeconds / 60;
 
-        weeklyTimeStats.push({day, time})
+        weeklyTimeStats.push({day, time, timeDisplay})
     }
     return weeklyTimeStats;
 }

@@ -10,21 +10,23 @@ export function getTextColor(hex) {
     return brightness > 160 ? "#222" : "#fff";
 }
 
-export function getWeeklyProjectStats(projects, tasksByDate) {
+/* return object with the project object and time spent of project this week */
+export function getWeeklyProjectStats(projects, sessions) {
         const weekStart = getCurrentWeekStart();
         const projectMap = new Map();
         const projectStats = [];
 
+        const date = new Date(weekStart);
+
         for (let index = 0; index < 7; index++) {
-            const date = new Date(weekStart);
-            date.setDate(weekStart.getDate() + index);
+            date.setDate(date.getDate() + 1);
 
             const dateKey = date.toLocaleDateString('en-US');
-            const tasks = tasksByDate[dateKey] || [];
+            const todaySessions = sessions.filter(session => session.date === dateKey);
 
-            tasks.forEach((task => {
-                const timeSpent = projectMap.get(task.projectId) || 0;
-                projectMap.set(task.projectId, timeSpent + (task.time || 0));
+            todaySessions.forEach((session => {
+                const timeSpent = (session?.durationSeconds ?? 0) / 60;
+                projectMap.set(session.projectId, timeSpent + (projectMap.get(session.projectId) || 0));
             }))
         };
 

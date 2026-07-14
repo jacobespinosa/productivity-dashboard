@@ -1,0 +1,16 @@
+.calendar-header-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 80px;
+    width: 100%;
+    border: 1px solid var(--border);
+    background-color: var(--border);
+    padding: 0.5rem 1rem;
+}
+
+.calendar-header-container .date {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+}

@@ -36,3 +36,13 @@ export function getCurrentWeekRange(startOfWeek) {
         startMonth !== endMonth ? `${endMonth} ` : ""
     }${end}${endPrefix}`;
 }
+
+export function getTodayDate() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);   
+    return today;
+}
+
+export function getDateKey(date) {
+    return date.toLocaleDateString('en-US');
+}

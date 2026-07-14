@@ -5,6 +5,7 @@ import CalendarPage from './pages/CalendarPage';
 import ProjectsPage from "./pages/ProjectsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import Layout from "./components/Layout";
+import AddTaskModal from './components/AddTaskModal';
 import { useState } from 'react';
 
 function App() {
@@ -38,26 +39,27 @@ function App() {
       timeSpent: 36902
     }
   ]);
+  const [currentProjectId, setCurrentProjectId] = useState(projects[0].id);
 
     const [timeByDate, setTimeByDate] = useState({
-        "7/6/2026": 9000,   
-        "7/7/2026": 13500,  
-        "7/8/2026": 1800,  
-        "7/9/2026": 10800,  
-        "7/10/2026": 8100, 
-        "7/11/2026": 9900, 
-        "7/12/2026": 7200  
+        "7/13/2026": 10000,   
+        "7/14/2026": 12000,  
+        "7/15/2026": 2000,  
+        "7/16/2026": 9000,  
+        "7/17/2026": 7200, 
+        "7/18/2026": 6000, 
+        "7/19/2026": 10000  
     });
 
   const [ tasksByDate, setTasksByDate ] = useState({
-      "7/6/2026": [
+      "7/13/2026": [
           {
               id: 1,
               name: "Study React",
               projectId: 0,
               time: 90,
               isDone: true,
-              dueDate: "2026-06-30"
+              dueDate: "2026-07-14"
           },
           {
               id: 2,
@@ -65,18 +67,18 @@ function App() {
               projectId: 2,
               time: 60,
               isDone: false,
-              dueDate: "2026-06-30"
+              dueDate: "2026-07-14"
           }
       ],
 
-      "7/7/2026": [
+      "7/14/2026": [
           {
               id: 3,
               name: "Work on Dashboard",
               projectId: 1,
               time: 120,
               isDone: true,
-              dueDate: "2026-07-1"
+              dueDate: "2026-07-15"
           },
           {
               id: 4,
@@ -84,7 +86,7 @@ function App() {
               projectId: 3,
               time: 45,
               isDone: true,
-              dueDate: "2026-07-1"
+              dueDate: "2026-07-15"
           },
           {
               id: 5,
@@ -92,29 +94,29 @@ function App() {
               projectId: 0,
               time: 60,
               isDone: false,
-              dueDate: "2026-07-1"
+              dueDate: "2026-07-15"
           }
       ],
 
-      "7/8/2026": [
+      "7/15/2026": [
           {
               id: 6,
               name: "Weekly Quiz",
               projectId: 0,
               time: 30,
               isDone: true,
-              dueDate: "2026-07-2"
+              dueDate: "2026-07-16"
           }
       ],
 
-      "7/9/2026": [
+      "7/16/2026": [
           {
               id: 7,
               name: "Portfolio Improvements",
               projectId: 1,
               time: 120,
               isDone: false,
-              dueDate: "2026-07-3"
+              dueDate: "2026-07-17"
           },
           {
               id: 8,
@@ -122,18 +124,18 @@ function App() {
               projectId: 3,
               time: 60,
               isDone: false,
-              dueDate: "2026-07-3"
+              dueDate: "2026-07-17"
           }
       ],
 
-      "7/10/2026": [
+      "7/17/2026": [
           {
               id: 9,
               name: "Read Documentation",
               projectId: 2,
               time: 45,
               isDone: true,
-              dueDate: "2026-7-4"
+              dueDate: "2026-7-18"
           },
           {
               id: 10,
@@ -141,18 +143,18 @@ function App() {
               projectId: 2,
               time: 90,
               isDone: false,
-              dueDate: "2026-07-4"
+              dueDate: "2026-07-18"
           }
       ],
 
-      "7/11/2026": [
+      "7/18/2026": [
           {
               id: 11,
               name: "Fix Timer Bugs",
               projectId: 1,
               time: 75,
               isDone: false,
-              dueDate: "2026-7-5"
+              dueDate: "2026-7-19"
           },
           {
               id: 12,
@@ -160,7 +162,7 @@ function App() {
               projectId: 3,
               time: 60,
               isDone: true,
-              dueDate: "2026-7-5"
+              dueDate: "2026-7-19"
           },
           {
               id: 13,
@@ -168,18 +170,18 @@ function App() {
               projectId: 0,
               time: 30,
               isDone: true,
-              dueDate: "2026-7-5"
+              dueDate: "2026-7-19"
           }
       ],
 
-      "7/12/2026": [
+      "7/19/2026": [
           {
               id: 14,
               name: "Plan Next Week",
               projectId: 0,
               time: 30,
               isDone: true,
-              dueDate: "2026-06-28",
+              dueDate: "2026-06-20",
           },
           {
               id: 15,
@@ -187,7 +189,7 @@ function App() {
               projectId: 1,
               time: 90,
               isDone: true,
-              dueDate: "2026-06-28"
+              dueDate: "2026-06-20"
           }
       ]
   });
@@ -197,8 +199,8 @@ function App() {
             id: 1,
             projectId: 1,
             taskId: 3, // Work on Dashboard
-            startTime: "2026-07-07T09:00:00",
-            endTime: "2026-07-07T11:00:00",
+            startTime: "2026-07-13T09:00:00",
+            endTime: "2026-07-13T11:00:00",
             durationSeconds: 7200,
             date: "7/7/2026"
         },
@@ -369,7 +371,8 @@ function App() {
                                 timeByDate={timeByDate} setTimeByDate={setTimeByDate}
                                 taskActions={taskActions} taskModalState={taskModalState}
                                 newTask={newTask} sessions={sessions}
-                                setSessions={setSessions}
+                                setSessions={setSessions} currentProjectId={currentProjectId}
+                                setCurrentProjectId={setCurrentProjectId}
                             />
                         } 
                     />
@@ -387,6 +390,20 @@ function App() {
                     <Route path="/analytics" element={<AnalyticsPage />} />
                 </Route>
             </Routes>
+            {isTaskModalOpen && (
+                <AddTaskModal
+                    projects={projects}
+                    mode={taskModalMode}
+                    task={newTask}
+                    onClose={() => {
+                        setCurrentProjectId(projects[0].id);
+                        setIsTaskModalOpen(false);
+                    }}
+                    onSubmit={taskModalMode === "add" 
+                                ? handleCreateTask : handleUpdateTask}
+                    currentProjectId={currentProjectId}
+                />
+            )}
         </BrowserRouter>
     );
 }

@@ -160,7 +160,7 @@ function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDelete
                                     )}
                                 </span>
                                 <div className="start-project-container">
-                                    {project && 
+                                    {project.id !== 0 && 
                                         <span
                                             style={{
                                                 background: project?.color,

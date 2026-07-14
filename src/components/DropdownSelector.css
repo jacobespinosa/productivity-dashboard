@@ -30,6 +30,7 @@
 }
 
 .project-options {
+    height: 140px;
     overflow-y: auto;
     margin-right: 0.75rem;
 }

@@ -1,6 +1,6 @@
 import './RecentSessions.css';
 import { getTasksArray } from '../utils/taskUtils';
-import { formatMinutesHHMM, formatTime12Hour } from '../utils/timeUtils';
+import { formatMinutesHHMM, formatTime12Hour, formatMinutesHHMMIncludeZero } from '../utils/timeUtils';
 
 function RecentSessions({sessions, projects, tasksByDate}) {
     const lastFiveSessions = sessions.sort((a, b) => b.endTime.localeCompare(a.endTime)).slice(0, 5);
@@ -22,13 +22,13 @@ function RecentSessions({sessions, projects, tasksByDate}) {
                     const sessionHeader = `${task 
                                             ? task.name 
                                             : project.id !== 0 
-                                            ? project.name : "No Project"}`;
+                                            ? project.name : "Unassigned"}`;
                     const displayProjectName = `${project.id === 0
                                                     ? ""
                                                     : project.name !== sessionHeader
                                                     ? `${project.name} • ` 
                                                     : "No Task • "}`;
-                    const sessionLength = `${formatMinutesHHMM(sessionMinutes)}`;
+                    const sessionLength = `${formatMinutesHHMMIncludeZero(sessionMinutes)}`;
                     const sessionMeta = `${displayProjectName}`;
                     const sessionTimeRange = `${startTime} – ${endTime}`
 

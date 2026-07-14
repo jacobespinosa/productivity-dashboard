@@ -21,8 +21,16 @@
 }
 
 .project-weekly-breakdown-label {
+    display: flex;
     font-size: 1.2rem;
     width: 110px;
+}
+
+.project-weekly-breakdown-label .project-name {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .project-weekly-breakdown-bar {

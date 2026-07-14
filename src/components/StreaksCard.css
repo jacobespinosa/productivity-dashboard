@@ -1,0 +1,82 @@
+.streaks-card-container {
+    display: flex;
+    flex-direction: column;
+    height: 110px;
+    width: 400px;
+    background-color: var(--surface);
+    box-shadow: 1px 1px 8px var(--shadow);
+}
+
+.streaks-card-header {
+    padding: 0.3rem;
+    text-align: center;
+}
+
+.streak-display {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.daily-focus-goal,
+.all-tasks-completed {
+    padding: 0.5rem;
+    padding-top: 0.3rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+.streaks {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.best-streak .days,
+.current-streak .days {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-weight: 600;
+}
+
+.best-streak .days .number,
+.current-streak .days .number {
+    font-size: 1.1rem;
+}
+
+.best-streak .label,
+.current-streak .label {
+    color: var(--text-primary);
+}
+
+.divider-vertical {
+    align-self: center;
+    height: 85%;
+    width: 1px;
+    background-color: var(--border);
+}
+
+.fire-icon {
+    position: relative;
+    display: inline-block;
+    z-index: 1
+}
+
+.fire-outer {
+    color: var(--red);
+}
+
+.fire-inner {
+    position: absolute;
+    color: var(--orange);
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.6);
+    z-index: -1;
+}
+
+.tropy-icon {
+    width: 1em;
+    height: 1em;
+}

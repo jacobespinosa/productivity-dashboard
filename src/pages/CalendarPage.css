@@ -1,0 +1,38 @@
+.calendar {
+    height: calc(100vh - 4rem);
+}
+
+.calendar-content {
+    height: 100%;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr 1.5fr;
+    grid-template-areas: 
+        'calendarHeader calendarHeader'
+        'estimatedWorkload taskList'
+        'weekCalendar weekCalendar';
+}
+
+.calendar-header {
+    grid-area: calendarHeader;
+}
+
+.estimated-workload {
+    grid-area: estimatedWorkload;
+    margin-left: 3rem;
+}
+
+.task-list-section {
+    grid-area: taskList;
+}
+
+.week-calendar {
+    grid-area: weekCalendar;
+}
+
+/*
+.mini-calendar,
+.week-calendar {
+    border: 1px solid black;
+}
