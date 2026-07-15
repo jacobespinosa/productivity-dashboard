@@ -10,76 +10,12 @@ TASKS:
   Actual hours
   End task feature that automatically adds up all timer seesions
 
-TIMER:
-  Session duration
-  Tasks worked on
-  Total time working
-  Track projects by time
-
-WEEKLY ANALYTICS:
-  Hours worked
-  Tasks Completed
-  Average session length
-  Completion rate
-  Difference between Estimated time and Actual time
-
-WEEKLY CALENDER:
-  Next week (button or automatic)
-  Archive prevous weeks
-  Tasks are tied to projects
-  Time planned vs time spent
-
-
 GOAL TRACKING:
   Long term goals
 
   EX: 
     React Course (88%), Maybe use moduals?
     Leet Code (67/250)
-
-GITHUB INTEGRATION:
-  Contributions
-  Repos
-  Commit Commits
-
-
-DASHBOARD:
-  SideBar (left side)
-  Timer (top left)
-  Current Task/Project (right of Timer)
-  WeeklyTimeGoalRing (middle)
-    With a goal
-  WeeklyProgress (middle)
-    Count by tasks
-  Streaks (middle)
-  TaskList (top right)
-    Tasks remaining
-  WeeklyCalender (bottom)
-
-Dashboard
-├── Sidebar
-│
-├── Top Row
-│   ├── Timer / Current Focus Session
-│   ├── Current Task / Project
-│   └── TaskList / Tasks Remaining
-│
-├── Metrics Row
-│   ├── Total Time Weekly
-│   ├── Weekly Progress
-│   ├── Streaks
-│   └── Recent Commits
-│
-└── Bottom Row
-    └── WeeklyCalendar
-
-Tasks
-  Sidebar
-  CurrentFocus
-  TaskList
-  WeeklyStats
-  WeeklyCalendar
-
 
 GRAPHS:
   Workload heatmap (monthly or weekly? Based on hours or tasks completed?)
@@ -116,26 +52,6 @@ TodayTaskList:
   - color projects DONE
 
 
-Dropdown:
-  bugs:
-    - Adding task when timer has tasks and project select gets rid of it DONE
-    - tasks for "No Project" not appearing DONE
-  Features:
-    - Click outside component closes it DONE
-    - Add create new project Modal DONE
-    - Organize tasks and projects better in dropdown DONE
-    - Finish styling DONE
-
-PROJECTS:
-  - color coded projects DONE
-
-DASHBOARD GRAPHS:
-   - time spent on week by project (bar chart horizontal / next to weekly hours ring) DONE
-   - daily focus over the last week (or 7 days). Use hours DONE
-   - Recent sessions (below daily tasks) DONE
-   - Weekly Project Goals
-   
-
 STREAKS:
    - A streak is about consistency. A goal is about achievement.
    - Days with at least one completed task. Very forgiving (Productivity)
@@ -152,55 +68,5 @@ STREAKS:
       - Days reaching a daily focus goal. Spending enough focused time (consistency)
       - Longest Streak (Personal Record)
 
-CALENDER PAGE:
-  - Calendar header with Month (long) and day of month;
-
-  - Mini calendar
-    - For quick navigation. Clicking a day jumps to it
-
-  - Filters for items in main calendar
-
-  - Daily agenda
-    - Modal for day when clicking on it 
-    - Notes for that day
-
-  - Main calendar
-    - tasks
-    - task count
-    - completed tasks
-    - total tracked time
-    - colored project dots
-
-    Mon 13
-    ● Math HW
-    ● React Dashboard
-    ○ Gym
-    3h 20m tracked
-
-   - Upcoming, overdue, due soon task with there own respective headers
-
----------------------------------------------------------
- Header
----------------------------------------------------------
-| Left Sidebar |            Main Area                  |
-|              |                                       |
-| Mini Calendar|       Month Calendar                  |
-|              |                                       |
-| Filters      |                                       |
-|              |                                       |
-| Upcoming     |                                       |
-| Due Soon     |                                       |
-| Overdue      |                                       |
----------------------------------------------------------
- Weekly Plan (your existing component)
----------------------------------------------------------
-
 ANALYTICS PAGE:
    - Heatmap that you can rotate through to see different stats 
-
-  What am I working on? → Timer
-  How am I doing this week? → Rings + Project breakdown
-  What should I work on today? → TodayTaskList
-  What did I just accomplish? → RecentSessions
-  How has my week looked? → WeeklyFocusChart
-  How consistent have I been? → StreaksCard

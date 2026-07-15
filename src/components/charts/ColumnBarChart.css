@@ -47,7 +47,7 @@
     border-bottom: 2px solid var(--shadow);
 }
 
-.workload-chart-bar .progress-fill {
+.bar .progress-fill {
     width: 100%;
     background-color: var(--blue);
     transition: height 0.3s ease;

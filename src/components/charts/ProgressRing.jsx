@@ -1,5 +1,5 @@
 import './ProgressRing.css';
-import { formatSecondsHHMM } from '../utils/timeUtils';
+import { formatSecondsHHMM } from '../../utils/timeUtils';
 
 function ProgressRing({value, goal, title, type, onClick}) {
     const percent = goal > 0 ? Math.min((value / goal) * 100, 100) : 0;

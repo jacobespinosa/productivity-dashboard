@@ -1,6 +1,6 @@
 import './AddTaskModal.css';
 import { useState } from 'react';
-import { getWeekStartISO } from '../utils/timeUtils';
+import { getWeekStartISO } from '../../utils/timeUtils';
 
 function AddTaskModal({mode, task, onClose, onSubmit, projects, currentProjectId}) {
     const [ taskName, setTaskName ] = useState(task?.name ?? "");

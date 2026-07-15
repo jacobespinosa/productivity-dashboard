@@ -5,23 +5,22 @@ import { getWeeklyTaskStats } from '../utils/taskUtils';
 import { getWeeklyTotalTime, getWeeklyTimeStats } from '../utils/timeUtils';
 import { useState } from 'react';
 
-import AddTaskModal from '../components/AddTaskModal';
+import AddTaskModal from '../components/modals/AddTaskModal';
 import SideBar from "../components/SideBar";
-import Timer   from "../components/Timer";
-import WeeklyCalendar from '../components/WeeklyCalendar';
-import ProgressRing from '../components/ProgressRing';
-import TodayTaskList from '../components/TodayTaskList';
-import CreateProjectModal from '../components/CreateProjectModal';
-import ProjectTimeBreakdown from '../components/ProjectTimeBreakdown';
-import WeeklyFocusChart from '../components/WeeklyFocusChart';
-import SetWeeklyGoalModal from '../components/SetWeeklyGoalModal';
-import RecentSessions from '../components/RecentSessions';
-import StreaksCard from '../components/StreaksCard';
-import ColumnBarChart from '../components/ColumnBarChart';
+import Timer   from "../components/dashboard/Timer";
+import WeeklyCalendar from '../components/calendar/WeeklyCalendar';
+import ProgressRing from '../components/charts/ProgressRing';
+import TodayTaskList from '../components/dashboard/TodayTaskList';
+import ProjectTimeBreakdown from '../components/charts/ProjectTimeBreakdown';
+import SetWeeklyGoalModal from '../components/modals/SetWeeklyGoalModal';
+import RecentSessions from '../components/dashboard/RecentSessions';
+import StreaksCard from '../components/dashboard/StreaksCard';
+import ColumnBarChart from '../components/charts/ColumnBarChart';
 
 function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                     timeByDate, setTimeByDate, taskActions, taskModalState,
-                    newTask, sessions, setSessions, currentProjectId, setCurrentProjectId }) {
+                    newTask, sessions, setSessions, currentProjectId, setCurrentProjectId,
+                    isCreateProjectOpen, setIsCreateProjectOpen}) {
 
   const {
       handleCreateTask,
@@ -41,7 +40,6 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
 
   const [currentSessionSeconds, setCurrentSessionSeconds] = useState(0);
   const [selectedTask, setSelectedTask] = useState(null);
-  const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [isWeeklyGoalModalOpen, setIsWeeklyGoalModalOpen] = useState(false);
   const [weeklyTimeGoal, setWeeklyTimeGoal] = useState(86400);
@@ -49,15 +47,6 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
   const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(tasksByDate);
   const totalWeeklyTime = getWeeklyTotalTime(timeByDate) + currentSessionSeconds;
 
-  function handleCreateProject(name, color) {
-      setProjects(prevProjects => 
-          [...prevProjects, {
-            id: Date.now(),
-            name: name,
-            color: color
-          }]
-      )
-  }
 
   const weeklyTimeStats = getWeeklyTimeStats(timeByDate);
   const sortedTimeStats = weeklyTimeStats.toSorted((a, b) => b.time - a.time);
@@ -123,6 +112,8 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                   getValue={item => item.time}
                   getBottomLabel={item => item.day}
                   getTopLabel={item => item.timeDisplay}
+                  columnWidth={"50px"}
+                  columnGap={"1.5rem"}
               />
             </div>
           </div>
@@ -159,14 +150,6 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
           </div>
         </section>
 
-      {isCreateProjectOpen && (
-          <CreateProjectModal
-              onSubmit={handleCreateProject}
-              onClose={() => {
-                setIsCreateProjectOpen(false);
-              }}
-          />
-      )}
 
       {isWeeklyGoalModalOpen && (
           <SetWeeklyGoalModal 

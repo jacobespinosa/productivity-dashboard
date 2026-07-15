@@ -1,6 +1,6 @@
 import './RecentSessions.css';
-import { getTasksArray } from '../utils/taskUtils';
-import { formatMinutesHHMM, formatTime12Hour, formatMinutesHHMMIncludeZero } from '../utils/timeUtils';
+import { getTasksArray } from '../../utils/taskUtils';
+import { formatMinutesHHMM, formatTime12Hour, formatMinutesHHMMIncludeZero } from '../../utils/timeUtils';
 
 function RecentSessions({sessions, projects, tasksByDate}) {
     const lastFiveSessions = sessions.sort((a, b) => b.endTime.localeCompare(a.endTime)).slice(0, 5);

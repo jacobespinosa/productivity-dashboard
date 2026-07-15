@@ -1,4 +1,4 @@
-import { getCurrentWeekStart } from "./dateUtils";
+import { getCurrentWeekStart, getTodayDate } from "./dateUtils";
 
 export function getWeeklyTaskStats(tasksByDate) {
 
@@ -53,7 +53,7 @@ export function isTaskPastDue(task) {
     const todayDate = new Date();
     todayDate.setHours(0, 0, 0, 0);
 
-    if (taskDueDate > todayDate) {
+    if (taskDueDate >= todayDate) {
         return false;
     }
     else if (!task.isDone || 
@@ -77,4 +77,37 @@ export function getLateTasks(tasksByDate) {
 
 export function getTasksArray(tasksByDate) {
     return Object.values(tasksByDate).flat();
+}
+
+export function getDueSoonTasks(tasksByDate) {
+    return Object.entries(tasksByDate).flatMap(([dateKey, tasks]) =>
+        tasks.map(task => (
+            {
+                ...task,
+                dateKey
+            }
+        )).filter(task => getDueStatus(task) === "due-soon"));
+}
+
+export function getTaskDueDateText(task) {
+    const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+    const today = getTodayDate();
+    const [year, month, day] = task.dueDate.split("-");
+    const taskDueDate = new Date(year, month - 1, day);
+
+    const numOfDaysPastDue = Math.round((today - taskDueDate) / MS_PER_DAY);
+
+    if (numOfDaysPastDue === 0) {
+        return "Today";
+    }
+    else if (numOfDaysPastDue > 0) {
+        return `Overdue • ${numOfDaysPastDue}d`
+    }
+    else if (numOfDaysPastDue === -1) {
+        return "Tomorrow"
+    }
+    else {
+        return `Due in ${daysUntilDue} ${daysUntilDue === 1 ? "day" : "days"}`;
+    }
 }

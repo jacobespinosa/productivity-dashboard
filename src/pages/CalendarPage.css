@@ -20,11 +20,15 @@
 
 .estimated-workload {
     grid-area: estimatedWorkload;
-    margin-left: 3rem;
+    margin-left: 5rem;
 }
 
 .task-list-section {
     grid-area: taskList;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-left: 8rem;
 }
 
 .week-calendar {

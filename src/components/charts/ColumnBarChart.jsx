@@ -1,7 +1,8 @@
-import { formatMinutesHHMMIncludeZero } from '../utils/timeUtils';
+import { formatMinutesHHMMIncludeZero } from "../../utils/timeUtils";
 import './ColumnBarChart.css';
 
-function ColumnBarChart({title, data, maxValue, getKey, getValue, getBottomLabel, getTopLabel}) {
+function ColumnBarChart({title, data, maxValue, getKey, getValue, 
+                         getBottomLabel, getTopLabel, columnWidth, columnGap}) {
     const hourMarkers = Array.from({length: maxValue / 60}, (_, index) => {
         return (index + 1) * 60;
     })
@@ -27,14 +28,14 @@ function ColumnBarChart({title, data, maxValue, getKey, getValue, getBottomLabel
                         );
                     })}
                 </div>
-                <ul className='column-bar-chart'>
+                <ul className='column-bar-chart' style={{"gap": `${columnGap}`}}>
                     {data.map((item) => {
                         const value = getValue(item);
                         const percent = maxValue > 0 ? Math.min((value / (maxValue)) * 100, 100) : 0;
 
                         return (
                         <li key={getKey(item)} className='column-bar-chart-item'>
-                            <div className='bar'>
+                            <div className='bar' style={{"width": `${columnWidth}`}}>
                                 {getTopLabel(item) && (
                                     <div className='bar-label-top'
                                         style={{"bottom": `calc(${percent}% + 8px)`}}>

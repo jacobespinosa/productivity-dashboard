@@ -1,7 +1,7 @@
 import './Timer.css';
 import { useState, useEffect, useRef } from 'react';
-import { formatSecondsHHMMSS } from '../utils/timeUtils';
-import DropdownSelector from '../components/DropdownSelector';
+import { formatSecondsHHMMSS } from '../../utils/timeUtils';
+import DropdownSelector from './DropdownSelector';
 
 function Timer({projects, setProjects, timeByDate, setTimeByDate,
                 currentSessionSeconds, setCurrentSessionSeconds,

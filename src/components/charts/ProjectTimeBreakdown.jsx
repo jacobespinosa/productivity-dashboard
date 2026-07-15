@@ -1,6 +1,6 @@
 import './ProjectTimeBreakdown.css';
-import { getWeeklyProjectStats } from '../utils/projectUtils';
-import { formatMinutesHHMMIncludeZero, getWeeklyTotalTime } from '../utils/timeUtils';
+import { getWeeklyProjectStats } from '../../utils/projectUtils';
+import { formatMinutesHHMMIncludeZero, getWeeklyTotalTime } from '../../utils/timeUtils';
 
 function ProjectTimeBreakdown({ projects, timeByDate, sessions }) {
     const projectStats = getWeeklyProjectStats(projects, sessions);

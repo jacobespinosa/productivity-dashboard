@@ -2,9 +2,9 @@ import './TodayTaskList.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faPlay, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { formatMinutesHHMM, formatISOMMDD } from '../utils/timeUtils'; 
-import { getDueStatus, getLateTasks } from '../utils/taskUtils';
-import { getTextColor } from '../utils/projectUtils';
+import { formatMinutesHHMM, formatISOMMDD } from '../../utils/timeUtils'; 
+import { getDueStatus, getLateTasks } from '../../utils/taskUtils';
+import { getTextColor } from '../../utils/projectUtils';
 import { useState } from 'react';
 
 function TodayTaskList({tasksByDate, handleAddTask, handleEditTask, handleDeleteTask, 

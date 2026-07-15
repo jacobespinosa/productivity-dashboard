@@ -1,0 +1,14 @@
+.projects {
+    height: calc(100vh - 4rem);
+}
+
+.projects-content {
+    height: 100%;
+}
+
+.projects-header {
+    padding: 0.5rem 1rem;
+    font-weight: normal;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+}

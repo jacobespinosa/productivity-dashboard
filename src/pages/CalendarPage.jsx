@@ -2,9 +2,11 @@ import './CalendarPage.css';
 import { getCurrentWeekStart } from '../utils/dateUtils';
 import { getDateKey } from '../utils/dateUtils';
 import { useState } from 'react';
-import WeeklyCalendar from "../components/WeeklyCalendar";
-import CalendarHeader from '../components/CalendarHeader';
-import ColumnBarChart from '../components/ColumnBarChart';
+import WeeklyCalendar from "../components/calendar/WeeklyCalendar";
+import CalendarHeader from '../components/calendar/CalendarHeader';
+import ColumnBarChart from '../components/charts/ColumnBarChart';
+import TaskListSection from '../components/calendar/TaskListSection';
+import { getLateTasks, getDueSoonTasks, getTaskDueDateText } from '../utils/taskUtils';
 
 function CalendarPage({tasksByDate, taskActions}) {
     const [ visibleWeekStart, setVisibleWeekStart ] = useState(getCurrentWeekStart());
@@ -48,13 +50,29 @@ function CalendarPage({tasksByDate, taskActions}) {
                 </div>
                 <div className="estimated-workload">
                     <ColumnBarChart 
-                        title={"Estimated Workload"}
+                        title={"Estimated Hours"}
                         data={estimatedWorkloadData}
                         maxValue={maxMinutes}
                         getKey={item => item.day}
                         getValue={item => item.time}
                         getBottomLabel={item => item.day}
                         getTopLabel={item => item.numOfTasks}
+                        columnWidth={"60px"}
+                        columnGap={"2rem"}
+                    />
+                </div>
+                <div className='task-list-section'>
+                    <TaskListSection 
+                        title={"Overdue"}
+                        tasks={getLateTasks(tasksByDate)}
+                        color={"var(--red)"}
+                        taskSubtext={getTaskDueDateText}
+                    />
+                    <TaskListSection 
+                        title={"Due Soon"}
+                        tasks={getDueSoonTasks(tasksByDate)}
+                        color={"var(--blue)"}
+                        taskSubtext={getTaskDueDateText}
                     />
                 </div>
                 <div className="week-calendar">

@@ -1,9 +1,8 @@
 import './StreaksCard.css';
-import trophyIcon from '../assets/trophy.svg';
+import trophyIcon from '../../assets/trophy.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFire, faSquare } from '@fortawesome/free-solid-svg-icons';
-import { getTaskCompletionStreaks } from '../utils/streakUtils';
-import { getFocusGoalStreaks } from '../utils/streakUtils';
+import { getTaskCompletionStreaks, getFocusGoalStreaks } from '../../utils/streakUtils';
 
 function StreaksCard({tasksByDate, timeByDate}) {
     const weeklyFocusGoal = 7200 // 2 hours

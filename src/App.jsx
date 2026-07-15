@@ -5,7 +5,8 @@ import CalendarPage from './pages/CalendarPage';
 import ProjectsPage from "./pages/ProjectsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import Layout from "./components/Layout";
-import AddTaskModal from './components/AddTaskModal';
+import AddTaskModal from './components/modals/AddTaskModal';
+import CreateProjectModal from './components/modals/CreateProjectModal';
 import { useState } from 'react';
 
 function App() {
@@ -13,12 +14,13 @@ function App() {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [selectedDateKey, setSelectedDateKey] = useState("");
   const [newTask, setNewTask] = useState(null);
+  const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
   const [projects, setProjects] = useState([
     {
       id: 0,
       name: "No Project",
       color: "#333",
-      timeSpent: 0
+      timeSpent: 11763
     },
     {
       id: 1,
@@ -58,8 +60,8 @@ function App() {
               name: "Study React",
               projectId: 0,
               time: 90,
-              isDone: true,
-              dueDate: "2026-07-14"
+              isDone: false,
+              dueDate: "2026-07-13"
           },
           {
               id: 2,
@@ -67,7 +69,7 @@ function App() {
               projectId: 2,
               time: 60,
               isDone: false,
-              dueDate: "2026-07-14"
+              dueDate: "2026-07-13"
           }
       ],
 
@@ -86,7 +88,7 @@ function App() {
               projectId: 3,
               time: 45,
               isDone: true,
-              dueDate: "2026-07-15"
+              dueDate: "2026-07-13"
           },
           {
               id: 5,
@@ -104,8 +106,8 @@ function App() {
               name: "Weekly Quiz",
               projectId: 0,
               time: 30,
-              isDone: true,
-              dueDate: "2026-07-16"
+              isDone: false,
+              dueDate: "2026-07-15"
           }
       ],
 
@@ -116,15 +118,15 @@ function App() {
               projectId: 1,
               time: 120,
               isDone: false,
-              dueDate: "2026-07-17"
+              dueDate: "2026-07-15"
           },
           {
               id: 8,
               name: "Cloud Notes",
               projectId: 3,
               time: 60,
-              isDone: false,
-              dueDate: "2026-07-17"
+              isDone: true,
+              dueDate: "2026-07-15"
           }
       ],
 
@@ -202,7 +204,7 @@ function App() {
             startTime: "2026-07-13T09:00:00",
             endTime: "2026-07-13T11:00:00",
             durationSeconds: 7200,
-            date: "7/7/2026"
+            date: "7/13/2026"
         },
         {
             id: 2,
@@ -211,7 +213,7 @@ function App() {
             startTime: "2026-07-07T11:30:00",
             endTime: "2026-07-07T12:15:00",
             durationSeconds: 2700,
-            date: "7/7/2026"
+            date: "7/13/2026"
         },
         {
             id: 3,
@@ -220,7 +222,7 @@ function App() {
             startTime: "2026-07-07T18:00:00",
             endTime: "2026-07-07T19:00:00",
             durationSeconds: 3600,
-            date: "7/7/2026"
+            date: "7/13/2026"
         },
         {
             id: 4,
@@ -229,7 +231,7 @@ function App() {
             startTime: "2026-07-08T08:30:00",
             endTime: "2026-07-08T09:00:00",
             durationSeconds: 1800,
-            date: "7/8/2026"
+            date: "7/14/2026"
         },
         {
             id: 5,
@@ -238,7 +240,7 @@ function App() {
             startTime: "2026-07-08T10:00:00",
             endTime: "2026-07-08T12:00:00",
             durationSeconds: 7200,
-            date: "7/8/2026"
+            date: "7/14/2026"
         },
         {
             id: 6,
@@ -247,7 +249,7 @@ function App() {
             startTime: "2026-07-08T13:15:00",
             endTime: "2026-07-08T14:00:00",
             durationSeconds: 2700,
-            date: "7/8/2026"
+            date: "7/14/2026"
         },
         {
             id: 7,
@@ -256,7 +258,7 @@ function App() {
             startTime: "2026-07-08T17:30:00",
             endTime: "2026-07-08T18:30:00",
             durationSeconds: 3600,
-            date: "7/8/2026"
+            date: "7/14/2026"
         }
     ])
 
@@ -341,6 +343,16 @@ function App() {
       setIsTaskModalOpen(true);
   }
 
+  function handleCreateProject(name, color) {
+      setProjects(prevProjects => 
+          [...prevProjects, {
+            id: Date.now(),
+            name: name,
+            color: color
+          }]
+      )
+  }
+
   const taskActions = {
       handleCreateTask,
       handleDeleteTask,
@@ -373,6 +385,8 @@ function App() {
                                 newTask={newTask} sessions={sessions}
                                 setSessions={setSessions} currentProjectId={currentProjectId}
                                 setCurrentProjectId={setCurrentProjectId}
+                                isCreateProjectOpen={isCreateProjectOpen}
+                                setIsCreateProjectOpen={setIsCreateProjectOpen}
                             />
                         } 
                     />
@@ -386,7 +400,15 @@ function App() {
                             />
                         } 
                     />
-                    <Route path="/projects" element={<ProjectsPage />} />
+                    <Route path="/projects" 
+                           element={
+                           <ProjectsPage 
+                                projects={projects}
+                                setProjects={setProjects}
+                                setIsCreateProjectOpen={setIsCreateProjectOpen}
+                           />
+                        } 
+                    />
                     <Route path="/analytics" element={<AnalyticsPage />} />
                 </Route>
             </Routes>
@@ -402,6 +424,15 @@ function App() {
                     onSubmit={taskModalMode === "add" 
                                 ? handleCreateTask : handleUpdateTask}
                     currentProjectId={currentProjectId}
+                />
+            )}
+
+            {isCreateProjectOpen && (
+                <CreateProjectModal
+                    onSubmit={handleCreateProject}
+                    onClose={() => {
+                        setIsCreateProjectOpen(false);
+                    }}
                 />
             )}
         </BrowserRouter>
