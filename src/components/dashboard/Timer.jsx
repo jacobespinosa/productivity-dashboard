@@ -94,7 +94,7 @@ function Timer({projects, setProjects, timeByDate, setTimeByDate,
         <div className="timer">
            <p className="time">{formatSecondsHHMMSS(currentSessionSeconds)}</p> 
            <div className="selector-wrapper" ref={dropdownRef}>
-            <div className="selector-container" style={{ "color": `${currentProject.color}`}}
+            <div className="selector-container" style={{ "color": `${currentProject?.color}`}}
                     onClick={() => setIsDropdownOpen(prev => !prev)}>
                 <div className="selector-text"
                      title={`${currentProject?.name}${selectedTask?.name ? `: ${selectedTask.name}` : ""}`}>

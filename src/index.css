@@ -1,4 +1,6 @@
 :root {
+    --font-primary: "Inter", sans-serif;
+
     --background: #eef2f6;
     --surface: #ffffff;
 
@@ -6,8 +8,9 @@
     --text-secondary: #6e6e73;
 
     --border: #d1d5db;
+    --input-border: #8f8f9d;
     --shadow: #bbb;
-    --accent: #4CC9FE;
+    --accent: #38BDF8;
 
     --blue: #2563eb;
     --black: #000;
@@ -22,4 +25,9 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: 0.9300rem;
 }

@@ -79,10 +79,14 @@ function AddTaskModal({mode, task, onClose, onSubmit, projects, currentProjectId
                             onChange={(e) => setProjectId(Number(e.target.value))}
                             value={projectId}
                         >
-                            {projects.map(project => 
-                                <option key={project.id} value={project.id}>
-                                    {project.name}
-                                </option>
+                            {projects.map(project => {
+                                if (project.isArchived) return null;
+                                return (
+                                    <option key={project.id} value={project.id}>
+                                        {project.name}
+                                    </option>
+                                )   
+                            }
                             )}
                         </select>
                     </div>

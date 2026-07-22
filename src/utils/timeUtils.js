@@ -51,17 +51,6 @@ export function getWeekStartISO() {
     return new Date(currentWeekStart).toISOString().split('T')[0];
 }
 
-export function formatISOMMDD(date) {
-    /* 2026-06-22 -> 6/22 */
-    if (!date) return
-
-    let dateArray = date.split('-');
-    dateArray.shift();
-    dateArray[0] = dateArray[0].replace(/^0+/, '');
-    dateArray[1] = dateArray[1].replace(/^0+/, '');
-    return dateArray.join('/');
-}
-
 export function getWeeklyTimeStats(timeByDate) {
     const weekStart = getCurrentWeekStart();
     const weeklyTimeStats = [];

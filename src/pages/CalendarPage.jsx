@@ -6,7 +6,7 @@ import WeeklyCalendar from "../components/calendar/WeeklyCalendar";
 import CalendarHeader from '../components/calendar/CalendarHeader';
 import ColumnBarChart from '../components/charts/ColumnBarChart';
 import TaskListSection from '../components/calendar/TaskListSection';
-import { getLateTasks, getDueSoonTasks, getTaskDueDateText } from '../utils/taskUtils';
+import { getOverdueTasks, getDueSoonTasks, getTaskDueDateText } from '../utils/taskUtils';
 
 function CalendarPage({tasksByDate, taskActions}) {
     const [ visibleWeekStart, setVisibleWeekStart ] = useState(getCurrentWeekStart());
@@ -64,7 +64,7 @@ function CalendarPage({tasksByDate, taskActions}) {
                 <div className='task-list-section'>
                     <TaskListSection 
                         title={"Overdue"}
-                        tasks={getLateTasks(tasksByDate)}
+                        tasks={getOverdueTasks(tasksByDate)}
                         color={"var(--red)"}
                         taskSubtext={getTaskDueDateText}
                     />

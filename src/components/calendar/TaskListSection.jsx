@@ -15,7 +15,7 @@ function TaskListSection({title, tasks, color, taskSubtext}) {
                         <li key={task.id}
                             className='task-list-item'
                             style={{
-                                "border-color": `${color}`,
+                                "borderColor": `${color}`,
                                 "--bgColor": `${color}`
                             }}
                         >

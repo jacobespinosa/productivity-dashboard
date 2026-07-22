@@ -1,0 +1,143 @@
+.project-details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 6rem;
+    width: 100%;
+}
+
+.project-tasks,
+.project-overview {
+    box-shadow: inset 0 -10px 0 var(--border);
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    width: 100%;
+}
+
+.project-tasks {
+    padding-bottom: 10px;
+}
+
+.project-details-container .divider {
+    width: 98%;
+    margin: 0 1rem;
+}
+
+.project-details-section-header {
+    font-weight: normal;
+    font-size: 1.6rem;
+    background-color: var(--border);
+    padding: 1rem;
+}
+
+.project-overview-container .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1rem;
+}
+
+.input-group .input-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.input-group .name-input {
+    color: var(--text-primary);
+    padding: 0.5rem;
+    width: 500px;
+    height: 40px;
+    font-size: .9rem;
+    border: 1px solid var(--input-border);
+}
+
+.input-group .name-input:focus {
+    outline: none;
+}
+
+.input-group .color-input {
+    padding: 0.35rem;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid var(--input-border);
+}
+
+.project-tasks-container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--border);
+}
+
+.task-list-top-label {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 1rem 2rem;
+    min-height: 50px;
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+}
+
+.project-tasks .project-task-list-item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+    min-height: 62px;
+    background-color: var(--surface);
+    position: relative;
+    z-index: 0;
+    cursor: pointer;
+}
+
+.project-tasks .project-task-list-item:hover {
+    box-shadow: 0 0 15px 2px var(--shadow);
+    z-index: 1;
+}
+
+.project-tasks .project-task-list {
+    width: 100%;
+}
+
+.project-task-list-item-column {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 100%;
+}
+
+.project-task-list-item .divider-vertical {
+    width: 1px;
+    height: 100%;
+    background-color: var(--border);
+}
+
+.project-tasks-add-task-btn {
+    font-family: inherit;
+    font-size: 0.9rem;
+    background-color: var(--green);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--surface);
+    border: 2px solid var(--green);
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    transition: border 0.2s ease;
+}
+
+.project-tasks-add-task-btn:hover {
+    border: 2px solid var(--surface);
+}
+
+.project-tasks-add-task-btn:disabled {
+    border: 1px solid var(--black);
+    color: var(--black);
+    background-color: var(--shadow);
+    opacity: 0.5;
+    cursor: not-allowed;
+}

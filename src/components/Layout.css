@@ -1,11 +1,13 @@
 .app-layout {
     display: grid;
     grid-template-columns: auto 1fr;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .page-content {
     padding: 2rem;
-    min-height: 100vh;
+    min-height: 0;
     background-color: var(--background);
+    overflow-y: auto;
 }

@@ -55,7 +55,7 @@
 }
 
 .date {
-    font-size: 1.1rem;
+    font-size: .95rem;
 }
 
 .task-list {
@@ -127,6 +127,8 @@
 .prev-week,
 .add-task-btn {
     margin-top: auto;
+    font-family: inherit;
+    font-size: 0.75rem;
     background-color: var(--green);
     border-radius: 8px;
     cursor: pointer;

@@ -65,6 +65,7 @@ export function isTaskPastDue(task) {
     }
 }
 
+/* If task was checked complete today then function still returns as late*/
 export function getLateTasks(tasksByDate) {
     return Object.entries(tasksByDate).flatMap(([dateKey, tasks]) => 
             tasks.map(task => (
@@ -73,6 +74,17 @@ export function getLateTasks(tasksByDate) {
                     dateKey
                 })
             )).filter(task => isTaskPastDue(task));
+}
+
+
+export function getOverdueTasks(tasksByDate) {
+    return Object.entries(tasksByDate).flatMap(([dateKey, tasks]) =>
+        tasks.map(task => (
+            {
+                ...task,
+                dateKey
+            }
+        )).filter(task => getDueStatus(task) === "overdue"));
 }
 
 export function getTasksArray(tasksByDate) {

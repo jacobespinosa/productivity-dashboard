@@ -42,7 +42,7 @@ function DropdownSelector({projects, currentProjectId, setCurrentProjectId,
                     <p className="project-selector-title">Select Project</p>
                     <ul className="project-options">
                     {projects.map((project) => {
-                        if (project.id === currentProjectId) return null;
+                        if (project.id === currentProjectId || project.isArchived) return null;
                         return (
                             <li className="project-option"
                                 key={project.id}

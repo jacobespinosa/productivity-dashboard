@@ -4,10 +4,12 @@ import Dashboard from './pages/Dashboard';
 import CalendarPage from './pages/CalendarPage';
 import ProjectsPage from "./pages/ProjectsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 import Layout from "./components/Layout";
 import AddTaskModal from './components/modals/AddTaskModal';
 import CreateProjectModal from './components/modals/CreateProjectModal';
 import { useState } from 'react';
+import { faLadderWater } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [taskModalMode, setTaskModalMode] = useState("add");
@@ -15,30 +17,35 @@ function App() {
   const [selectedDateKey, setSelectedDateKey] = useState("");
   const [newTask, setNewTask] = useState(null);
   const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
+
   const [projects, setProjects] = useState([
     {
       id: 0,
       name: "No Project",
       color: "#333",
-      timeSpent: 11763
+      timeSpent: 11763,
+      isArchived: false
     },
     {
       id: 1,
       name: "leetCode",
       color: "#FF8849",
-      timeSpent: 21674
+      timeSpent: 21674,
+      isArchived: true
     },
     {
       id: 2,
       name: "Python",
       color: "#69BE28",
-      timeSpent: 16223
+      timeSpent: 16223,
+      isArchived: false
     },
     {
       id: 3,
       name: "SIEM",
       color: "#3DB7E4",
-      timeSpent: 36902
+      timeSpent: 36902,
+      isArchived: false
     }
   ]);
   const [currentProjectId, setCurrentProjectId] = useState(projects[0].id);
@@ -66,7 +73,7 @@ function App() {
           {
               id: 2,
               name: "LeetCode",
-              projectId: 2,
+              projectId: 1,
               time: 60,
               isDone: false,
               dueDate: "2026-07-13"
@@ -137,7 +144,7 @@ function App() {
               projectId: 2,
               time: 45,
               isDone: true,
-              dueDate: "2026-7-18"
+              dueDate: "2026-07-18"
           },
           {
               id: 10,
@@ -156,7 +163,7 @@ function App() {
               projectId: 1,
               time: 75,
               isDone: false,
-              dueDate: "2026-7-19"
+              dueDate: "2026-07-19"
           },
           {
               id: 12,
@@ -164,7 +171,7 @@ function App() {
               projectId: 3,
               time: 60,
               isDone: true,
-              dueDate: "2026-7-19"
+              dueDate: "2026-07-19"
           },
           {
               id: 13,
@@ -172,7 +179,7 @@ function App() {
               projectId: 0,
               time: 30,
               isDone: true,
-              dueDate: "2026-7-19"
+              dueDate: "2026-07-19"
           }
       ],
 
@@ -348,7 +355,9 @@ function App() {
           [...prevProjects, {
             id: Date.now(),
             name: name,
-            color: color
+            color: color,
+            timeSpent: 0,
+            isArchived: false
           }]
       )
   }
@@ -402,13 +411,28 @@ function App() {
                     />
                     <Route path="/projects" 
                            element={
-                           <ProjectsPage 
-                                projects={projects}
-                                setProjects={setProjects}
-                                setIsCreateProjectOpen={setIsCreateProjectOpen}
-                           />
-                        } 
+                                <ProjectsPage 
+                                    projects={projects}
+                                    setProjects={setProjects}
+                                    setIsCreateProjectOpen={setIsCreateProjectOpen}
+                                    setTasksByDate={setTasksByDate}
+                                    setSessions={setSessions}
+                                />
+                            } 
                     />
+                    <Route path="/projects/:projectId" 
+                           element={
+                                <ProjectDetailsPage 
+                                    projects={projects}
+                                    setProjects={setProjects}
+                                    tasksByDate={tasksByDate}
+                                    handleEditTask={handleEditTask}
+                                    handleAddTask={handleAddTask}
+                                    setCurrentProjectId={setCurrentProjectId}
+                                />
+                            } 
+                    />
+                    
                     <Route path="/analytics" element={<AnalyticsPage />} />
                 </Route>
             </Routes>

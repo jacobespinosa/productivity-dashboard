@@ -1,9 +1,9 @@
 import './WeeklyCalendar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan  } from '@fortawesome/free-regular-svg-icons';
-import { getCurrentWeekStart, getDaySuffix, 
+import { getCurrentWeekStart, getDaySuffix, formatISOMMDD,
          getCurrentWeekRange, getTodayDate, getDateKey } from '../../utils/dateUtils';
-import { formatMinutesHHMM, formatISOMMDD } from '../../utils/timeUtils';
+import { formatMinutesHHMM } from '../../utils/timeUtils';
 import { getDueStatus } from '../../utils/taskUtils';
 import { useState } from 'react';
 

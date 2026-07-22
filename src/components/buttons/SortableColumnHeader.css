@@ -1,0 +1,26 @@
+.sort-btn {
+    font-size: inherit;
+    font-family: inherit;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.20rem;
+}
+
+.sort-icons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 0.75rem;
+}
+
+.sort-icons svg:first-child {
+    margin-bottom: -2px;
+}
+
+.sort-icons svg:last-child {
+    margin-top: -2px;
+}

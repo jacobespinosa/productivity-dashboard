@@ -46,3 +46,27 @@ export function getTodayDate() {
 export function getDateKey(date) {
     return date.toLocaleDateString('en-US');
 }
+
+export function formatISOMMDD(date) {
+    /* 2026-06-22 -> 6/22 */
+    if (!date) return;
+
+    let dateArray = date.split('-');
+    dateArray.shift();
+    dateArray[0] = dateArray[0].replace(/^0+/, '');
+    dateArray[1] = dateArray[1].replace(/^0+/, '');
+    return dateArray.join('/');
+}
+
+export function formatISOMMDDYYYY(date) {
+    /* 2026-06-22 -> 6/22/2026 */
+    if (!date) return;
+
+    let dateArray = date.split('-');
+    const year = dateArray[0];
+    dateArray.shift();
+    dateArray[0] = dateArray[0].replace(/^0+/, '');
+    dateArray[1] = dateArray[1].replace(/^0+/, '');
+    dateArray.push(year);
+    return dateArray.join('/');
+}

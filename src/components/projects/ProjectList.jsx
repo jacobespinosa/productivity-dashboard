@@ -1,8 +1,19 @@
 import './ProjectList.css';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { formatMinutesHHMMIncludeZero } from '../../utils/timeUtils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import ProjectConfirmDeleteModal from '../modals/ProjectConfirmDeleteModal';
+import SortableColumnHeader from '../buttons/SortableColumnHeader';
 
-function ProjectList({projects}) {
+function ProjectList({projects, setProjects, setTasksByDate, setSessions}) {
+    const navigate = useNavigate();
+    const [filterType, setFilterType] = useState("active");
+    const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
+    const [isProjectConfirmDeleteModalOpen, setIsProjectConfirmDeleteModalOpen] = useState(false);
+    const [projectToDelete, setProjectToDelete] = useState(null);
+
     const [sortConfig, setSortConfig] = useState({
         field: "name",
         direction: "ascending"
@@ -24,6 +35,10 @@ function ProjectList({projects}) {
                     : -comparison;
     })
 
+    function handleSelectProject(projectId) {
+        navigate(`/projects/${projectId}`);
+    }
+
     function handleSort(field) {
         setSortConfig(current => {
             const clickedSameKey = current.field === field;
@@ -38,26 +53,103 @@ function ProjectList({projects}) {
         });
     }
 
+    function handleArchiveProject(projectId) {
+        setProjects(prevProjects =>
+            prevProjects.map(project =>
+                project.id === projectId
+                ? {
+                    ...project,
+                    isArchived: true
+                }
+                : project
+            )
+        );
+    }
+
+    function handleRestoreProject(projectId) {
+        setProjects(prevProjects => 
+            prevProjects.map(project =>
+                project.id === projectId
+                ? {
+                    ...project,
+                    isArchived: false
+                }
+                : project
+            )
+        );
+    }
+
+    function handleDeleteProject(projectId) {
+        console.log("delete started")
+        setProjects(prevProjects =>
+            prevProjects.filter(project => project.id !== projectId)
+        );
+
+        setTasksByDate(prevTasksByDate => {
+            return Object.fromEntries(
+                Object.entries(prevTasksByDate).map(([datekey, tasks]) => [
+                    datekey,
+                    tasks.filter((task) => task.projectId !== projectId)
+                ])
+            )
+        });
+
+        setSessions(prevSessions => 
+            prevSessions.filter(session => session.projectId !== projectId)
+        );
+        console.log("delete finished")
+
+        setIsProjectConfirmDeleteModalOpen(false);
+    }
+
+    const visibleProjects = sortedProjects.filter(project => {
+        if (filterType === "active") return !project.isArchived;
+        if (filterType === "archived") return project.isArchived;
+        return true;
+    });
+
     return (
         <div className='project-list-container'>
             <h3 className='project-list-header'>
                 projects
             </h3>
             <div className='project-list-top-label'>
-                <button type="button" className='project-list-name-btn'
-                        onClick={() => handleSort("name")}>
-                    Name
-                </button>
-                <button type="button" className='project-list-time-btn'
-                        onClick={() => handleSort("timeSpent")}>
-                    Tracked
-                </button>
-                <button type="button" className='project-list-filter-btn'>
-                    {}
+                <SortableColumnHeader
+                    label="Name"
+                    field="name"
+                    sortConfig={sortConfig}
+                    onSort={handleSort}
+                />
+                <SortableColumnHeader 
+                    label="Tracked"
+                    field="timeSpent"
+                    sortConfig={sortConfig}
+                    onSort={handleSort}
+                />
+
+                <button type="button" className='project-list-filter-btn'
+                        onClick={() => setIsFilterDropdownOpen(prev => !prev)}>
+                    Filter
+                    {isFilterDropdownOpen 
+                        ? <FontAwesomeIcon icon={faChevronUp} className='chevron-up' />
+                        : <FontAwesomeIcon icon={faChevronDown} className='chevron-down' />}
+                    
+                    {isFilterDropdownOpen &&
+                        <div className="project-filter-menu">
+                            <button onClick={() => setFilterType("active")}>Active</button>
+                            <button onClick={() => setFilterType("archived")}>Archived</button>
+                            <button onClick={() => setFilterType("all")}>All</button>
+                        </div>
+                    }
                 </button>
             </div>
             <ul className='project-list'>
-                {sortedProjects.map(project => {
+                {visibleProjects.map(project => {
+                    if (filterType === "active") {
+                        if (project.isArchived) return;
+                    } else if (filterType === "archived") {
+                        if (!project.isArchived) return;
+                    }
                     return (
                         <li key={project.id}
                             className="project-list-item"
@@ -65,19 +157,60 @@ function ProjectList({projects}) {
                             <div className="name-label">
                                 <span className="project-dot"
                                     style={{"color": `${project.color}`}}>●</span>
-                                <span className="project-name">{project.name}</span>
+                                <span className="project-name"
+                                    style={{
+                                        "textDecoration": 
+                                        `${project.isArchived 
+                                            ? "line-through" : ""}`,
+                                        "pointerEvents":
+                                        `${project.id === 0
+                                            ? "none" : "auto"}`
+                                    }}
+                                    onClick={() => handleSelectProject(project.id)}
+                                >
+                                        {project.name}
+                                </span>
                             </div>
-                            <div className="divider-vertical"></div>
-                            <span className="project-tracked-time">
-                                {formatMinutesHHMMIncludeZero(project.timeSpent / 60)}
-                            </span>
-                            <button type="button" className="project-item-archive-btn">
-                                Archive
-                            </button>
+                            <div className='project-list-time-column'>
+                                <div className="divider-vertical"></div>
+                                <span className="project-tracked-time">
+                                    {formatMinutesHHMMIncludeZero(project.timeSpent / 60)}
+                                </span>
+                            </div>
+                            <div className='project-actions'>
+                                {project.id !== 0 && project.isArchived &&
+                                    <button type="button" className='project-item-restore-btn'
+                                            onClick={() => handleRestoreProject(project.id)}>
+                                        Restore
+                                    </button>
+                                }
+                                {project.id !== 0 && project.isArchived &&
+                                    <button type="button" className="project-item-delete-btn"
+                                            onClick={() => {
+                                                setProjectToDelete(project);
+                                                setIsProjectConfirmDeleteModalOpen(true)
+                                            }}>
+                                        Delete
+                                    </button>
+                                }
+                                {project.id !== 0 && !project.isArchived &&
+                                    <button type="button" className="project-item-archive-btn"
+                                            onClick={() => handleArchiveProject(project.id)}>
+                                        Archive
+                                    </button>
+                                }
+                            </div>
                         </li>
                     );
                 })}
             </ul>
+            {isProjectConfirmDeleteModalOpen &&
+                <ProjectConfirmDeleteModal 
+                    projectToDelete={projectToDelete}
+                    setIsProjectConfirmDeleteModalOpen={setIsProjectConfirmDeleteModalOpen}
+                    handleDeleteProject={handleDeleteProject}
+                />                
+            }
         </div>
     );
 }

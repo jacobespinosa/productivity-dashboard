@@ -1,7 +1,8 @@
 import './ProjectsPage.css';
 import ProjectList from '../components/projects/ProjectList';
 
-function ProjectsPage({ projects, setProjects, setIsCreateProjectOpen }) {
+function ProjectsPage({ projects, setProjects, setIsCreateProjectOpen,
+                        setTasksByDate, setSessions }) {
     return (
         <main className='projects'>
             <section className='projects-content'>
@@ -15,6 +16,9 @@ function ProjectsPage({ projects, setProjects, setIsCreateProjectOpen }) {
                 <div className='projects-list'>
                     <ProjectList 
                         projects={projects}
+                        setProjects={setProjects}
+                        setTasksByDate={setTasksByDate}
+                        setSessions={setSessions}
                     />
                 </div>
             </section>

@@ -1,0 +1,63 @@
+.project-confirm-delete-modal-background {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.project-confirm-delete-modal {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    width: 600px;
+    background-color: var(--surface);
+}
+
+.project-confirm-delete-modal .modal-title {
+    color: var(--text-primary);
+    font-weight: normal;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.project-confirm-delete-modal .modal-text {
+    color: var(--text-primary);
+    padding: 3rem 1rem;
+}
+
+.project-confirm-delete-modal .actions {
+    display: flex;
+    gap: 2rem;
+    margin: auto;
+}
+
+.project-confirm-delete-modal .actions .cancel {
+    font-size: inherit;
+    font-family: inherit;
+    border: none;
+    color: var(--accent);
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.project-confirm-delete-modal .actions .cancel:hover {
+    text-decoration: underline;
+}
+
+.project-confirm-delete-modal .actions .delete {
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1px solid var(--red);
+    background-color: var(--red);
+    color: var(--surface);
+    padding: .5rem 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.project-confirm-delete-modal .actions .delete:hover {
+    background-color: color-mix(in srgb, var(--red) 90%, black);
+}
