@@ -80,7 +80,6 @@ function ProjectList({projects, setProjects, setTasksByDate, setSessions}) {
     }
 
     function handleDeleteProject(projectId) {
-        console.log("delete started")
         setProjects(prevProjects =>
             prevProjects.filter(project => project.id !== projectId)
         );
@@ -97,7 +96,6 @@ function ProjectList({projects, setProjects, setTasksByDate, setSessions}) {
         setSessions(prevSessions => 
             prevSessions.filter(session => session.projectId !== projectId)
         );
-        console.log("delete finished")
 
         setIsProjectConfirmDeleteModalOpen(false);
     }

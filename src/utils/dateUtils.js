@@ -70,3 +70,45 @@ export function formatISOMMDDYYYY(date) {
     dateArray.push(year);
     return dateArray.join('/');
 }
+
+/* Checks if date object is within this week */
+export function isThisWeek(date) {
+    const weekStart = getCurrentWeekStart();
+
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekEnd.getDate() + 7);
+
+    return date >= weekStart && date < weekEnd;
+}
+
+/* Checks if date object is within last week */
+export function isLastWeek(date) {
+    const weekStart = getCurrentWeekStart();
+
+    const lastWeekStart = new Date(weekStart);
+    lastWeekStart.setDate(lastWeekStart.getDate() - 7);
+
+    return date >= lastWeekStart && date < weekStart;
+}
+
+/* Return start of week date oject for a provided date */
+export function getWeekStart(date) {
+    const weekStart = new Date(date);
+
+    weekStart.setHours(0, 0, 0, 0);
+
+    const dayOfWeek = weekStart.getDay();
+    const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+
+    weekStart.setDate(weekStart.getDate() - daysToSubtract);
+
+    return weekStart;
+}
+
+/* Returns date object for yesterday */
+export function getYesterdayDate() {
+    const today = getTodayDate();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    return yesterday;
+}

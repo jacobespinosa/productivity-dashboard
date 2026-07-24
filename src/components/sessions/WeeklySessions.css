@@ -1,0 +1,67 @@
+.weekly-session-container {
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background-color: var(--surface);
+}
+
+.weekly-session-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.weekly-session-summary {
+    display: flex;
+    justify-content: space-between;
+}
+
+.weekly-session-total-time {
+    color: var(--text-secondary);
+}
+
+.weekly-session-stats {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.weekly-session-stat {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.weekly-session-stat dt {
+    color: var(--text-secondary);
+}
+
+.weekly-session-stat dd {
+    color: black;
+}
+
+.weekly-session-total-time span {
+    font-weight: bold;
+    color: black;
+    font-size: 1.1rem;
+}
+
+.weekly-session-date-range {
+    font-weight: bold;
+}
+
+.weekly-session-stat .low {
+    color: var(--red);
+}
+
+.weekly-session-stat .close {
+    color: var(--orange);
+}
+
+.weekly-session-stat .met {
+    color: var(--green);
+}
+
+.weekly-session-stats .seperator {
+    color: var(--text-secondary);
+}

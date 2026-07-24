@@ -1,7 +1,7 @@
 import './SideBar.css';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faFolder,  } from '@fortawesome/free-regular-svg-icons';
+import { faCalendar, faFolder, faClock } from '@fortawesome/free-regular-svg-icons';
 import { faChartLine, faGear, faBorderAll } from '@fortawesome/free-solid-svg-icons';
 
 function SideBar() {
@@ -24,6 +24,10 @@ function SideBar() {
         <NavLink to="/projects" className="sidebar-link">
           <FontAwesomeIcon icon={faFolder} />
           Projects
+        </NavLink>
+        <NavLink to="/sessions" className="sidebar-link">
+          <FontAwesomeIcon icon={faClock} />
+          Sessions
         </NavLink>
         <NavLink to="/analytics" className="sidebar-link">
           <FontAwesomeIcon icon={faChartLine} />

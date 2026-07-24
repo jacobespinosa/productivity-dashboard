@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import CalendarPage from './pages/CalendarPage';
 import ProjectsPage from "./pages/ProjectsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import SessionsPage from "./pages/SessionsPage"
 import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 import Layout from "./components/Layout";
 import AddTaskModal from './components/modals/AddTaskModal';
@@ -17,6 +18,7 @@ function App() {
   const [selectedDateKey, setSelectedDateKey] = useState("");
   const [newTask, setNewTask] = useState(null);
   const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
+  const [weeklyTimeGoal, setWeeklyTimeGoal] = useState(86400);
 
   const [projects, setProjects] = useState([
     {
@@ -51,6 +53,7 @@ function App() {
   const [currentProjectId, setCurrentProjectId] = useState(projects[0].id);
 
     const [timeByDate, setTimeByDate] = useState({
+        "7/12/2026": 3600,
         "7/13/2026": 10000,   
         "7/14/2026": 12000,  
         "7/15/2026": 2000,  
@@ -266,7 +269,7 @@ function App() {
             endTime: "2026-07-08T18:30:00",
             durationSeconds: 3600,
             date: "7/14/2026"
-        }
+        },
     ])
 
   function handleCreateTask(taskName, projectId, estimatedTime, dueDate) {
@@ -396,6 +399,8 @@ function App() {
                                 setCurrentProjectId={setCurrentProjectId}
                                 isCreateProjectOpen={isCreateProjectOpen}
                                 setIsCreateProjectOpen={setIsCreateProjectOpen}
+                                weeklyTimeGoal={weeklyTimeGoal}
+                                setWeeklyTimeGoal={setWeeklyTimeGoal}
                             />
                         } 
                     />
@@ -432,7 +437,18 @@ function App() {
                                 />
                             } 
                     />
-                    
+                    <Route path="/sessions" 
+                           element={
+                                <SessionsPage 
+                                    sessions={sessions}
+                                    setSessions={setSessions}
+                                    tasksByDate={tasksByDate}
+                                    projects={projects}
+                                    timeByDate={timeByDate}
+                                    weeklyTimeGoal={weeklyTimeGoal}
+                                />
+                           } 
+                    />
                     <Route path="/analytics" element={<AnalyticsPage />} />
                 </Route>
             </Routes>

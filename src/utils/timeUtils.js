@@ -30,18 +30,17 @@ export function formatSecondsHHMM(totalSeconds) {
     return `${hh}:${mm}`;
 }
 
-export function getWeeklyTotalTime(timeByDate) {
-    const currentWeekStart = getCurrentWeekStart();
-
-    const weekStart = new Date(currentWeekStart);
+/* returns total seconds for week */
+export function getWeeklyTotalTime(timeByDate, weekStart) {
+    const currentDate = new Date(weekStart);
     let totalTime = 0;
 
     for (let i = 0; i < 7; i++) {
-        let dateKey = weekStart.toLocaleDateString();
+        let dateKey = currentDate.toLocaleDateString('en-US');
 
         totalTime += timeByDate[dateKey] ?? 0;
 
-        weekStart.setDate(weekStart.getDate() + 1);
+        currentDate.setDate(currentDate.getDate() + 1);
     }
     return totalTime;
 }

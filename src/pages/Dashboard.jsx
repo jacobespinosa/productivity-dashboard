@@ -20,7 +20,7 @@ import ColumnBarChart from '../components/charts/ColumnBarChart';
 function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
                     timeByDate, setTimeByDate, taskActions, taskModalState,
                     newTask, sessions, setSessions, currentProjectId, setCurrentProjectId,
-                    isCreateProjectOpen, setIsCreateProjectOpen}) {
+                    isCreateProjectOpen, setIsCreateProjectOpen, weeklyTimeGoal, setWeeklyTimeGoal}) {
 
   const {
       handleCreateTask,
@@ -38,14 +38,15 @@ function Dashboard({projects, setProjects, tasksByDate, setTasksByDate,
     setIsTaskModalOpen
   } = taskModalState
 
+  const currentWeekStart = getCurrentWeekStart();
+
   const [currentSessionSeconds, setCurrentSessionSeconds] = useState(0);
   const [selectedTask, setSelectedTask] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
   const [isWeeklyGoalModalOpen, setIsWeeklyGoalModalOpen] = useState(false);
-  const [weeklyTimeGoal, setWeeklyTimeGoal] = useState(86400);
 
   const { totalTasks, totalTasksCompleted } = getWeeklyTaskStats(tasksByDate);
-  const totalWeeklyTime = getWeeklyTotalTime(timeByDate) + currentSessionSeconds;
+  const totalWeeklyTime = getWeeklyTotalTime(timeByDate, currentWeekStart) + currentSessionSeconds;
 
 
   const weeklyTimeStats = getWeeklyTimeStats(timeByDate);

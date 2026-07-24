@@ -70,3 +70,40 @@ STREAKS:
 
 ANALYTICS PAGE:
    - Heatmap that you can rotate through to see different stats 
+
+
+SESSIONS PAGE:
+
+Design:
+
+  Session Week header:
+    This Week                                           18h 42m
+
+    27 Sessions     Avg 42 min     Goal 94% 
+
+  Session day header:
+     TODAY
+
+     3 Sessions • 2h 15m
+
+  Session day:
+     | Calendar                <✓ Completed task>      7:12 PM → 7:43 PM    31m   <edit> <delete>
+     | Add bar hover info      <productivity data>
+
+  Session item hover:
+    - opaque project color covers the project and task name label left to right
+    - Edit icon and delete icon appear only on hover
+
+Features:
+  - Clicking session item opens an edit modal. Add this to the dashboard
+
+Structure
+
+SessionsPage
+├── SessionHistory
+│   ├── WeeklySessions
+│   │   ├── SessionDay
+│   │   │   └── SessionCard
+│   │   └── SessionDay
+│   └── WeeklySessions
+└── SessionFilters
